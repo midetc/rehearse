@@ -8,3 +8,14 @@ class Collection(models.Model):
 
     def __str__(self):
         return f"{self.name}, (is_active={self.is_active})"
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name} ({self.collection})"
+
+
