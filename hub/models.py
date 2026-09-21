@@ -1,6 +1,6 @@
+from django.conf import settings
 from django.db import models
 
-from config import settings
 
 
 class Collection(models.Model):
@@ -20,17 +20,17 @@ class Category(models.Model):
     def __str__(self):
         return f"{self.name} ({self.collection})"
 
+class Level(models.TextChoices):
+    JUNIOR = "junior", "Junior"
+    MIDDLE = "middle", "Middle"
+    SENIOR = "senior", "Senior"
 
 class CardTemplate(models.Model):
-    class Level(models.TextChoices):
-        JUNIOR = "junior", "Junior"
-        MIDDLE = "middle", "Middle"
-        SENIOR = "senior", "Senior"
-
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     level = models.CharField(
         max_length=20,
         choices=Level.choices,
+
     )
     question = models.TextField()
     answer = models.TextField()
@@ -46,7 +46,8 @@ class Card(models.Model):
     template = models.ForeignKey(
         CardTemplate,
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
+        blank=True
     )
     status = models.CharField(
         max_length=20,
@@ -56,3 +57,11 @@ class Card(models.Model):
     is_custom = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    level = models.CharField(
+        max_length=20,
+        choices=Level.choices,
+
+    )
+    question = models.TextField()
+    answer = models.TextField()

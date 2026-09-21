@@ -20,5 +20,5 @@ class CardTemplateAdmin(admin.ModelAdmin):
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
-    list_display = ("owner", "template", "status", "is_custom", "created_at", "updated_at")
+    list_display = ("owner", "template","answer", "question", "level", "category", "status", "is_custom", "created_at", "updated_at")
 
