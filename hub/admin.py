@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from hub.models import Collection
+
+
+@admin.register(Collection)
+class CollectionAdmin(admin.ModelAdmin):
+    list_display = ("name", "slug", "is_active")
