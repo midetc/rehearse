@@ -2,7 +2,20 @@
 
 {% block content %}
   <h1>Lorem</h1>
-  <p>
-    Lorem20
-  </p>
+
+  {% if user.active_collection is None %}
+    <p>
+      to start you need to select a collection, you can do this by clicking the button below
+    </p>
+    <a href="{% url 'hub:select-collection' %}">Set Collection</a>
+    {% else %}
+    <p>
+      You have selected the collection "{{ user.active_collection.name }}". You can now start using the hub.
+      If you want to change the collection, you can do so by clicking the button below.
+    </p>
+    <a href="{% url 'hub:select-collection' %}">Change Collection</a>
+  {% endif %}
+
+
+
 {% endblock %}
