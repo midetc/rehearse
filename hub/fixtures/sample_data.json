@@ -1,0 +1,165 @@
+[
+  {
+    "model": "hub.collection",
+    "pk": 1,
+    "fields": {
+      "name": "Backend Development",
+      "slug": "backend",
+      "is_active": true
+    }
+  },
+  {
+    "model": "hub.collection",
+    "pk": 2,
+    "fields": {
+      "name": "AI Engineering",
+      "slug": "ai-engineering",
+      "is_active": true
+    }
+  },
+  {
+    "model": "hub.category",
+    "pk": 1,
+    "fields": {
+      "name": "OOP",
+      "description": "Object-oriented programming basics",
+      "collection": 1
+    }
+  },
+  {
+    "model": "hub.category",
+    "pk": 2,
+    "fields": {
+      "name": "Django",
+      "description": "Django framework interview topics",
+      "collection": 1
+    }
+  },
+  {
+    "model": "hub.category",
+    "pk": 3,
+    "fields": {
+      "name": "Databases",
+      "description": "SQL and data modeling",
+      "collection": 1
+    }
+  },
+  {
+    "model": "hub.category",
+    "pk": 4,
+    "fields": {
+      "name": "LLMs",
+      "description": "Large language models basics",
+      "collection": 2
+    }
+  },
+  {
+    "model": "hub.category",
+    "pk": 5,
+    "fields": {
+      "name": "RAG",
+      "description": "Retrieval-augmented generation",
+      "collection": 2
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "level": "junior",
+      "question": "What is encapsulation in OOP?",
+      "answer": "Encapsulation means bundling data and methods that operate on that data inside a class, and restricting direct access to some of the object's components."
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 2,
+    "fields": {
+      "category": 1,
+      "level": "middle",
+      "question": "What is the difference between composition and inheritance?",
+      "answer": "Inheritance models an is-a relationship by extending a base class. Composition models a has-a relationship by storing other objects as fields. Composition is often preferred for flexibility and looser coupling."
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 3,
+    "fields": {
+      "category": 2,
+      "level": "junior",
+      "question": "What is the role of Django migrations?",
+      "answer": "Migrations are versioned schema changes derived from models. They let you apply, reverse, and share database structure updates across environments with migrate."
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 4,
+    "fields": {
+      "category": 2,
+      "level": "middle",
+      "question": "Why use AUTH_USER_MODEL instead of django.contrib.auth.models.User?",
+      "answer": "AUTH_USER_MODEL lets you swap in a custom user early so ForeignKeys point to your model. Changing the user model after tables exist is painful, so set it before the first migrate."
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 5,
+    "fields": {
+      "category": 3,
+      "level": "junior",
+      "question": "What is the difference between 1:N and N:M relationships?",
+      "answer": "1:N means one parent row links to many child rows via a ForeignKey. N:M means each side can link to many of the other, usually through an intermediate table."
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 6,
+    "fields": {
+      "category": 3,
+      "level": "senior",
+      "question": "What is a database index and when would you add one?",
+      "answer": "An index is a data structure that speeds up lookups at the cost of write overhead and storage. Add indexes for frequent filters and joins, especially on foreign keys and search columns."
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 7,
+    "fields": {
+      "category": 4,
+      "level": "junior",
+      "question": "What is a prompt in an LLM application?",
+      "answer": "A prompt is the input text (and structure) you send to the model: instructions, context, and the user question. Prompt quality strongly affects output quality."
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 8,
+    "fields": {
+      "category": 4,
+      "level": "middle",
+      "question": "What are tokens and why do they matter for cost and limits?",
+      "answer": "Tokens are chunks of text the model reads and generates. API pricing and context windows are measured in tokens, so longer prompts and answers cost more and may hit limits."
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 9,
+    "fields": {
+      "category": 5,
+      "level": "middle",
+      "question": "What is RAG in simple terms?",
+      "answer": "RAG retrieves relevant documents from your data store, then inserts them into the prompt so the LLM answers with grounded context instead of relying only on its training memory."
+    }
+  },
+  {
+    "model": "hub.cardtemplate",
+    "pk": 10,
+    "fields": {
+      "category": 5,
+      "level": "senior",
+      "question": "Why do we chunk documents before embedding them for RAG?",
+      "answer": "Chunking keeps retrieved context within size limits, improves retrieval precision, and reduces noise. Too-large chunks dilute relevance; too-small chunks lose meaning."
+    }
+  }
+]
