@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <ol>
+    {% for card in card_list %}
+
+      <li><a href="{% url "hub:card-detail" card.id %}">{{ card.question }}</a> Status: {{ card.status }}</li>
+    {% empty %}
+      <li>No cards yet. Select a collection to get starter cards.</li>
+    {% endfor %}
+  </ol>
+
+
+
+{% endblock %}

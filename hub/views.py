@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView
 
 from hub.forms import SelectCollectionForm
 from hub.models import Card, CardTemplate
@@ -56,3 +58,17 @@ def seed_cards_for_user(user: User) -> None:
         for card_template in card_templates
     ]
     Card.objects.bulk_create(cards)
+
+
+class CardListView(LoginRequiredMixin, ListView):
+    model = Card
+
+    def get_queryset(self):
+        return super().get_queryset().filter(owner=self.request.user, category__collection=self.request.user.active_collection)
+
+
+class CardDetailView(LoginRequiredMixin, DetailView):
+    model = Card
+
+    def get_queryset(self):
+        return super().get_queryset().filter(owner=self.request.user, category__collection=self.request.user.active_collection)
