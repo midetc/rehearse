@@ -4,7 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
 from hub.forms import SelectCollectionForm
 from hub.models import Card, CardTemplate
@@ -64,11 +65,24 @@ class CardListView(LoginRequiredMixin, ListView):
     model = Card
 
     def get_queryset(self):
-        return super().get_queryset().filter(owner=self.request.user, category__collection=self.request.user.active_collection)
+        return super().get_queryset().filter(owner=self.request.user,
+                                             category__collection=self.request.user.active_collection)
 
 
 class CardDetailView(LoginRequiredMixin, DetailView):
     model = Card
 
     def get_queryset(self):
-        return super().get_queryset().filter(owner=self.request.user, category__collection=self.request.user.active_collection)
+        return super().get_queryset().filter(owner=self.request.user,
+                                             category__collection=self.request.user.active_collection)
+
+
+class CardCreateView(LoginRequiredMixin, CreateView):
+    model = Card
+    fields = ["level", "category", "question", "answer", "status"]
+    success_url = reverse_lazy("hub:card-list")
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.instance.is_custom = True
+        return super().form_valid(form)

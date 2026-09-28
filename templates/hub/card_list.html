@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <h3><a href="{% url "hub:card-create" %}">Create a new card</a></h3>
+
+
   <ol>
     {% for card in card_list %}
 
