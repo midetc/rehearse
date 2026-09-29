@@ -11,6 +11,8 @@ class CollectionAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "collection")
+    list_filter = ("collection",)
+    search_fields = ("name",)
 
 
 @admin.register(CardTemplate)
@@ -20,5 +22,6 @@ class CardTemplateAdmin(admin.ModelAdmin):
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
-    list_display = ("owner", "template","answer", "question", "level", "category", "status", "is_custom", "created_at", "updated_at")
-
+    list_display = ("owner", "template", "answer", "question", "level",
+                    "category", "status", "is_custom", "created_at",
+                    "updated_at")
