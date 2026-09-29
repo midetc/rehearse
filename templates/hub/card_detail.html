@@ -2,7 +2,11 @@
 
 {% block content %}
   <a href="{% url "hub:card-update" card.id %}">Update</a>
-  <p>{{ card.id }}</p><p>{{ card.answer }}</p><p>{{ card.question }}</p><p>{{ card.category }}</p><p>{{ card.category.collection }}</p>
+  <br>
+  <a href="{% url "hub:card-delete" card.id %}">Delete</a>
+
+  <p>{{ card.id }}</p><p>{{ card.answer }}</p><p>{{ card.question }}</p><p>{{ card.category }}</p>
+  <p>{{ card.category.collection }}</p>
 
 
 

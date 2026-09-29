@@ -5,7 +5,8 @@ from django.http import HttpResponse
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
+    DeleteView
 
 from hub.forms import SelectCollectionForm
 from hub.models import Card, CardTemplate, Category
@@ -118,3 +119,15 @@ class CardUpdateView(LoginRequiredMixin, UpdateView):
             collection=self.request.user.active_collection
         )
         return form
+
+
+class CardDeleteView(LoginRequiredMixin, DeleteView):
+    model = Card
+    template_name = "hub/card_confirm_delete.html"
+    success_url = reverse_lazy("hub:card-list")
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner=self.request.user,
+            category__collection=self.request.user.active_collection,
+        )
