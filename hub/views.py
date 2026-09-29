@@ -5,10 +5,10 @@ from django.http import HttpResponse
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from hub.forms import SelectCollectionForm
-from hub.models import Card, CardTemplate
+from hub.models import Card, CardTemplate, Category
 
 
 @login_required
@@ -86,3 +86,35 @@ class CardCreateView(LoginRequiredMixin, CreateView):
         form.instance.owner = self.request.user
         form.instance.is_custom = True
         return super().form_valid(form)
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields["category"].queryset = Category.objects.filter(
+            collection=self.request.user.active_collection
+        )
+        return form
+
+
+class CardUpdateView(LoginRequiredMixin, UpdateView):
+    model = Card
+    fields = ["level", "category", "question", "answer", "status"]
+
+    success_url = reverse_lazy("hub:card-list")
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            owner=self.request.user,
+            category__collection=self.request.user.active_collection,
+        )
+
+    def form_valid(self, form):
+        if not form.instance.is_custom:
+            form.instance.is_custom = True
+        return super().form_valid(form)
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields["category"].queryset = Category.objects.filter(
+            collection=self.request.user.active_collection
+        )
+        return form
