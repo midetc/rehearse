@@ -3,8 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.http.request import HttpRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
     DeleteView
 
@@ -156,3 +157,24 @@ class CardDeleteView(LoginRequiredMixin, DeleteView):
             owner=self.request.user,
             category__collection=self.request.user.active_collection,
         )
+
+@login_required
+@require_POST
+def card_set_status(request: HttpRequest, pk: int) -> HttpResponse:
+    card = get_object_or_404(
+        Card.objects.filter(
+            owner=request.user,
+            category__collection_id=request.user.active_collection_id,
+        ),
+        pk=pk,
+    )
+    action = request.POST.get("action")
+    if action == "know":
+        card.status = Card.Status.KNOWN
+    elif action == "dont_know":
+        card.status = Card.Status.LEARNING
+    else:
+        return redirect("hub:card-detail", pk=pk)
+
+    card.save(update_fields=["status", "updated_at"])
+    return redirect("hub:card-detail", pk=pk)
