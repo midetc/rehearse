@@ -3,6 +3,10 @@
 {% block content %}
   <h3><a href="{% url "hub:card-create" %}">Create a new card</a></h3>
 
+  <form action="" method="get">
+  {{ search_form }}
+  <input type="submit">
+</form>
 
   <ol>
     {% for card in card_list %}

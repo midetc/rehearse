@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
     DeleteView
 
-from hub.forms import SelectCollectionForm
+from hub.forms import SelectCollectionForm, CardQuestionSearchForm
 from hub.models import Card, CardTemplate, Category
 
 
@@ -66,8 +66,23 @@ class CardListView(LoginRequiredMixin, ListView):
     model = Card
 
     def get_queryset(self):
-        return super().get_queryset().filter(owner=self.request.user,
+        queryset = super().get_queryset().filter(owner=self.request.user,
                                              category__collection=self.request.user.active_collection)
+        question = self.request.GET.get("question")
+
+        if question:
+            queryset = queryset.filter(question__icontains=question)
+
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        question = self.request.GET.get("question", "")
+
+        context["search_form"] = CardQuestionSearchForm(
+            initial={"question": question})
+        return context
 
 
 class CardDetailView(LoginRequiredMixin, DetailView):
