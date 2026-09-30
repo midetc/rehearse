@@ -4,16 +4,18 @@
   <h3><a href="{% url "hub:card-create" %}">Create a new card</a></h3>
 
   <form action="" method="get">
-  {{ search_form }}
-  <input type="submit">
-</form>
+    {{ search_form }}
+    {{ filter.form.as_p }}
+
+    <input type="submit">
+  </form>
 
   <ol>
-    {% for card in card_list %}
+    {% for card in filter.qs %}
 
       <li><a href="{% url "hub:card-detail" card.id %}">{{ card.question }}</a> Status: {{ card.status }}</li>
     {% empty %}
-      <li>No cards yet. Select a collection to get starter cards.</li>
+      <p>No cards yet. Select a collection to get starter cards.</p>
     {% endfor %}
   </ol>
 
