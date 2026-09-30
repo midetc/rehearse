@@ -68,7 +68,7 @@ class CardListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(owner=self.request.user,
-                                             category__collection=self.request.user.active_collection)
+                                                 category__collection=self.request.user.active_collection)
         question = self.request.GET.get("question")
 
         if question:
@@ -90,9 +90,7 @@ class CardListView(LoginRequiredMixin, ListView):
             request=self.request,
         )
 
-
         return context
-
 
 
 class CardDetailView(LoginRequiredMixin, DetailView):
@@ -100,7 +98,9 @@ class CardDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user,
-                                             category__collection=self.request.user.active_collection)
+                                             category__collection=self.request.user.active_collection).select_related(
+            "category", "category__collection"
+        )
 
 
 class CardCreateView(LoginRequiredMixin, CreateView):
@@ -116,7 +116,7 @@ class CardCreateView(LoginRequiredMixin, CreateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields["category"].queryset = Category.objects.filter(
-            collection=self.request.user.active_collection
+            collection_id=self.request.user.active_collection_id
         )
         return form
 
@@ -141,7 +141,7 @@ class CardUpdateView(LoginRequiredMixin, UpdateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields["category"].queryset = Category.objects.filter(
-            collection=self.request.user.active_collection
+            collection_id=self.request.user.active_collection_id
         )
         return form
 

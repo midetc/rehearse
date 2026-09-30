@@ -18,7 +18,7 @@ class Category(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.name} ({self.collection})"
+        return f"{self.name}"
 
 class Level(models.TextChoices):
     JUNIOR = "junior", "Junior"

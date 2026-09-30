@@ -13,5 +13,5 @@ class CardFilter(FilterSet):
         user = getattr(self.request, "user", None)
         if user is not None and user.active_collection_id:
             self.filters["category"].queryset = Category.objects.filter(
-                collection=user.active_collection
+                collection_id=user.active_collection_id
             )
