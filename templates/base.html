@@ -21,16 +21,16 @@
 
         {% if user.is_authenticated %}
           <p>{{ user.username }}</p>
-           {% if user.active_collection %}
-          <p>Track: {{ user.active_collection.name }}</p>
-        {% else %}
-          <p>Track: not selected</p>
-        {% endif %}
+          {% if user.active_collection %}
+            <p>Track: {{ user.active_collection.name }}</p>
+          {% else %}
+            <p>Track: not selected</p>
+          {% endif %}
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
             <input type="submit" value="logout">
           </form>
-        <a href="{% url 'hub:select-collection' %}">Change collection</a>
+          <a href="{% url 'hub:select-collection' %}">Change collection</a>
 
         {% endif %}
 
@@ -38,7 +38,7 @@
         <ul class="sidebar-nav">
           <li><a href="{% url 'hub:index' %}">Home</a></li>
           <li><a href="{% url 'hub:card-list' %}">Cards</a></li>
-          <li><a href="">Lorem3</a></li>
+          <li><a href="{% url 'hub:practice-menu' %}">Practice</a></li>
         </ul>
       {% endblock %}
 

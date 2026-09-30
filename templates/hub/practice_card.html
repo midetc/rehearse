@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  <p><a href="{% url 'hub:practice-menu' %}">Exit practice</a></p>
+  <h2>{{ card.question }}</h2>
+  <p>{{ card.get_status_display }} · {{ card.level }}</p>
+
+  <details>
+    <summary>Show answer</summary>
+    <p>{{ card.answer }}</p>
+  </details>
+
+  <form method="post" action="{% url 'hub:card-set-status' card.pk %}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="practice">
+    <input type="hidden" name="mode" value="{{ mode }}">
+    <button type="submit" name="action" value="know">Know</button>
+    <button type="submit" name="action" value="dont_know">Don't know</button>
+  </form>
+{% endblock %}

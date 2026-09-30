@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Done</h1>
+  <p>No more cards in this queue ({{ mode }}).</p>
+  <p><a href="{% url 'hub:practice-menu' %}">Practice again</a></p>
+  <p><a href="{% url 'hub:card-list' %}">Back to cards</a></p>
+{% endblock %}

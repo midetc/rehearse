@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Practice</h1>
+
+  {% if request.GET.done %}
+    <p>Queue finished ({{ request.GET.mode }}).</p>
+  {% endif %}
+
+  <ul>
+    <li><a href="{% url 'hub:practice-start' %}?mode=new">New cards</a></li>
+    <li><a href="{% url 'hub:practice-start' %}?mode=learning">Learning</a></li>
+    <li><a href="{% url 'hub:practice-start' %}?mode=all">New + Learning</a></li>
+  </ul>
+{% endblock %}

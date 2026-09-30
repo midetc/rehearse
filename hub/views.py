@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
     DeleteView
@@ -158,6 +159,7 @@ class CardDeleteView(LoginRequiredMixin, DeleteView):
             category__collection=self.request.user.active_collection,
         )
 
+
 @login_required
 @require_POST
 def card_set_status(request: HttpRequest, pk: int) -> HttpResponse:
@@ -177,4 +179,78 @@ def card_set_status(request: HttpRequest, pk: int) -> HttpResponse:
         return redirect("hub:card-detail", pk=pk)
 
     card.save(update_fields=["status", "updated_at"])
+
+    next_url = request.POST.get("next")
+    mode = request.POST.get("mode", "")
+    if next_url == "practice":
+        nxt = _next_practice_card(request.user, mode, card.pk)
+        if nxt is None:
+            return redirect(
+                f"{reverse('hub:practice-menu')}?done=1&mode={mode}")
+        return redirect(
+            f"{reverse('hub:practice-card', kwargs={'pk': nxt.pk})}?mode={mode}"
+        )
+
     return redirect("hub:card-detail", pk=pk)
+
+
+def _user_cards(user) -> QuerySet:
+    return Card.objects.filter(
+        owner=user,
+        category__collection_id=user.active_collection_id,
+    )
+
+
+def _practice_queue(user, mode: str) -> QuerySet:
+    qs = _user_cards(user).order_by("id")
+    if mode == "new":
+        return qs.filter(status=Card.Status.NEW)
+    if mode == "learning":
+        return qs.filter(status=Card.Status.LEARNING)
+    if mode == "all":
+        return qs.filter(
+            status__in=[Card.Status.NEW, Card.Status.LEARNING]
+        )
+    return qs.none()
+
+
+def _next_practice_card(user, mode: str, current_pk: int):
+    qs = _practice_queue(user, mode).exclude(pk=current_pk)
+    return qs.first()
+
+
+@login_required
+def practice_menu(request: HttpRequest) -> HttpResponse:
+    if not request.user.active_collection_id:
+        return redirect("hub:select-collection")
+    return render(request, "hub/practice_menu.html")
+
+
+@login_required
+def practice_start(request: HttpRequest) -> HttpResponse:
+    mode = request.GET.get("mode", "")
+    card = _practice_queue(request.user, mode).first()
+    if card is None:
+        return render(
+            request,
+            "hub/practice_done.html",
+            {"mode": mode},
+        )
+    return redirect(
+        f"{reverse('hub:practice-card', kwargs={'pk': card.pk})}?mode={mode}")
+
+
+@login_required
+def practice_card(request: HttpRequest, pk: int) -> HttpResponse:
+    mode = request.GET.get("mode", "")
+    card = get_object_or_404(
+        _user_cards(request.user).select_related(
+            "category", "category__collection"
+        ),
+        pk=pk,
+    )
+    return render(
+        request,
+        "hub/practice_card.html",
+        {"card": card, "mode": mode},
+    )
