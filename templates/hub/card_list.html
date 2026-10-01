@@ -22,7 +22,7 @@
   </div>
 
   <ol class="card-list">
-    {% for card in filter.qs %}
+    {% for card in cards %}
       <li>
         <a href="{% url 'hub:card-detail' card.id %}">{{ card.question }}</a>
         <span class="status">{{ card.get_status_display }}</span>
@@ -31,4 +31,25 @@
       <li class="empty-note">No cards yet. Choose a track to load starters, or create one.</li>
     {% endfor %}
   </ol>
+
+  {% if page_obj.paginator.num_pages > 1 %}
+    <nav class="pagination" aria-label="Card pages">
+      {% if page_obj.has_previous %}
+        <a class="btn-ghost" href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Previous</a>
+      {% else %}
+        <span class="btn-ghost is-disabled">Previous</span>
+      {% endif %}
+
+      <span class="pagination-meta">
+        Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        · {{ page_obj.paginator.count }} cards
+      </span>
+
+      {% if page_obj.has_next %}
+        <a class="btn-ghost" href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Next</a>
+      {% else %}
+        <span class="btn-ghost is-disabled">Next</span>
+      {% endif %}
+    </nav>
+  {% endif %}
 {% endblock %}

@@ -102,31 +102,40 @@ def seed_cards_for_user(user: User) -> None:
 
 class CardListView(LoginRequiredMixin, ListView):
     model = Card
+    paginate_by = 20
+    context_object_name = "cards"
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(owner=self.request.user,
-                                                 category__collection=self.request.user.active_collection)
+        queryset = (
+            super()
+            .get_queryset()
+            .filter(
+                owner=self.request.user,
+                category__collection=self.request.user.active_collection,
+            )
+            .select_related("category")
+            .order_by("id")
+        )
         question = self.request.GET.get("question")
-
         if question:
             queryset = queryset.filter(question__icontains=question)
-
-        return queryset
+        self.filterset = CardFilter(
+            self.request.GET,
+            queryset=queryset,
+            request=self.request,
+        )
+        return self.filterset.qs
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-
         question = self.request.GET.get("question", "")
-
         context["search_form"] = CardQuestionSearchForm(
-            initial={"question": question})
-
-        context["filter"] = CardFilter(
-            self.request.GET,
-            queryset=self.get_queryset(),
-            request=self.request,
+            initial={"question": question}
         )
-
+        context["filter"] = self.filterset
+        params = self.request.GET.copy()
+        params.pop("page", None)
+        context["querystring"] = params.urlencode()
         return context
 
 
