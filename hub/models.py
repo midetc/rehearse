@@ -9,7 +9,7 @@ class Collection(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.name}, (is_active={self.is_active})"
+        return self.name
 
 
 class Category(models.Model):
