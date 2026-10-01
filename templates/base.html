@@ -48,7 +48,7 @@
       {% endblock %}
     </aside>
     <main class="stage">
-      <div class="stage-inner">
+      <div class="stage-inner {% block stage_class %}{% endblock %}">
         {% block content %}{% endblock %}
       </div>
     </main>

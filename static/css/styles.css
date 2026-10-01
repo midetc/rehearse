@@ -587,6 +587,192 @@ textarea:focus {
   }
 }
 
+.stage-inner.stage-tracks {
+  max-width: 68rem;
+}
+
+.track-head {
+  margin-bottom: 1.5rem;
+}
+
+.track-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.35rem;
+  min-width: 2rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(20, 23, 28, 0.08);
+  color: var(--ink-muted);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  vertical-align: middle;
+}
+
+.track-form {
+  margin: 0;
+}
+
+.track-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.track-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: none;
+  text-align: left;
+  font: inherit;
+  color: #e8edf4;
+  background: #1a222d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.1rem;
+  padding: 1.15rem 1.2rem 1.25rem;
+  cursor: pointer;
+  transition:
+    transform 0.18s var(--ease),
+    border-color 0.18s var(--ease),
+    box-shadow 0.18s var(--ease);
+  animation: row-in 0.45s var(--ease) both;
+}
+
+.track-card:nth-child(1) { animation-delay: 0.02s; }
+.track-card:nth-child(2) { animation-delay: 0.05s; }
+.track-card:nth-child(3) { animation-delay: 0.08s; }
+.track-card:nth-child(4) { animation-delay: 0.11s; }
+.track-card:nth-child(5) { animation-delay: 0.14s; }
+.track-card:nth-child(6) { animation-delay: 0.17s; }
+.track-card:nth-child(7) { animation-delay: 0.2s; }
+.track-card:nth-child(8) { animation-delay: 0.23s; }
+.track-card:nth-child(9) { animation-delay: 0.26s; }
+.track-card:nth-child(10) { animation-delay: 0.29s; }
+
+.track-card:hover,
+.track-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(228, 87, 46, 0.55);
+  box-shadow: 0 14px 30px rgba(20, 23, 28, 0.18);
+  background: #1a222d;
+  color: #e8edf4;
+}
+
+.track-card.is-current {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(228, 87, 46, 0.35);
+}
+
+.track-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.track-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.45rem;
+  border-radius: 0.7rem;
+  background: #10151c;
+  color: #fff;
+  font-family: var(--font-brand);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.track-icon[data-slug="python-developer"] { color: #ffd43b; }
+.track-icon[data-slug="java-developer"] { color: #f89820; }
+.track-icon[data-slug="go"] { color: #79d4fd; }
+.track-icon[data-slug="rust"] { color: #f74c00; }
+.track-icon[data-slug="cpp-robotics"] { color: #659ad2; }
+.track-icon[data-slug="kotlin"] { color: #c78bff; }
+.track-icon[data-slug="devops"] { color: #7ee0a5; }
+.track-icon[data-slug="ai-engineer"] { color: #ff8f6b; }
+.track-icon[data-slug="qa"] { color: #8ec8ff; }
+.track-icon[data-slug="data-analyst"] { color: #9ae6b4; }
+
+.track-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #b7c0cc;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.track-name {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #fff;
+}
+
+.track-progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.track-progress-bar {
+  height: 0.42rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.track-progress-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2f9e6b, #7ee0a5);
+}
+
+.track-progress-label {
+  color: #d7dde5;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.track-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  color: #9aa5b3;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.track-desc {
+  margin: 0;
+  color: #9aa5b3;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.track-current-label {
+  margin-top: auto;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 @media (max-width: 860px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -615,5 +801,9 @@ textarea:focus {
   .sidebar-nav a:hover {
     transform: none;
     border-bottom-color: var(--accent);
+  }
+
+  .track-grid {
+    grid-template-columns: 1fr;
   }
 }

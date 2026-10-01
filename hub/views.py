@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import QuerySet
+from django.db.models import Count, QuerySet
 from django.http import HttpResponse
 from django.http.request import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
@@ -10,9 +10,10 @@ from django.views.decorators.http import require_POST
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
     DeleteView
 
+from hub.catalog_seed import ICON_LABELS
 from hub.filters import CardFilter
-from hub.forms import SelectCollectionForm, CardQuestionSearchForm
-from hub.models import Card, CardTemplate, Category
+from hub.forms import CardQuestionSearchForm
+from hub.models import Card, CardTemplate, Category, Collection
 
 
 @login_required
@@ -23,24 +24,59 @@ def index(request: HttpRequest) -> HttpResponse:
 @login_required
 def select_collection(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        form = SelectCollectionForm(request.POST)
+        collection = get_object_or_404(
+            Collection,
+            pk=request.POST.get("collection"),
+            is_active=True,
+        )
+        request.user.active_collection = collection
+        request.user.save()
+        if not Card.objects.filter(
+            category__collection=collection,
+            owner=request.user,
+        ).exists():
+            seed_cards_for_user(request.user)
+        return redirect("hub:index")
 
-        if form.is_valid():
-            request.user.active_collection = form.cleaned_data["collection"]
-            request.user.save()
-
-            if not Card.objects.filter(
-                    category__collection=request.user.active_collection,
-                    owner=request.user
-            ).exists():
-                seed_cards_for_user(request.user)
-            return redirect("hub:index")
-    else:
-        form = SelectCollectionForm(
-            initial={"collection": request.user.active_collection})
-
-    return render(request, "hub/select_collection.html",
-                  context={"form": form})
+    collections = (
+        Collection.objects.filter(is_active=True)
+        .annotate(
+            topic_count=Count("category", distinct=True),
+            card_count=Count("category__cardtemplate", distinct=True),
+        )
+        .order_by("name")
+    )
+    tracks = []
+    for collection in collections:
+        owned = Card.objects.filter(
+            owner=request.user,
+            category__collection=collection,
+        )
+        total = owned.count()
+        done = owned.filter(
+            status__in=[Card.Status.KNOWN, Card.Status.MASTERED]
+        ).count()
+        progress = int((done / total) * 100) if total else None
+        tracks.append(
+            {
+                "id": collection.id,
+                "name": collection.name,
+                "slug": collection.slug,
+                "description": collection.description,
+                "icon": ICON_LABELS.get(
+                    collection.slug, collection.name[:2].upper()
+                ),
+                "topic_count": collection.topic_count,
+                "card_count": collection.card_count,
+                "progress": progress,
+                "is_current": collection.id == request.user.active_collection_id,
+            }
+        )
+    return render(
+        request,
+        "hub/select_collection.html",
+        {"tracks": tracks, "track_count": len(tracks)},
+    )
 
 
 User = get_user_model()
