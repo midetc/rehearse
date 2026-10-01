@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Reset cards</h1>
+  <p>Delete all your cards in the current track and load starter cards again?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, reset</button>
+  </form>
+  <a href="{% url 'hub:card-list' %}">Cancel</a>
+{% endblock %}

@@ -2,7 +2,7 @@ from django.urls import path
 
 from hub.views import index, select_collection, CardListView, CardDetailView, \
     CardCreateView, CardUpdateView, CardDeleteView, card_set_status, \
-    practice_menu, practice_start, practice_card
+    practice_menu, practice_start, practice_card, reset_cards
 
 urlpatterns = [
     path("", index, name="index"),
@@ -22,6 +22,11 @@ urlpatterns = [
     path("practice/", practice_menu, name="practice-menu"),
     path("practice/run/", practice_start, name="practice-start"),
     path("practice/run/<int:pk>/", practice_card, name="practice-card"),
+    path(
+        "cards/reset-cards/",
+        reset_cards,
+        name="reset-cards",
+    ),
 ]
 
 app_name = "hub"

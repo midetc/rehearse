@@ -2,7 +2,7 @@
 
 {% block content %}
   <h3><a href="{% url "hub:card-create" %}">Create a new card</a></h3>
-
+    <h3><a href="{% url "hub:reset-cards" %}">Reset all</a></h3>
   <form action="" method="get">
     {{ search_form }}
     {{ filter.form.as_p }}

@@ -45,7 +45,6 @@ def select_collection(request: HttpRequest) -> HttpResponse:
 
 User = get_user_model()
 
-
 def seed_cards_for_user(user: User) -> None:
     card_templates = CardTemplate.objects.filter(
         category__collection=user.active_collection
@@ -265,3 +264,20 @@ def practice_card(request: HttpRequest, pk: int) -> HttpResponse:
         "hub/practice_card.html",
         {"card": card, "mode": mode, "position": position, "total": total},
     )
+
+@login_required
+def reset_cards(request: HttpRequest) -> HttpResponse:
+    if not request.user.active_collection_id:
+        return redirect("hub:select-collection")
+
+    if request.method == "POST":
+        Card.objects.filter(
+            owner=request.user,
+            category__collection_id=request.user.active_collection_id,
+        ).delete()
+        seed_cards_for_user(request.user)
+        request.session.pop("practice_pks", None)
+        request.session.pop("practice_mode", None)
+        return redirect("hub:card-list")
+
+    return render(request, "hub/reset_cards_confirm.html")
