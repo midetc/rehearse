@@ -1,34 +1,35 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block title %}<title>Sign in · Rehearse</title>{% endblock %}
 
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
+{% block layout %}
+  <div class="auth-shell">
+    <div class="auth-panel">
+      <a class="brand" href="{% url 'login' %}">Rehear<span>se</span></a>
+      <p class="page-lead">Interview prep hub. Sign in to open your track and start practicing.</p>
 
-    {% if user.is_authenticated %}
-      <p>Your account doesn't have access to this page. To proceed,
-      please log in with an account that has access.</p>
-    {% else %}
-      <p>Please log in to see this page.</p>
-       <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="login">
-    <input type="hidden" name="next" value="{{ next }}">
-  </form>
+      {% if form.errors %}
+        <p class="meta">Username or password did not match. Try again.</p>
+      {% endif %}
 
-    {% endif %}
-  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
-
+      {% if user.is_authenticated %}
+        <p class="page-lead">You are already signed in.</p>
+        <a class="btn-rehearse" href="{% url 'hub:index' %}">Go to hub</a>
+      {% else %}
+        <form method="post" action="{% url 'login' %}" class="stack">
+          {% csrf_token %}
+          <p>
+            <label for="id_username">Username</label>
+            {{ form.username }}
+          </p>
+          <p>
+            <label for="id_password">Password</label>
+            {{ form.password }}
+          </p>
+          <button type="submit">Sign in</button>
+          <input type="hidden" name="next" value="{{ next }}">
+        </form>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

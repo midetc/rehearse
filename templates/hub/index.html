@@ -1,21 +1,25 @@
 {% extends "base.html" %}
 
+{% block title %}<title>Home · Rehearse</title>{% endblock %}
+
 {% block content %}
-  <h1>Lorem</h1>
+  <p class="page-kicker">Interview prep</p>
+  <h1 class="page-title">Ready when you are</h1>
 
   {% if user.active_collection is None %}
-    <p>
-      to start you need to select a collection, you can do this by clicking the button below
+    <p class="page-lead">
+      Pick a track to load your starter cards. Backend or AI Engineering — you can switch later.
     </p>
-    <a href="{% url 'hub:select-collection' %}">Set Collection</a>
-    {% else %}
-    <p>
-      You have selected the collection "{{ user.active_collection.name }}". You can now start using the hub.
-      If you want to change the collection, you can do so by clicking the button below.
+    <a class="btn-rehearse" href="{% url 'hub:select-collection' %}">Choose track</a>
+  {% else %}
+    <p class="page-lead">
+      Active track: <strong>{{ user.active_collection.name }}</strong>.
+      Practice weak cards, review your deck, or open the full list.
     </p>
-    <a href="{% url 'hub:select-collection' %}">Change Collection</a>
+    <div class="toolbar">
+      <a class="btn-rehearse" href="{% url 'hub:practice-menu' %}">Start practice</a>
+      <a class="btn-ghost" href="{% url 'hub:card-list' %}">Open cards</a>
+      <a class="btn-ghost" href="{% url 'hub:select-collection' %}">Switch track</a>
+    </div>
   {% endif %}
-
-
-
 {% endblock %}

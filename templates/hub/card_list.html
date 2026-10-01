@@ -1,24 +1,34 @@
 {% extends "base.html" %}
 
+{% block title %}<title>Cards · Rehearse</title>{% endblock %}
+
 {% block content %}
-  <h3><a href="{% url "hub:card-create" %}">Create a new card</a></h3>
-    <h3><a href="{% url "hub:reset-cards" %}">Reset all</a></h3>
-  <form action="" method="get">
-    {{ search_form }}
-    {{ filter.form.as_p }}
+  <p class="page-kicker">Deck</p>
+  <h1 class="page-title">Your cards</h1>
+  <p class="page-lead">Search and filter the deck for your current track.</p>
 
-    <input type="submit">
-  </form>
+  <div class="toolbar">
+    <a class="btn-rehearse" href="{% url 'hub:card-create' %}">New card</a>
+    <a class="btn-ghost" href="{% url 'hub:practice-menu' %}">Practice</a>
+    <a class="btn-ghost" href="{% url 'hub:reset-cards' %}">Reset deck</a>
+  </div>
 
-  <ol>
+  <div class="filters">
+    <form action="" method="get" class="stack">
+      {{ search_form.as_p }}
+      {{ filter.form.as_p }}
+      <button type="submit">Apply</button>
+    </form>
+  </div>
+
+  <ol class="card-list">
     {% for card in filter.qs %}
-
-      <li><a href="{% url "hub:card-detail" card.id %}">{{ card.question }}</a> Status: {{ card.status }}</li>
+      <li>
+        <a href="{% url 'hub:card-detail' card.id %}">{{ card.question }}</a>
+        <span class="status">{{ card.get_status_display }}</span>
+      </li>
     {% empty %}
-      <p>No cards yet. Select a collection to get starter cards.</p>
+      <li class="empty-note">No cards yet. Choose a track to load starters, or create one.</li>
     {% endfor %}
   </ol>
-
-
-
 {% endblock %}

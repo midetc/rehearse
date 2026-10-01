@@ -1,10 +1,17 @@
 {% extends "base.html" %}
+
+{% block title %}<title>Reset deck · Rehearse</title>{% endblock %}
+
 {% block content %}
-  <h1>Reset cards</h1>
-  <p>Delete all your cards in the current track and load starter cards again?</p>
-  <form method="post">
+  <p class="page-kicker">Confirm</p>
+  <h1 class="page-title">Reset this track?</h1>
+  <p class="page-lead">
+    All your cards in the current track will be removed and starter cards loaded again.
+    Custom edits in this track will be lost.
+  </p>
+  <form method="post" class="actions-row">
     {% csrf_token %}
-    <button type="submit">Yes, reset</button>
+    <button type="submit" class="btn-danger-soft">Yes, reset</button>
+    <a class="btn-ghost" href="{% url 'hub:card-list' %}">Cancel</a>
   </form>
-  <a href="{% url 'hub:card-list' %}">Cancel</a>
 {% endblock %}

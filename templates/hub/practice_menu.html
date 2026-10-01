@@ -1,12 +1,17 @@
 {% extends "base.html" %}
+
+{% block title %}<title>Practice · Rehearse</title>{% endblock %}
+
 {% block content %}
-  <h1>Practice</h1>
+  <p class="page-kicker">Session</p>
+  <h1 class="page-title">Practice</h1>
+  <p class="page-lead">Pick a queue and answer out loud. Reveal when ready.</p>
 
   {% if request.GET.done %}
-    <p>Queue finished ({{ request.GET.mode }}).</p>
+    <p class="flash-ok">Queue finished ({{ request.GET.mode }}).</p>
   {% endif %}
 
-  <ul>
+  <ul class="practice-modes">
     <li><a href="{% url 'hub:practice-start' %}?mode=new">New cards</a></li>
     <li><a href="{% url 'hub:practice-start' %}?mode=learning">Learning</a></li>
     <li><a href="{% url 'hub:practice-start' %}?mode=all">New + Learning</a></li>

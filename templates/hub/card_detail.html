@@ -1,21 +1,28 @@
 {% extends "base.html" %}
 
+{% block title %}<title>Card · Rehearse</title>{% endblock %}
+
 {% block content %}
-  <p><a href="{% url 'hub:card-list' %}">Back to cards</a></p>
-  <p><a href="{% url 'hub:card-update' card.id %}">Update</a></p>
-  <p><a href="{% url 'hub:card-delete' card.id %}">Delete</a></p>
+  <p class="page-kicker">Card</p>
+  <div class="actions-row">
+    <a class="btn-ghost" href="{% url 'hub:card-list' %}">Back</a>
+    <a class="btn-ghost" href="{% url 'hub:card-update' card.id %}">Edit</a>
+    <a class="btn-ghost" href="{% url 'hub:card-delete' card.id %}">Delete</a>
+  </div>
 
-  <h2>{{ card.question }}</h2>
-  <p>Status: {{ card.get_status_display }} · {{ card.level }} · {{ card.category }}</p>
+  <h1 class="question">{{ card.question }}</h1>
+  <p class="meta">
+    {{ card.get_status_display }} · {{ card.get_level_display }} · {{ card.category }}
+  </p>
 
-  <details>
+  <details class="reveal">
     <summary>Show answer</summary>
     <p>{{ card.answer }}</p>
   </details>
 
-  <form method="post" action="{% url 'hub:card-set-status' card.id %}">
+  <form method="post" action="{% url 'hub:card-set-status' card.id %}" class="actions-row">
     {% csrf_token %}
-    <button type="submit" name="action" value="know">Know</button>
-    <button type="submit" name="action" value="dont_know">Don't know</button>
+    <button type="submit" name="action" value="know" class="btn-ok">Know</button>
+    <button type="submit" name="action" value="dont_know" class="btn-danger-soft">Don't know</button>
   </form>
 {% endblock %}

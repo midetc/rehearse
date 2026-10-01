@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 
+{% block title %}<title>Choose track · Rehearse</title>{% endblock %}
+
 {% block content %}
-  <form method="post" action="{% url 'hub:select-collection' %}">
+  <p class="page-kicker">Setup</p>
+  <h1 class="page-title">Choose your track</h1>
+  <p class="page-lead">
+    Each track has its own starter deck. Switching later keeps your cards per track.
+  </p>
+  <form method="post" action="{% url 'hub:select-collection' %}" class="stack">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Select Collection">
+    <button type="submit">Save track</button>
   </form>
-
 {% endblock %}
