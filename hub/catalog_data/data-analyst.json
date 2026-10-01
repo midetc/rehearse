@@ -1,0 +1,1043 @@
+{
+  "slug": "data-analyst",
+  "name": "Data Analyst",
+  "description": "Turn data into decisions with SQL and stats.",
+  "categories": [
+    {
+      "name": "SQL",
+      "description": "Querying, joins, and analytical SQL patterns.",
+      "cards": [
+        {
+          "question": "What should analysts know about WHERE versus HAVING?",
+          "answer": "Where versus having matters because row filters before aggregation versus group filters after. Use it when stakeholders need trustworthy numbers. Misplacing aggregates in WHERE causes syntax or logic errors.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply INNER JOIN in a weekly metrics review?",
+          "answer": "In reviews, INNER JOIN helps when rows with matches in both tables. Document definitions before debating deltas. Use when you only want entities present on both sides.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with LEFT JOIN?",
+          "answer": "Teams often assume all rows from the left plus matching right rows without checking grain or filters. Preserves driving tables like all users even without orders. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is GROUP BY a senior-level analytics topic?",
+          "answer": "It becomes senior when collapsing rows to one row per dimension combination. You must communicate uncertainty and business tradeoffs clearly. Every selected non-aggregate must appear in GROUP BY.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about duplicate detection?",
+          "answer": "Duplicate detection matters because finding repeated keys with COUNT or ROW_NUMBER. Use it when stakeholders need trustworthy numbers. Define survivorship before deleting production duplicates.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply window functions in a weekly metrics review?",
+          "answer": "In reviews, window functions helps when aggregates over partitions while keeping row detail. Document definitions before debating deltas. Replace many correlated subqueries for rankings and running totals.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with CTEs?",
+          "answer": "Teams often assume named subqueries in WITH clauses without checking grain or filters. Improve readability for multi-step analytical queries. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is NULL semantics a senior-level analytics topic?",
+          "answer": "It becomes senior when unknown comparisons and COUNT differences. You must communicate uncertainty and business tradeoffs clearly. Use COALESCE or IS NOT DISTINCT FROM when NULL keys matter.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about EXISTS subqueries?",
+          "answer": "Exists subqueries matters because checking presence without returning duplicate rows. Use it when stakeholders need trustworthy numbers. Often faster than DISTINCT IN lists on large tables.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply UNION versus UNION ALL in a weekly metrics review?",
+          "answer": "In reviews, UNION versus UNION ALL helps when deduplicating combined result sets. Document definitions before debating deltas. UNION ALL is cheaper when duplicates are impossible or acceptable.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with indexes for analysts?",
+          "answer": "Teams often assume B-tree indexes on filter and join keys without checking grain or filters. Ask engineers before suggesting indexes on huge fact tables. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is EXPLAIN plans a senior-level analytics topic?",
+          "answer": "It becomes senior when reading how optimizers execute queries. You must communicate uncertainty and business tradeoffs clearly. Look for sequential scans on large tables and bad join orders.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about CASE expressions?",
+          "answer": "Case expressions matters because conditional logic inside SELECT. Use it when stakeholders need trustworthy numbers. Keep cases readable and document business rules inline.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply date truncation in a weekly metrics review?",
+          "answer": "In reviews, date truncation helps when grouping events by day, week, or month. Document definitions before debating deltas. Align timezone conversions with product definitions.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with string functions?",
+          "answer": "Teams often assume TRIM, SPLIT, and regex extractions without checking grain or filters. Normalize messy identifiers before joining. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is self joins a senior-level analytics topic?",
+          "answer": "It becomes senior when joining a table to itself for hierarchies or pairs. You must communicate uncertainty and business tradeoffs clearly. Alias tables clearly to avoid ambiguous columns.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about funnel SQL?",
+          "answer": "Funnel sql matters because sequential step completion per user. Use it when stakeholders need trustworthy numbers. Define session timeouts and whether steps must be consecutive.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply cohort retention queries in a weekly metrics review?",
+          "answer": "In reviews, cohort retention queries helps when users active in period n after signup week. Document definitions before debating deltas. Anchor cohorts on first action, not account creation alone.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with rolling metrics?",
+          "answer": "Teams often assume moving averages with window frames without checking grain or filters. Specify ROWS versus RANGE frames to avoid off-by-one errors. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is QUALIFY clause a senior-level analytics topic?",
+          "answer": "It becomes senior when filtering window results in warehouses that support it. You must communicate uncertainty and business tradeoffs clearly. Cleaner than wrapping window queries in outer filters.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about parameterized queries?",
+          "answer": "Parameterized queries matters because binding variables instead of string concatenation. Use it when stakeholders need trustworthy numbers. Prevents SQL injection even in internal tools.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply dialect differences in a weekly metrics review?",
+          "answer": "In reviews, dialect differences helps when functions varying between Postgres, BigQuery, and Snowflake. Document definitions before debating deltas. Document warehouse-specific syntax in shared playbooks.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with pivot patterns?",
+          "answer": "Teams often assume turning rows into columns with conditional aggregation without checking grain or filters. Alternative to PIVOT operators where unsupported. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is data quality checks in SQL a senior-level analytics topic?",
+          "answer": "It becomes senior when assertions on null rates and referential integrity. You must communicate uncertainty and business tradeoffs clearly. Automate nightly checks before dashboards refresh.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about slowly changing dimensions?",
+          "answer": "Slowly changing dimensions matters because historical attribute tracking in warehouses. Use it when stakeholders need trustworthy numbers. Type 2 tables use effective dates for point-in-time truth.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply deduplication with ROW_NUMBER in a weekly metrics review?",
+          "answer": "In reviews, deduplication with ROW_NUMBER helps when keeping one row per key via partitions. Document definitions before debating deltas. Order by updated_at DESC to keep latest version.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with anti-join patterns?",
+          "answer": "Teams often assume finding rows without matches using LEFT JOIN IS NULL without checking grain or filters. Equivalent to NOT EXISTS; pick readable form for team. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is cross joins a senior-level analytics topic?",
+          "answer": "It becomes senior when Cartesian products for scaffolding date spines. You must communicate uncertainty and business tradeoffs clearly. Use deliberately with filters to avoid accidental explosions.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about approximate count distinct?",
+          "answer": "Approximate count distinct matters because HyperLogLog functions for huge tables. Use it when stakeholders need trustworthy numbers. Trade exactness for speed in exploratory dashboards.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply sampling large tables in a weekly metrics review?",
+          "answer": "In reviews, sampling large tables helps when TABLESAMPLE or random filters for profiling. Document definitions before debating deltas. Do not extrapolate sample metrics to executives without weighting.",
+          "level": "senior"
+        },
+        {
+          "question": "What mistake do teams make with time zone conversion?",
+          "answer": "Teams often assume AT TIME ZONE or equivalent functions without checking grain or filters. Store UTC; convert at query time for local reporting. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is nested JSON in SQL a senior-level analytics topic?",
+          "answer": "It becomes senior when LATERAL FLATTEN or JSON_VALUE accessors. You must communicate uncertainty and business tradeoffs clearly. Explode arrays carefully to preserve one-row grain.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about ranking functions?",
+          "answer": "Ranking functions matters because ROW_NUMBER, RANK, and DENSE_RANK differences. Use it when stakeholders need trustworthy numbers. Choose based on whether ties should share ranks.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Statistics",
+      "description": "Inference, experimentation, and interpreting uncertainty.",
+      "cards": [
+        {
+          "question": "What should analysts know about mean versus median?",
+          "answer": "Mean versus median matters because average versus 50th percentile. Use it when stakeholders need trustworthy numbers. Report both on skewed revenue metrics.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply p-values in a weekly metrics review?",
+          "answer": "In reviews, p-values helps when evidence strength against a null hypothesis. Document definitions before debating deltas. Not the probability the variant wins; predefine alpha.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with confidence intervals?",
+          "answer": "Teams often assume range of plausible parameter values without checking grain or filters. Wide intervals signal need for more data. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is correlation versus causation a senior-level analytics topic?",
+          "answer": "It becomes senior when association without intervention claims. You must communicate uncertainty and business tradeoffs clearly. Control confounders or run experiments before causal language.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about Type I errors?",
+          "answer": "Type i errors matters because false positives detecting nonexistent effects. Use it when stakeholders need trustworthy numbers. Lower alpha reduces them but needs larger samples.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply Type II errors in a weekly metrics review?",
+          "answer": "In reviews, Type II errors helps when false negatives missing real effects. Document definitions before debating deltas. Increase power with sample size or effect size targets.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with t-tests?",
+          "answer": "Teams often assume comparing means between two groups without checking grain or filters. Check normality and variance assumptions or use robust alternatives. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is chi-square tests a senior-level analytics topic?",
+          "answer": "It becomes senior when association between categorical variables. You must communicate uncertainty and business tradeoffs clearly. Common for conversion versus variant tables.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about Simpson's paradox?",
+          "answer": "Simpson's paradox matters because aggregated trends reversing within segments. Use it when stakeholders need trustworthy numbers. Always inspect segment-level results before launch.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply statistical power in a weekly metrics review?",
+          "answer": "In reviews, statistical power helps when probability of detecting a true effect. Document definitions before debating deltas. Low power wastes experiment traffic.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with minimum detectable effect?",
+          "answer": "Teams often assume smallest lift worth detecting without checking grain or filters. Drives sample size calculations with baseline rates. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is central limit theorem a senior-level analytics topic?",
+          "answer": "It becomes senior when sampling distribution of means approaching normal. You must communicate uncertainty and business tradeoffs clearly. Justifies many large-sample approximations for averages.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about standard error?",
+          "answer": "Standard error matters because uncertainty of a sample statistic. Use it when stakeholders need trustworthy numbers. Shrinks with sqrt of sample size.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply variance and standard deviation in a weekly metrics review?",
+          "answer": "In reviews, variance and standard deviation helps when spread around the mean. Document definitions before debating deltas. Use SD for interpretability in original units.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with z-scores?",
+          "answer": "Teams often assume standardized distances from the mean without checking grain or filters. Flag outliers but investigate before dropping. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is hypothesis testing steps a senior-level analytics topic?",
+          "answer": "It becomes senior when null, alternative, test statistic, decision. You must communicate uncertainty and business tradeoffs clearly. Pre-register primary metrics to avoid p-hacking.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about prediction versus confidence intervals?",
+          "answer": "Prediction versus confidence intervals matters because uncertainty for individuals versus means. Use it when stakeholders need trustworthy numbers. Do not confuse them when forecasting user counts.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply logistic regression odds ratios in a weekly metrics review?",
+          "answer": "In reviews, logistic regression odds ratios helps when multiplicative change in odds per unit feature. Document definitions before debating deltas. Exponentiate coefficients for OR interpretation.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with linear regression assumptions?",
+          "answer": "Teams often assume linearity, independence, homoscedasticity, normality of errors without checking grain or filters. Diagnostic plots guide transforms or model changes. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is heteroscedasticity a senior-level analytics topic?",
+          "answer": "It becomes senior when non-constant error variance across predictions. You must communicate uncertainty and business tradeoffs clearly. Robust standard errors or weighted least squares help.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about multiple regression?",
+          "answer": "Multiple regression matters because several predictors jointly explaining outcome. Use it when stakeholders need trustworthy numbers. Coefficients are conditional on other variables in the model.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply multicollinearity and VIF in a weekly metrics review?",
+          "answer": "In reviews, multicollinearity and VIF helps when inflated variance from correlated predictors. Document definitions before debating deltas. High VIF suggests dropping or combining features.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with time series seasonality?",
+          "answer": "Teams often assume repeating patterns by week or year without checking grain or filters. Deseasonalize or include seasonal dummies in models. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is stationarity a senior-level analytics topic?",
+          "answer": "It becomes senior when constant mean and variance over time. You must communicate uncertainty and business tradeoffs clearly. Many models require differencing or detrending first.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about autocorrelation?",
+          "answer": "Autocorrelation matters because correlation of series with its lags. Use it when stakeholders need trustworthy numbers. Violates independence assumptions in naive regression on series.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply Bonferroni correction in a weekly metrics review?",
+          "answer": "In reviews, Bonferroni correction helps when alpha divided by number of tests. Document definitions before debating deltas. Conservative but simple for few comparisons.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with bootstrap resampling?",
+          "answer": "Teams often assume simulating sampling distributions by re-drawing data without checking grain or filters. Works when formulas assume wrong distributions. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is permutation tests a senior-level analytics topic?",
+          "answer": "It becomes senior when shuffling labels to build null distributions. You must communicate uncertainty and business tradeoffs clearly. Nonparametric significance without normality assumptions.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about survival analysis basics?",
+          "answer": "Survival analysis basics matters because time-to-event with censoring. Use it when stakeholders need trustworthy numbers. Kaplan-Meier curves describe retention or churn timing.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply sampling methods in a weekly metrics review?",
+          "answer": "In reviews, sampling methods helps when random, stratified, and cluster sampling. Document definitions before debating deltas. Match method to how data was collected to avoid bias.",
+          "level": "senior"
+        },
+        {
+          "question": "What mistake do teams make with Bayesian credible intervals?",
+          "answer": "Teams often assume posterior ranges for parameters without checking grain or filters. Easier to communicate as probability statements than frequentist CI. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is regression to the mean a senior-level analytics topic?",
+          "answer": "It becomes senior when extreme groups moving toward average on remeasure. You must communicate uncertainty and business tradeoffs clearly. Explains disappointing follow-ups after outlier cohorts.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about mean versus median?",
+          "answer": "Mean versus median matters because average versus 50th percentile. Use it when stakeholders need trustworthy numbers. Report both on skewed revenue metrics.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Python & Spreadsheets",
+      "description": "Pandas, Excel, and repeatable analysis workflows.",
+      "cards": [
+        {
+          "question": "What should analysts know about pandas read_csv?",
+          "answer": "Pandas read_csv matters because loading delimited files with dtypes. Use it when stakeholders need trustworthy numbers. Specify parse_dates and dtypes to save memory.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply VLOOKUP limitations in a weekly metrics review?",
+          "answer": "In reviews, VLOOKUP limitations helps when fragile spreadsheet lookups with column shifts. Document definitions before debating deltas. Prefer structured tables and validated keys.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with pivot tables?",
+          "answer": "Teams often assume quick exploration of sums by dimensions without checking grain or filters. Export values before sharing to avoid broken refresh paths. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is missing data in pandas a senior-level analytics topic?",
+          "answer": "It becomes senior when isna, fillna, and indicator columns. You must communicate uncertainty and business tradeoffs clearly. Understand MCAR versus informative missingness before imputing.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about groupby aggregations?",
+          "answer": "Groupby aggregations matters because split-apply-combine summaries. Use it when stakeholders need trustworthy numbers. Use named aggregations for readable multi-metric outputs.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply pandas merge in a weekly metrics review?",
+          "answer": "In reviews, pandas merge helps when joining DataFrames on keys. Document definitions before debating deltas. Validate cardinality and watch suffix collisions.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with Excel automation from Python?",
+          "answer": "Teams often assume scheduled reports via openpyxl or xlsxwriter without checking grain or filters. Version scripts instead of manual copy-paste. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is large CSV performance a senior-level analytics topic?",
+          "answer": "It becomes senior when chunking, dtypes, and parquet. You must communicate uncertainty and business tradeoffs clearly. Filter columns early to fit in laptop RAM.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about reproducible notebooks?",
+          "answer": "Reproducible notebooks matters because pinned deps and cleared outputs in git. Use it when stakeholders need trustworthy numbers. Promote stable logic to tested modules.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply SQL versus spreadsheet validation in a weekly metrics review?",
+          "answer": "In reviews, SQL versus spreadsheet validation helps when comparing metrics on fixed date slices. Document definitions before debating deltas. Differences usually come from filters or timezones.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with vectorization in pandas?",
+          "answer": "Teams often assume avoiding slow Python loops on columns without checking grain or filters. Use built-in string and datetime accessors. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is numpy basics for analysts a senior-level analytics topic?",
+          "answer": "It becomes senior when arrays, broadcasting, and ufuncs. You must communicate uncertainty and business tradeoffs clearly. Bridge to pandas when operations are numeric heavy.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about datetime parsing pitfalls?",
+          "answer": "Datetime parsing pitfalls matters because timezones and ambiguous local times. Use it when stakeholders need trustworthy numbers. Normalize to UTC internally.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply pd.cut and qcut in a weekly metrics review?",
+          "answer": "In reviews, pd.cut and qcut helps when binning continuous variables. Document definitions before debating deltas. Document bin edges for stakeholders.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with Excel Power Query?",
+          "answer": "Teams often assume repeatable transforms inside workbooks without checking grain or filters. Teach self-serve analysts instead of one-off formulas. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is Google Sheets ARRAYFORMULA a senior-level analytics topic?",
+          "answer": "It becomes senior when propagating formulas down columns. You must communicate uncertainty and business tradeoffs clearly. Mind performance on large sheets.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about regex extraction?",
+          "answer": "Regex extraction matters because pattern-based parsing in pandas. Use it when stakeholders need trustworthy numbers. Test edge cases on dirty real inputs.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply pytest for analytics code in a weekly metrics review?",
+          "answer": "In reviews, pytest for analytics code helps when unit tests on metric functions. Document definitions before debating deltas. Catch definition drift before Monday dashboards.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with encoding issues in CSV?",
+          "answer": "Teams often assume utf-8 versus latin-1 misreads without checking grain or filters. Specify encoding explicitly on read. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is parquet for analysts a senior-level analytics topic?",
+          "answer": "It becomes senior when columnar files for repeated loads. You must communicate uncertainty and business tradeoffs clearly. Preserves types better than CSV exports.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about Jupyter secrets hygiene?",
+          "answer": "Jupyter secrets hygiene matters because keeping credentials out of notebooks. Use it when stakeholders need trustworthy numbers. Use environment variables and secret stores.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply profiling pandas code in a weekly metrics review?",
+          "answer": "In reviews, profiling pandas code helps when %%timeit and memory profilers. Document definitions before debating deltas. Optimize only after identifying real bottlenecks.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with melt and pivot in pandas?",
+          "answer": "Teams often assume long versus wide tidy formats without checking grain or filters. Match shape to visualization and BI tools. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is Excel tables and structured references a senior-level analytics topic?",
+          "answer": "It becomes senior when named tables that expand automatically. You must communicate uncertainty and business tradeoffs clearly. Reduce broken ranges when rows append.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about conditional formatting rules?",
+          "answer": "Conditional formatting rules matters because highlighting thresholds in spreadsheets. Use it when stakeholders need trustworthy numbers. Do not replace statistical tests for significance.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply chain assignments in pandas in a weekly metrics review?",
+          "answer": "In reviews, chain assignments in pandas helps when method chaining with pipe. Document definitions before debating deltas. Improves readability for linear transforms.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with lambda in pandas apply?",
+          "answer": "Teams often assume small custom functions on columns without checking grain or filters. Prefer vectorized ops when possible for speed. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is downcasting numeric dtypes a senior-level analytics topic?",
+          "answer": "It becomes senior when smaller ints and floats to save RAM. You must communicate uncertainty and business tradeoffs clearly. Use after range checks to avoid overflow.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about Great Expectations for analysts?",
+          "answer": "Great expectations for analysts matters because validation suites on exported tables. Use it when stakeholders need trustworthy numbers. Fail pipelines before executives see wrong KPIs.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply openpyxl formatting in a weekly metrics review?",
+          "answer": "In reviews, openpyxl formatting helps when preserving number formats in exports. Document definitions before debating deltas. Separates presentation from computed values.",
+          "level": "senior"
+        },
+        {
+          "question": "What mistake do teams make with data dictionary maintenance?",
+          "answer": "Teams often assume column definitions alongside datasets without checking grain or filters. Onboards PMs faster than ad hoc Slack explanations. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is assertions in ETL scripts a senior-level analytics topic?",
+          "answer": "It becomes senior when hard stops on impossible metric values. You must communicate uncertainty and business tradeoffs clearly. Cheaper than debugging silent wrong charts.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about visual sanity checks?",
+          "answer": "Visual sanity checks matters because histograms before aggregating. Use it when stakeholders need trustworthy numbers. Reveal skew, caps, and instrumentation bugs early.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply pandas read_csv in a weekly metrics review?",
+          "answer": "In reviews, pandas read_csv helps when loading delimited files with dtypes. Document definitions before debating deltas. Specify parse_dates and dtypes to save memory.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Warehousing & BI",
+      "description": "Dimensional modeling, pipelines, and dashboards.",
+      "cards": [
+        {
+          "question": "What should analysts know about fact tables?",
+          "answer": "Fact tables matters because measurable events at a defined grain. Use it when stakeholders need trustworthy numbers. Join to dimensions for descriptive attributes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply dimension tables in a weekly metrics review?",
+          "answer": "In reviews, dimension tables helps when entities like users, products, and dates. Document definitions before debating deltas. Slowly changing dimensions capture history.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with OLTP versus OLAP?",
+          "answer": "Teams often assume transaction systems versus analytical warehouses without checking grain or filters. Do not hammer OLTP replicas for heavy reporting. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is dataset grain a senior-level analytics topic?",
+          "answer": "It becomes senior when what one row represents. You must communicate uncertainty and business tradeoffs clearly. Misstated grain double-counts in BI tools.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about ETL versus ELT?",
+          "answer": "Etl versus elt matters because transform before or after load. Use it when stakeholders need trustworthy numbers. ELT leverages warehouse SQL engines like BigQuery.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply semantic layers in a weekly metrics review?",
+          "answer": "In reviews, semantic layers helps when curated metrics in Looker or Power BI. Document definitions before debating deltas. Stop every analyst redefining revenue differently.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with incremental dbt models?",
+          "answer": "Teams often assume merging new rows by unique keys without checking grain or filters. Full refreshes remain for small dimensions. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is late-arriving facts a senior-level analytics topic?",
+          "answer": "It becomes senior when events landing after partition close. You must communicate uncertainty and business tradeoffs clearly. Sliding windows restate recent partitions.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about executive dashboards?",
+          "answer": "Executive dashboards matters because few KPIs with trends and plan variance. Use it when stakeholders need trustworthy numbers. Show freshness timestamps on every tile.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply row-level security in a weekly metrics review?",
+          "answer": "In reviews, row-level security helps when filtering data by user attributes. Document definitions before debating deltas. Test impersonation accounts before rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with warehouse cost control?",
+          "answer": "Teams often assume partitioning and avoiding SELECT star without checking grain or filters. Monitor bytes scanned per dashboard. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is star schemas a senior-level analytics topic?",
+          "answer": "It becomes senior when facts surrounded by conformed dimensions. You must communicate uncertainty and business tradeoffs clearly. Simple joins for BI and analyst SQL.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about snowflake schemas?",
+          "answer": "Snowflake schemas matters because normalized dimensions reducing redundancy. Use it when stakeholders need trustworthy numbers. More joins but smaller dimension storage.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply conformed dimensions in a weekly metrics review?",
+          "answer": "In reviews, conformed dimensions helps when shared definitions across business units. Document definitions before debating deltas. Enables apples-to-apples cross-team metrics.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with bridge tables?",
+          "answer": "Teams often assume many-to-many relationships between dimensions without checking grain or filters. Model correctly to avoid fan-out duplicates. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is medallion architecture a senior-level analytics topic?",
+          "answer": "It becomes senior when bronze silver gold curation layers. You must communicate uncertainty and business tradeoffs clearly. Bronze raw, silver cleaned, gold business-ready.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about CDC streams?",
+          "answer": "Cdc streams matters because change data capture into warehouses. Use it when stakeholders need trustworthy numbers. Keeps marts near real time without full reloads.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply dbt tests in a weekly metrics review?",
+          "answer": "In reviews, dbt tests helps when unique and not-null constraints on keys. Document definitions before debating deltas. Catch bad merges before dashboards update.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with LookML metrics?",
+          "answer": "Teams often assume defined measures in Looker models without checking grain or filters. Centralize complex SQL once. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is Power BI DAX a senior-level analytics topic?",
+          "answer": "It becomes senior when expressions for calculated columns and measures. You must communicate uncertainty and business tradeoffs clearly. Understand filter context to avoid double counting.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about refresh schedules?",
+          "answer": "Refresh schedules matters because cadence aligning with decisions. Use it when stakeholders need trustworthy numbers. Hourly for ops, daily for finance close.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply BI cache settings in a weekly metrics review?",
+          "answer": "In reviews, BI cache settings helps when import versus direct query modes. Document definitions before debating deltas. Balance freshness with performance and cost.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with drill-through paths?",
+          "answer": "Teams often assume from KPIs to underlying records without checking grain or filters. Help executives trust the number. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is metric governance a senior-level analytics topic?",
+          "answer": "It becomes senior when finance-signed definitions. You must communicate uncertainty and business tradeoffs clearly. Analytics publishes a book of metrics.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about data catalogs?",
+          "answer": "Data catalogs matters because searchable metadata and owners. Use it when stakeholders need trustworthy numbers. Reduces duplicate tables and mystery columns.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply lineage tracking in a weekly metrics review?",
+          "answer": "In reviews, lineage tracking helps when upstream sources for each dashboard tile. Document definitions before debating deltas. Speeds impact analysis when schemas change.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with freshness SLAs?",
+          "answer": "Teams often assume promised max lag for datasets without checking grain or filters. Display violations prominently in BI headers. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is anomaly detection on KPIs a senior-level analytics topic?",
+          "answer": "It becomes senior when statistical alerts on metric swings. You must communicate uncertainty and business tradeoffs clearly. Tune sensitivity to avoid alert fatigue.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about junk dimensions?",
+          "answer": "Junk dimensions matters because combined low-cardinality flags. Use it when stakeholders need trustworthy numbers. Reduce dimension proliferation in star schemas.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply degenerate dimensions in a weekly metrics review?",
+          "answer": "In reviews, degenerate dimensions helps when transaction IDs stored in fact tables. Document definitions before debating deltas. Useful for drill to detail without joins.",
+          "level": "senior"
+        },
+        {
+          "question": "What mistake do teams make with snapshot fact tables?",
+          "answer": "Teams often assume periodic inventory or balance captures without checking grain or filters. Compare ending balances week over week. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is data mesh principles a senior-level analytics topic?",
+          "answer": "It becomes senior when domain-owned data products. You must communicate uncertainty and business tradeoffs clearly. Federated governance with standard interfaces.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about self-serve BI pitfalls?",
+          "answer": "Self-serve bi pitfalls matters because uncertified metrics spreading errors. Use it when stakeholders need trustworthy numbers. Certify core datasets and label experimental ones.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply fact tables in a weekly metrics review?",
+          "answer": "In reviews, fact tables helps when measurable events at a defined grain. Document definitions before debating deltas. Join to dimensions for descriptive attributes.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Experiments & Causality",
+      "description": "A/B tests, causal methods, and experiment design.",
+      "cards": [
+        {
+          "question": "What should analysts know about north star metrics?",
+          "answer": "North star metrics matters because primary measures of product value delivery. Use it when stakeholders need trustworthy numbers. Pair with guardrails like churn or support tickets.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply randomization units in a weekly metrics review?",
+          "answer": "In reviews, randomization units helps when what gets assigned to control or variant. Document definitions before debating deltas. Must align with how outcomes are measured.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with guardrail metrics?",
+          "answer": "Teams often assume signals of harm during experiments without checking grain or filters. Block launch if primary wins but guardrails break. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is experiment duration a senior-level analytics topic?",
+          "answer": "It becomes senior when running through full weekly cycles. You must communicate uncertainty and business tradeoffs clearly. Avoid stopping early on noisy early lifts.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about novelty effects?",
+          "answer": "Novelty effects matters because users reacting to change because it is new. Use it when stakeholders need trustworthy numbers. Extend readouts or segment by tenure.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply ratio metrics in experiments in a weekly metrics review?",
+          "answer": "In reviews, ratio metrics in experiments helps when numerators and denominators like CTR. Document definitions before debating deltas. Use delta method or bootstrapping for valid CIs.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with shipping without significance?",
+          "answer": "Teams often assume decisions when intervals exclude big harm without checking grain or filters. Document criteria beyond p-values alone. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is event instrumentation a senior-level analytics topic?",
+          "answer": "It becomes senior when tracking product actions with schemas. You must communicate uncertainty and business tradeoffs clearly. QA events against server logs before trusting funnels.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about causal inference without A/B?",
+          "answer": "Causal inference without a/b matters because observational methods when randomization is impossible. Use it when stakeholders need trustworthy numbers. Present ranges with explicit assumptions.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply analysis backlog prioritization in a weekly metrics review?",
+          "answer": "In reviews, analysis backlog prioritization helps when scoring requests by decision urgency. Document definitions before debating deltas. Require hypotheses and metrics in intake forms.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with SUTVA violations?",
+          "answer": "Teams often assume spillover when units interfere without checking grain or filters. Cluster randomize or geo holdouts when users interact. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is AA tests a senior-level analytics topic?",
+          "answer": "It becomes senior when experiments with no expected difference. You must communicate uncertainty and business tradeoffs clearly. Validate randomization and variance estimates.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about holdout groups?",
+          "answer": "Holdout groups matters because long-term control cohorts. Use it when stakeholders need trustworthy numbers. Measure cumulative effects beyond short tests.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply geo experiments in a weekly metrics review?",
+          "answer": "In reviews, geo experiments helps when randomizing markets instead of users. Document definitions before debating deltas. Watch heterogeneous market sizes and seasonality.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with switchback tests?",
+          "answer": "Teams often assume alternating treatments over time windows without checking grain or filters. Model carryover effects across windows carefully. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is difference-in-differences a senior-level analytics topic?",
+          "answer": "It becomes senior when comparing trends between treated and control groups. You must communicate uncertainty and business tradeoffs clearly. Requires parallel trends assumption checks.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about synthetic control?",
+          "answer": "Synthetic control matters because weighted donor markets mimicking pre-period. Use it when stakeholders need trustworthy numbers. Sensitive to donor pool choice and short pre histories.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply propensity score matching in a weekly metrics review?",
+          "answer": "In reviews, propensity score matching helps when balancing covariates in observational studies. Document definitions before debating deltas. Check balance diagnostics after matching.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with instrumental variables?",
+          "answer": "Teams often assume using exogenous shocks to estimate causal effects without checking grain or filters. Valid instruments are rare and must be defended. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is regression discontinuity a senior-level analytics topic?",
+          "answer": "It becomes senior when causal estimates around eligibility cutoffs. You must communicate uncertainty and business tradeoffs clearly. Bandwidth choice affects bias-variance tradeoff.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about confounding variables?",
+          "answer": "Confounding variables matters because common causes of treatment and outcome. Use it when stakeholders need trustworthy numbers. Omitting them biases treatment effect estimates.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply collider bias in a weekly metrics review?",
+          "answer": "In reviews, collider bias helps when conditioning on common effects inducing spurious association. Document definitions before debating deltas. Do not control on post-treatment mediators casually.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with mediators?",
+          "answer": "Teams often assume variables on the causal path from treatment to outcome without checking grain or filters. Clarify whether the goal is total or direct effects. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is DAGs for analysts a senior-level analytics topic?",
+          "answer": "It becomes senior when directed graphs encoding causal assumptions. You must communicate uncertainty and business tradeoffs clearly. Communicate what you adjust for and why.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about heterogeneous treatment effects?",
+          "answer": "Heterogeneous treatment effects matters because uplift varying by segment. Use it when stakeholders need trustworthy numbers. Personalization needs powered subgroup analysis.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply post-period bias in a weekly metrics review?",
+          "answer": "In reviews, post-period bias helps when measuring outcomes before effects stabilize. Document definitions before debating deltas. Align metric windows with product behavior.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with pre-registration?",
+          "answer": "Teams often assume documenting metrics before peeking without checking grain or filters. Reduces fishing and increases stakeholder trust. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is peeked p-values a senior-level analytics topic?",
+          "answer": "It becomes senior when inflated false positives from repeated looks. You must communicate uncertainty and business tradeoffs clearly. Use sequential testing or fixed horizons.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about multi-arm bandits for product?",
+          "answer": "Multi-arm bandits for product matters because adaptive traffic allocation. Use it when stakeholders need trustworthy numbers. Can speed learning but complicate classic inference.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply long-term metric tradeoffs in a weekly metrics review?",
+          "answer": "In reviews, long-term metric tradeoffs helps when short-term lifts hurting retention. Document definitions before debating deltas. Run holdouts when possible to see sustained impact.",
+          "level": "senior"
+        },
+        {
+          "question": "What mistake do teams make with interference in social products?",
+          "answer": "Teams often assume treatment affecting control users without checking grain or filters. Cluster or ego-network randomization mitigates bias. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is intent-to-treat analysis a senior-level analytics topic?",
+          "answer": "It becomes senior when analyzing all assigned users regardless of compliance. You must communicate uncertainty and business tradeoffs clearly. Conservative but policy-relevant for shipped features.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about north star metrics?",
+          "answer": "North star metrics matters because primary measures of product value delivery. Use it when stakeholders need trustworthy numbers. Pair with guardrails like churn or support tickets.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Communication & Product",
+      "description": "Stakeholders, metrics governance, and product analytics.",
+      "cards": [
+        {
+          "question": "What should analysts know about stakeholder requirements?",
+          "answer": "Stakeholder requirements matters because clarifying decisions before querying. Use it when stakeholders need trustworthy numbers. Ask what action changes if the number moves.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply metric definitions in a weekly metrics review?",
+          "answer": "In reviews, metric definitions helps when precise numerators, denominators, and filters. Document definitions before debating deltas. Write definitions PMs can quote in meetings.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with data storytelling?",
+          "answer": "Teams often assume narratives connecting charts to decisions without checking grain or filters. Lead with the recommendation, then evidence. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is chart type selection a senior-level analytics topic?",
+          "answer": "It becomes senior when bars for categories, lines for time. You must communicate uncertainty and business tradeoffs clearly. Avoid pie charts with many slices.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about executive summaries?",
+          "answer": "Executive summaries matters because one-page highlights with risks. Use it when stakeholders need trustworthy numbers. Busy leaders may read only this section.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply documenting assumptions in a weekly metrics review?",
+          "answer": "In reviews, documenting assumptions helps when filters, exclusions, and data freshness. Document definitions before debating deltas. Prevents debates rooted in hidden differences.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with communicating data quality?",
+          "answer": "Teams often assume flagging known gaps upfront without checking grain or filters. Builds trust more than silent caveats after questions. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is pushing back on bad asks a senior-level analytics topic?",
+          "answer": "It becomes senior when redirecting vague chart requests. You must communicate uncertainty and business tradeoffs clearly. Offer a decision frame instead of endless cuts.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about OKR alignment?",
+          "answer": "Okr alignment matters because mapping analyses to objectives. Use it when stakeholders need trustworthy numbers. Decline work that does not move agreed goals.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply root cause analysis in a weekly metrics review?",
+          "answer": "In reviews, root cause analysis helps when five whys with data evidence. Document definitions before debating deltas. Distinguish correlation from confirmed drivers.",
+          "level": "junior"
+        },
+        {
+          "question": "What mistake do teams make with workshop facilitation?",
+          "answer": "Teams often assume structured sessions with PM and design without checking grain or filters. Timebox hypotheses and success metrics live. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "junior"
+        },
+        {
+          "question": "When is requirements templates a senior-level analytics topic?",
+          "answer": "It becomes senior when intake forms with deadline and decision owner. You must communicate uncertainty and business tradeoffs clearly. Reduces slack pings with half-baked asks.",
+          "level": "junior"
+        },
+        {
+          "question": "What should analysts know about accessible visualizations?",
+          "answer": "Accessible visualizations matters because colorblind-safe palettes and labels. Use it when stakeholders need trustworthy numbers. Accessibility is part of analytical professionalism.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply funnel versus cohort narratives in a weekly metrics review?",
+          "answer": "In reviews, funnel versus cohort narratives helps when explaining drop-off versus retention. Document definitions before debating deltas. Pick the story that matches the product question.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with anomaly communication?",
+          "answer": "Teams often assume explaining spikes without panic without checking grain or filters. Separate instrumentation bugs from real shifts. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is forecast uncertainty a senior-level analytics topic?",
+          "answer": "It becomes senior when ranges instead of single point predictions. You must communicate uncertainty and business tradeoffs clearly. Executives plan better with scenarios.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about self-serve analytics risks?",
+          "answer": "Self-serve analytics risks matters because uncertified dashboards spreading errors. Use it when stakeholders need trustworthy numbers. Certify golden datasets and train users.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply metric governance forums in a weekly metrics review?",
+          "answer": "In reviews, metric governance forums helps when regular reviews with finance and product. Document definitions before debating deltas. Resolve definition conflicts before quarter close.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with ad hoc versus curated reporting?",
+          "answer": "Teams often assume when quick SQL beats a new dashboard tile without checking grain or filters. Not every question deserves permanent UI. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is peer review of analyses a senior-level analytics topic?",
+          "answer": "It becomes senior when second analyst validating logic. You must communicate uncertainty and business tradeoffs clearly. Catches join bugs before leadership sees results.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about version control for reports?",
+          "answer": "Version control for reports matters because git for SQL and notebook sources. Use it when stakeholders need trustworthy numbers. Diffs show what changed when metrics move.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply handoffs to engineering in a weekly metrics review?",
+          "answer": "In reviews, handoffs to engineering helps when specs for permanent pipelines. Document definitions before debating deltas. Include grain, keys, SLAs, and test cases.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with ethics in reporting?",
+          "answer": "Teams often assume honest axes and full context without checking grain or filters. Misleading charts damage credibility permanently. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "middle"
+        },
+        {
+          "question": "When is impact sizing a senior-level analytics topic?",
+          "answer": "It becomes senior when back-of-envelope value of metric lifts. You must communicate uncertainty and business tradeoffs clearly. Helps prioritize experiments and engineering work.",
+          "level": "middle"
+        },
+        {
+          "question": "What should analysts know about dashboard QA checklists?",
+          "answer": "Dashboard qa checklists matters because visual and numeric checks before publish. Use it when stakeholders need trustworthy numbers. Compare totals to trusted SQL sanity queries.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply trust building with skeptics in a weekly metrics review?",
+          "answer": "In reviews, trust building with skeptics helps when showing code and definitions openly. Document definitions before debating deltas. Transparency beats defensiveness in tense reviews.",
+          "level": "middle"
+        },
+        {
+          "question": "What mistake do teams make with action-oriented recommendations?",
+          "answer": "Teams often assume each analysis ending with next steps without checking grain or filters. Numbers alone rarely change behavior. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is writing for non-technical audiences a senior-level analytics topic?",
+          "answer": "It becomes senior when plain language without dumbing down rigor. You must communicate uncertainty and business tradeoffs clearly. Define jargon once and use consistently.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about managing analytical debt?",
+          "answer": "Managing analytical debt matters because backlog of broken tiles and orphan metrics. Use it when stakeholders need trustworthy numbers. Schedule cleanup like engineering tech debt.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply cross-functional RACI in a weekly metrics review?",
+          "answer": "In reviews, cross-functional RACI helps when who owns data, analysis, and decisions. Document definitions before debating deltas. Prevents orphaned metrics nobody maintains.",
+          "level": "senior"
+        },
+        {
+          "question": "What mistake do teams make with presenting null results?",
+          "answer": "Teams often assume experiments that did not win without checking grain or filters. Null results still inform roadmap prioritization. Align SQL, spreadsheets, and dashboards to one definition.",
+          "level": "senior"
+        },
+        {
+          "question": "When is escalation paths for data bugs a senior-level analytics topic?",
+          "answer": "It becomes senior when who to ping when pipelines break. You must communicate uncertainty and business tradeoffs clearly. Faster fixes when on-call rotation is clear.",
+          "level": "senior"
+        },
+        {
+          "question": "What should analysts know about celebrating reproducibility?",
+          "answer": "Celebrating reproducibility matters because sharing query links and parameters. Use it when stakeholders need trustworthy numbers. Teammates can extend work instead of restarting.",
+          "level": "senior"
+        }
+      ]
+    }
+  ]
+}

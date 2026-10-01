@@ -1,0 +1,943 @@
+{
+  "slug": "go",
+  "name": "Go Developer",
+  "description": "Go for cloud services, concurrent APIs, testing, and production operations on Linux fleets.",
+  "categories": [
+    {
+      "name": "Go Core",
+      "description": "Types, interfaces, errors, modules, and idiomatic Go style.",
+      "cards": [
+        {
+          "question": "How do Go interfaces work without explicit implements?",
+          "answer": "Types satisfy interfaces implicitly by having the required methods. Small interfaces like io.Reader compose better than large ones. Empty interface{} or any holds any value with type assertions at use sites. Interface values are fat pointers to data and method tables.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the zero value and why does it matter?",
+          "answer": "Variables declared without initialization get the type zero value: 0, false, nil pointers, empty strings. Structs zero to fields recursively. Enables useful defaults but nil maps panic on write until make. Constructors often named NewType return initialized pointers.",
+          "level": "junior"
+        },
+        {
+          "question": "How should errors be handled idiomatically in Go?",
+          "answer": "Return error as last value and check if err != nil immediately. Wrap with fmt.Errorf and %w for context preserving errors.Is and errors.As. Sentinel errors compare with errors.Is instead of string matching. Panic only for programmer bugs, not expected IO failures.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain slices versus arrays in Go.",
+          "answer": "Arrays have fixed length part of the type; slices are views with pointer, length, and capacity. append may reallocate backing array when capacity exceeded. Slicing shares memory; mutating subslices affects siblings until copy. make([]T, len, cap) preallocates efficiently.",
+          "level": "middle"
+        },
+        {
+          "question": "What is defer and common pitfalls?",
+          "answer": "defer schedules function execution until surrounding function returns, LIFO order. Arguments evaluate immediately at defer statement time. Useful for closing files and unlocking mutexes. defer in tight loops can exhaust stack or delay cleanup until function exit.",
+          "level": "middle"
+        },
+        {
+          "question": "How do pointers differ from Java or C# references?",
+          "answer": "Go has explicit *T pointers but no pointer arithmetic. Taking address of stack variables escapes to heap when compiler sees lifetime beyond function via escape analysis. nil pointers dereference panic unless guarded. Value receivers copy structs; pointer receivers mutate in place.",
+          "level": "junior"
+        },
+        {
+          "question": "When use struct embedding versus composition fields?",
+          "answer": "Embedding promotes methods to outer type for delegation resembling inheritance. Outer type can override promoted methods. Explicit field names avoid API ambiguity when embedding multiple types. Prefer embedding for small interface satisfaction, not deep hierarchies.",
+          "level": "middle"
+        },
+        {
+          "question": "What is go mod and go.sum purpose?",
+          "answer": "go.mod declares module path and minimum dependency versions. go.sum stores cryptographic hashes of module contents for reproducible builds. go mod tidy adds missing and removes unused modules. Private modules need GOPRIVATE and VCS auth configuration.",
+          "level": "middle"
+        },
+        {
+          "question": "How does range loop capture variables in Go 1.22+?",
+          "answer": "Per-iteration loop variables fix classic goroutine closure bugs where all iterations shared one variable. Older code copied loop var inside body before go func. Still avoid capturing large structs unnecessarily in goroutines. range over maps order is randomized.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the difference between make and new?",
+          "answer": "new(T) allocates zeroed memory and returns *T, mainly for pointers to values. make initializes slices, maps, and channels only, returning usable non-nil reference types. Cannot make arbitrary structs. maps from make have zero length but ready for assignment.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design a production approach around interfaces implicit in Go Core?",
+          "answer": "Senior work on interfaces implicit in Go Core means setting standards, not only fixing bugs. Define ownership boundaries, observability, and rollback paths before scaling usage across services or devices. Expect follow-ups on failure isolation, security, and long-term cost once interfaces implicit becomes load-bearing.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize interfaces implicit across a large Go Core codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does struct types matter for Go Core work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use methods value receiver?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply pointer receiver correctly in Go Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve embedding in Go Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see zero values in a Go Core codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply nil semantics correctly in Go Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve slices in Go Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on arrays in Go Core architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply maps correctly in Go Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve channels type in Go Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on make versus new in Go Core architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is defer?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve panic recover in Go Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on errors Is As in Go Core architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply error wrapping correctly in Go Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to custom error types, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see generics Go in a Go Core codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply type constraints correctly in Go Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Concurrency",
+      "description": "Goroutines, channels, sync primitives, and context cancellation.",
+      "cards": [
+        {
+          "question": "What is a goroutine and how lightweight is it?",
+          "answer": "Goroutines are functions started with go keyword scheduled by Go runtime on OS threads. Initial stack is small and grows dynamically. Millions can exist when mostly blocked on IO. Still consume memory; unbounded spawning causes OOM.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain channel buffered versus unbuffered semantics.",
+          "answer": "Unbuffered channels synchronize sender and receiver at handoff. Buffered channels accept sends until full without receiver ready. Close signals no more sends; receivers drain remaining values then get zero value with ok false. Select multiplexes channel operations with default for non-blocking tries.",
+          "level": "middle"
+        },
+        {
+          "question": "When prefer sync.Mutex over channels?",
+          "answer": "Mutex protects shared memory state mutated by few goroutines with clear critical sections. Channels pass ownership of work or data; mutexes guard in-place structures like caches. Go proverb: share memory by communicating, but mutexes are fine for simple counters. Always unlock with defer.",
+          "level": "senior"
+        },
+        {
+          "question": "How does context.Context propagate cancellation?",
+          "answer": "Context carries deadlines, cancellation signals, and request-scoped values down call trees. Derive child contexts with WithCancel, WithTimeout, or WithDeadline. Listen on ctx.Done() in long operations and return ctx.Err(). Never store contexts in structs; pass as first parameter.",
+          "level": "middle"
+        },
+        {
+          "question": "What is errgroup used for?",
+          "answer": "golang.org/x/sync/errgroup runs goroutines with shared cancelation on first error. Wait returns first non-nil error after all finish. Simplifies parallel fan-out HTTP fetches with failure propagation. Limit concurrency with semaphore channel when spawning many tasks.",
+          "level": "junior"
+        },
+        {
+          "question": "How avoid goroutine leaks?",
+          "answer": "Ensure every goroutine exits when parent context cancels or work completes. Blocked sends on full channels without receivers leak forever. Use context cancellation and closing channels to unblock selectors. pprof goroutine profile shows stuck stacks in production.",
+          "level": "junior"
+        },
+        {
+          "question": "What is sync.WaitGroup pattern?",
+          "answer": "WaitGroup counts active goroutines; Add before start, Done in defer, Wait blocks until zero. Panics if Add negative or Wait copied after first use. Combine with channels for result collection. Do not reuse WaitGroup across logical phases without careful reset.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain sync.Once and atomic package uses.",
+          "answer": "sync.Once guarantees initialization function runs exactly once concurrently. atomics provide lock-free counters and flags for metrics hot paths. Prefer sync/atomic typed wrappers in Go 1.19+. Still use mutex when updating complex structures.",
+          "level": "middle"
+        },
+        {
+          "question": "How design worker pools in Go?",
+          "answer": "Fixed pool of goroutines read jobs from buffered channel until closed. Limits parallelism and backpressure naturally via channel size. context cancels workers on shutdown. Alternative: semaphore weighted for limiting in-flight tasks in errgroup.",
+          "level": "junior"
+        },
+        {
+          "question": "What race conditions does the race detector catch?",
+          "answer": "go test -race instruments memory accesses to detect concurrent read/write without synchronization. CI should run race builds on critical packages. Detector slows tests significantly; not for production binaries. Fixes involve mutex, channels, or copying data per goroutine.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply goroutines in day-to-day Concurrency work?",
+          "answer": "Goroutines are lightweight tasks scheduled by the Go runtime on OS threads with small initial stacks. They excel at concurrent IO when paired with channels and context cancellation. Unbounded goroutine creation still consumes memory; bound parallelism with worker pools or semaphores.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply goroutines correctly in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve GOMAXPROCS in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on scheduler in Concurrency architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply channels unbuffered correctly in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does channels buffered matter for Concurrency work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see close channel in a Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is range channel?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve select default in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see context cancel in a Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is context timeout?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve WaitGroup in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on Mutex RWMutex in Concurrency architecture?",
+          "answer": "Mutexes serialize access to shared mutable state and must be held for the shortest critical section possible. Establish a global lock order across modules to prevent deadlock cycles. Prefer transferring data over channels when ownership handoff is clearer than shared memory.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply Once correctly in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does Cond matter for Concurrency work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use atomic types?",
+          "answer": "Atomics provide lock-free updates when paired with an appropriate memory ordering. Relaxed works for independent counters; release-acquire publishes data between threads. Incorrect ordering causes subtle bugs that TSan and careful code review must catch.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize race detector across a large Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to goroutine leaks, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see worker pools in a Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize errgroup across a large Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Web & APIs",
+      "description": "HTTP servers, routing, middleware, JSON, and service design in Go.",
+      "cards": [
+        {
+          "question": "How does net/http ServeMux routing work in modern Go?",
+          "answer": "Go 1.22+ supports method and path patterns like GET /items/{id} on ServeMux. Longest match wins with explicit method binding. Handlers are func(ResponseWriter, *Request). http.Handler interface enables middleware wrapping via HandlerFunc adapters.",
+          "level": "junior"
+        },
+        {
+          "question": "What middleware patterns are common in Go HTTP stacks?",
+          "answer": "Middleware chains log requests, recover panics, authenticate JWT, and inject trace ids. Each wraps http.Handler calling next.ServeHTTP. Keep middleware pure and order-sensitive: recovery outermost, auth before business handlers. frameworks like chi and echo provide grouping helpers.",
+          "level": "middle"
+        },
+        {
+          "question": "How encode and decode JSON efficiently?",
+          "answer": "json.NewEncoder(w).Encode streams without building entire string in memory. Set Content-Type application/json explicitly. DisallowUnknownFields on Decoder catches API drift in strict clients. Use json.RawMessage for deferred parsing of polymorphic fields.",
+          "level": "junior"
+        },
+        {
+          "question": "How implement graceful shutdown for HTTP servers?",
+          "answer": "Listen for SIGINT/SIGTERM, call srv.Shutdown with timeout context to drain in-flight requests. Shutdown closes listeners then waits for active connections. Reject new work after signal while finishing existing. Health endpoints flip to failing when shutdown starts if load balancers support it.",
+          "level": "middle"
+        },
+        {
+          "question": "What is context timeout per request handler?",
+          "answer": "Derive timeout context from request context to bound upstream DB and HTTP client calls. Cancel propagates to sql.QueryContext and http.NewRequestWithContext. Return 504 when deadline exceeded. Do not reuse request context after handler returns.",
+          "level": "middle"
+        },
+        {
+          "question": "Compare stdlib HTTP client versus resty or specialized clients.",
+          "answer": "http.Client with Transport tuned for MaxIdleConnsPerHost reuses TCP connections efficiently. Set reasonable timeouts on Client and Transport to avoid hung goroutines. Higher-level clients add retries and backoff with caution on non-idempotent methods. Always read and close response bodies to reuse connections.",
+          "level": "senior"
+        },
+        {
+          "question": "How validate input in Go APIs?",
+          "answer": "Use struct tags with github.com/go-playground/validator or hand-written checks after decode. Return 400 with field-level errors JSON for clients. Validate business rules in service layer separate from transport DTOs. Sanitize strings before logging to avoid log injection.",
+          "level": "senior"
+        },
+        {
+          "question": "What is OpenAPI generation role in Go teams?",
+          "answer": "Tools like swag or oapi-codegen generate server stubs or clients from spec. Keeps documentation aligned with handlers when CI checks drift. Version APIs with /v1 paths and deprecate with headers. Contract tests verify generated clients against mock servers.",
+          "level": "middle"
+        },
+        {
+          "question": "How handle file uploads securely?",
+          "answer": "Limit request body size with MaxBytesReader. Stream to disk or object storage instead of loading entirely into memory. Validate content type and scan malware outside handler path. Store outside web root with signed URLs for download.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain idempotency keys for POST endpoints.",
+          "answer": "Clients send Idempotency-Key header; server stores result hash to replay same response on retries. Prevents duplicate charges or records on network failures. Keys expire after TTL with storage like Redis. Document behavior for safe client retry policies.",
+          "level": "junior"
+        },
+        {
+          "question": "What is net/http Server?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve ServeMux patterns in Web & APIs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see Handler interface in a Web & APIs codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply middleware chaining correctly in Web & APIs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve chi router in Web & APIs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on echo framework in Web & APIs architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize gin framework across a large Web & APIs codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve JSON encode decode in Web & APIs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see validation tags in a Web & APIs codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is HTTP client timeouts?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does Transport tuning matter for Web & APIs work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use TLS config?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply reverse proxies correctly in Web & APIs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does grpc go matter for Web & APIs work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on protobuf in Web & APIs architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply connect rpc correctly in Web & APIs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve REST versioning in Web & APIs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see problem json errors in a Web & APIs codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize CORS middleware across a large Web & APIs codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve CSRF basics in Web & APIs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Testing & Tooling",
+      "description": "go test, benchmarks, fuzzing, linting, and module maintenance.",
+      "cards": [
+        {
+          "question": "How table-driven tests improve coverage readability?",
+          "answer": "Define slice of structs with name, input, want fields looping t.Run subtests. Subtests enable parallel t.Parallel and targeted failure messages. Shared setup lives outside loop; avoid mutable shared state across parallel subtests. Standard pattern across Go stdlib examples.",
+          "level": "junior"
+        },
+        {
+          "question": "What is httptest.ResponseRecorder used for?",
+          "answer": "Records handler output without opening real network port. Pass to handler with httptest.NewRequest for unit testing middleware and routes. Assert status, headers, and body with helpers. Integration tests may still spin real server on localhost.",
+          "level": "senior"
+        },
+        {
+          "question": "How write benchmarks with testing.B?",
+          "answer": "func BenchmarkX(b *testing.B) resets timer around setup, runs b.N iterations automatically scaling. Report memory with b.ReportAllocs. Compare with benchstat across commits. Avoid compiler optimizing away work by assigning to package level sink.",
+          "level": "junior"
+        },
+        {
+          "question": "What does go test -cover and -race provide?",
+          "answer": "Cover profiles statement execution percentage per package. Race detector finds concurrent unsynchronized access during tests. Combine in CI for packages touching goroutines. Coverage gaps highlight untested error branches worth table cases.",
+          "level": "junior"
+        },
+        {
+          "question": "How fuzz testing works in Go 1.18+?",
+          "answer": "Fuzz functions feed mutated inputs seeking crashes or failed assertions. Seed corpus checks in repo reproduces findings. Great for parsers and decoders accepting untrusted bytes. Minimize crashing inputs automatically for regression tests.",
+          "level": "middle"
+        },
+        {
+          "question": "What tools does golangci-lint aggregate?",
+          "answer": "Runs staticcheck, govet, errcheck, and dozens of linters with one config file. CI fails on new issues while allowing gradual adoption. Faster than running each linter manually. Pin version for reproducible builds.",
+          "level": "senior"
+        },
+        {
+          "question": "How mock dependencies without heavy frameworks?",
+          "answer": "Define small interfaces in consumer package and pass fakes in tests. testify/mock or mockgen generate stubs for large interfaces. Keep interfaces narrow to reduce mock boilerplate. Integration tests with real DB containers complement unit fakes.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain go work for local multi-module development.",
+          "answer": "go.work lists replace directives across modules on disk for simultaneous edits. Avoid committing go.work to libraries accidentally pointing to local paths. Useful when service and shared pkg evolve together. go mod publish ignores work file.",
+          "level": "senior"
+        },
+        {
+          "question": "What is effective gofmt enforcement?",
+          "answer": "gofmt or gofmt -s simplifies code layout consistently. goimports adds/removes imports on save. CI rejects unformatted diffs with script comparing gofmt output. Consistency reduces review noise across teams.",
+          "level": "middle"
+        },
+        {
+          "question": "How debug failing tests with delve?",
+          "answer": "dlv test pauses on breakpoints inside tests including goroutines. Useful for inspecting deadlocks and unexpected state. VS Code Go extension integrates delve launch configs. reproduce with -run filter on single test name.",
+          "level": "senior"
+        },
+        {
+          "question": "What is go test?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to table driven tests, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see subtests in a Testing & Tooling codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is t.Parallel?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve httptest in Testing & Tooling?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on testify assert in Testing & Tooling architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply gomock correctly in Testing & Tooling?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to mockgen, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use integration tests?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize testcontainers-go across a large Testing & Tooling codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve benchmarks in Testing & Tooling?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use benchstat?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is fuzzing go?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does coverage profiles matter for Testing & Tooling work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see race in CI in a Testing & Tooling codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize golangci-lint across a large Testing & Tooling codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does staticcheck matter for Testing & Tooling work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on go vet in Testing & Tooling architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is go work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does replace directive matter for Testing & Tooling work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Storage & Networking",
+      "description": "Databases, caches, messaging, and network clients in Go services.",
+      "cards": [
+        {
+          "question": "What is database/sql?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does sqlx matter for Storage & Networking work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see pgx driver in a Storage & Networking codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply connection pools correctly in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve transactions in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on context queries in Storage & Networking architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize migrations golang across a large Storage & Networking codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does redis go matter for Storage & Networking work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see etcd client in a Storage & Networking codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is S3 minio?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve blob storage in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see io.Copy in a Storage & Networking codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply bufio correctly in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve net.Conn in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see TCP tuning in a Storage & Networking codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply UDP use cases correctly in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does DNS resolver matter for Storage & Networking work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use HTTP keep-alive?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply TLS mutual correctly in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does certificate rotation matter for Storage & Networking work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use grpc load balancing?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize service discovery across a large Storage & Networking codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to kafka sarama, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see nats client in a Storage & Networking codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply message ordering correctly in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve idempotent consumers in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see outbox pattern in a Storage & Networking codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply CQRS go correctly in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve caching layers in Storage & Networking?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see TTL caches in a Storage & Networking codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Production Go",
+      "description": "Observability, deployment, performance tuning, and operating Go services.",
+      "cards": [
+        {
+          "question": "How expose Prometheus metrics from Go services?",
+          "answer": "Use prometheus/client_golang counters, histograms, and gauges registered on /metrics handler. Label cardinality must stay bounded; avoid high-cardinality user ids as labels. Middleware records request duration histograms. Grafana dashboards alert on SLO burn rates.",
+          "level": "junior"
+        },
+        {
+          "question": "What is pprof and when attach it?",
+          "answer": "net/http/pprof serves CPU, heap, and goroutine profiles on debug endpoints. Import for on-demand profiling in staging or with auth in prod during incidents. go tool pprof analyzes flamegraphs offline. CPU profile shows hot functions under load.",
+          "level": "senior"
+        },
+        {
+          "question": "How configure GOMAXPROCS in containers?",
+          "answer": "Go respects cgroup CPU limits automatically on modern versions via uber-go/automaxprocs in some setups. Misconfigured limits cause throttling with fewer usable threads. Align Kubernetes CPU requests/limits with expected parallelism. Watch for latency spikes when CPU starved.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain building static binaries with CGO_ENABLED=0.",
+          "answer": "Disabling CGO produces pure Go static executables easy to copy into scratch containers. Required when cross-compiling without C toolchain. Pure Go sacrifices some DNS resolver and sqlite driver features needing C. Choose distroless or alpine bases accordingly.",
+          "level": "junior"
+        },
+        {
+          "question": "How structured logging with slog differs from log.Printf?",
+          "answer": "slog emits key-value structured records easy for JSON ingestion. Levels and attributes attach consistently across handlers. Pass logger with context fields down call stack instead of globals. Correlate logs with trace ids from OpenTelemetry middleware.",
+          "level": "senior"
+        },
+        {
+          "question": "What health check endpoints should production expose?",
+          "answer": "Liveness proves process running; readiness proves dependencies like DB reachable. Separate cheap liveness from deeper readiness to avoid kube restarts on transient DB blips. Include build version git sha in info endpoint for deploy verification.",
+          "level": "middle"
+        },
+        {
+          "question": "How handle secret management in Go apps?",
+          "answer": "Load secrets from environment or mounted files injected by orchestrator, never commit. Use vault or cloud secret managers with short-lived tokens rotated automatically. Avoid logging configs that echo secrets on startup misconfig. fsnotify reload optional for cert rotation.",
+          "level": "junior"
+        },
+        {
+          "question": "What causes high GC pressure in Go services?",
+          "answer": "Allocating many short-lived objects per request increases GC frequency. sync.Pool reuses buffers for JSON or byte slices in hot paths. Preallocate slices when size known. profile heap in pprof to find unexpected allocations in middleware.",
+          "level": "junior"
+        },
+        {
+          "question": "How deploy Go with minimal container images?",
+          "answer": "Multi-stage Dockerfile builds with golang image then copies binary to scratch or distroless. Run as non-root user with read-only root filesystem when possible. Embed version with -ldflags -X main.version. Sign images and scan for CVEs in CI.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain backpressure when calling slow downstream from Go API.",
+          "answer": "Limit in-flight requests with semaphores and context deadlines. Return 503 when overloaded rather than unbounded queueing goroutines. Circuit breakers shed load when error rate spikes. Monitor queue depth and latency histograms to tune limits.",
+          "level": "junior"
+        },
+        {
+          "question": "What is structured slog?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to OpenTelemetry go, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use Prometheus metrics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is RED metrics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to USE method, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use pprof CPU?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is pprof heap?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does trace execution matter for Production Go work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on GOGC tuning in Production Go architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is memory ballast?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to container limits, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see OOM kills in a Production Go codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply Kubernetes requests limits correctly in Production Go?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve liveness readiness in Production Go?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use config env?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is secrets mounts?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve feature flags in Production Go?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use deployment strategies?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is canary analysis?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does rollback matter for Production Go work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        }
+      ]
+    }
+  ]
+}

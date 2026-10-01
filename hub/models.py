@@ -6,6 +6,7 @@ from django.db import models
 class Collection(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=50)
+    description = models.CharField(max_length=255, blank=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):

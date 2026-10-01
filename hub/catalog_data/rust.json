@@ -1,0 +1,1043 @@
+{
+  "slug": "rust",
+  "name": "Rust Developer",
+  "description": "Ownership-safe systems programming, async services, and low-level performance with modern Rust tooling.",
+  "categories": [
+    {
+      "name": "Ownership & Borrowing",
+      "description": "Move semantics, lifetimes, borrowing rules, and smart pointers in idiomatic Rust.",
+      "cards": [
+        {
+          "question": "What problem does Rust ownership solve?",
+          "answer": "Each value has a single owner; when the owner goes out of scope the value is dropped exactly once. This eliminates double-free and use-after-free without a garbage collector. Borrowing lets temporary shared or exclusive access without transferring ownership. The borrow checker enforces these rules at compile time.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the difference between move and copy in Rust?",
+          "answer": "Types implementing Copy duplicate bits on assignment; most primitives and small aggregates are Copy. Non-Copy types move ownership, leaving the source unusable unless it implements Default or was partially moved. Clone is explicit deep duplication when needed. Accidental moves of large buffers show up as use-after-move compile errors.",
+          "level": "senior"
+        },
+        {
+          "question": "When do you need lifetime annotations on function signatures?",
+          "answer": "When the compiler cannot infer how long references in parameters and return values relate. Common with functions returning slices or references into inputs. Elision rules cover many simple cases like fn foo(x: &str) -> &str with one input lifetime. Incorrect annotations fail to compile rather than dangling at runtime.",
+          "level": "senior"
+        },
+        {
+          "question": "Compare Box, Rc, and Arc for sharing data.",
+          "answer": "Box owns heap data uniquely with known size on the stack. Rc shares ownership on single-threaded code with reference counting. Arc is thread-safe Rc using atomic refcounts for multi-threaded sharing. Choose Arc<Mutex<T>> or channels when threads mutate shared state.",
+          "level": "junior"
+        },
+        {
+          "question": "What is interior mutability and Cell versus RefCell?",
+          "answer": "Interior mutability allows mutation through shared references when runtime checks or Copy rules guarantee safety. Cell wraps Copy types with get/set without references. RefCell provides runtime borrow flags for non-Copy data and panics on double mutable borrow. Mutex extends the idea across threads with blocking.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain the 'static' lifetime and when it appears.",
+          "answer": "'static means the reference lives for the entire program, like string literals stored in the binary. Owned String can be leaked to 'static with Box::leak for global config but rarely should. Trait bounds T: 'static often mean no borrowed data in async tasks. Confusing 'static with const or global variables is a common mistake.",
+          "level": "junior"
+        },
+        {
+          "question": "What is borrowing mutably versus immutably?",
+          "answer": "Any number of immutable borrows OR exactly one mutable borrow may exist at a time for a given value. Mutable borrows exclude readers, enabling exclusive updates without data races. Splitting borrows across struct fields uses disjoint field borrowing automatically in many patterns. Iterator methods often take &mut self exploiting this rule.",
+          "level": "junior"
+        },
+        {
+          "question": "How does Drop interact with panic and unwinding?",
+          "answer": "Drop runs when values leave scope, including during stack unwinding from panic unless abort strategy is set. Drop order is reverse declaration order for struct fields. Implement Drop for RAII around files and locks; avoid panicking inside Drop. Manually mem::forget skips Drop when you must leak intentionally.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Cow and when is it useful?",
+          "answer": "Clone-on-write enum either borrows immutably or owns a cloned buffer when mutation is needed. Ideal for APIs accepting &str or String-like inputs without forcing allocation upfront. Parsing pipelines use Cow to stay borrow-only on happy paths. Conversion to owned happens lazily on first write.",
+          "level": "junior"
+        },
+        {
+          "question": "Why can returning references to local variables fail to compile?",
+          "answer": "Local variables die at function end, so any reference to them would dangle. Rust rejects these unless lifetimes tie returns to inputs. Returning owned values or 'static references fixes the issue. This compile-time check replaces many C++ return-reference footguns.",
+          "level": "junior"
+        },
+        {
+          "question": "What is ownership rules?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to move semantics, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on Copy trait in Ownership & Borrowing architecture?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Clone trait?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to borrowing, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see mutable borrows in a Ownership & Borrowing codebase?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "junior"
+        },
+        {
+          "question": "What is immutable borrows?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve lifetimes in Ownership & Borrowing?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see lifetime elision in a Ownership & Borrowing codebase?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "senior"
+        },
+        {
+          "question": "What is static lifetime?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve Box in Ownership & Borrowing?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see Rc in a Ownership & Borrowing codebase?",
+          "answer": "Smart pointers encode ownership and sharing: unique, shared, or interior mutability patterns. Choose Arc/Mutex for cross-thread sharing and RefCell for single-thread interior mutability. Pinning stabilizes addresses required by self-referential async state machines.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Arc?",
+          "answer": "Smart pointers encode ownership and sharing: unique, shared, or interior mutability patterns. Choose Arc/Mutex for cross-thread sharing and RefCell for single-thread interior mutability. Pinning stabilizes addresses required by self-referential async state machines.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve Weak in Ownership & Borrowing?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on RefCell in Ownership & Borrowing architecture?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Cell?",
+          "answer": "Smart pointers encode ownership and sharing: unique, shared, or interior mutability patterns. Choose Arc/Mutex for cross-thread sharing and RefCell for single-thread interior mutability. Pinning stabilizes addresses required by self-referential async state machines.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does Mutex matter for Ownership & Borrowing work?",
+          "answer": "Mutexes serialize access to shared mutable state and must be held for the shortest critical section possible. Establish a global lock order across modules to prevent deadlock cycles. Prefer transferring data over channels when ownership handoff is clearer than shared memory.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on RwLock in Ownership & Borrowing architecture?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize interior mutability across a large Ownership & Borrowing codebase?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to Cow, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see Pin in a Ownership & Borrowing codebase?",
+          "answer": "Smart pointers encode ownership and sharing: unique, shared, or interior mutability patterns. Choose Arc/Mutex for cross-thread sharing and RefCell for single-thread interior mutability. Pinning stabilizes addresses required by self-referential async state machines.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Unpin?",
+          "answer": "Smart pointers encode ownership and sharing: unique, shared, or interior mutability patterns. Choose Arc/Mutex for cross-thread sharing and RefCell for single-thread interior mutability. Pinning stabilizes addresses required by self-referential async state machines.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve drop order in Ownership & Borrowing?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on ManuallyDrop in Ownership & Borrowing architecture?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "Types & Traits",
+      "description": "Enums, pattern matching, trait objects, generics, and error modeling.",
+      "cards": [
+        {
+          "question": "How do Result and Option differ from exceptions?",
+          "answer": "Errors are values carried in Result<T, E> that callers must handle explicitly. Option models absence without null pointers. This makes control flow visible and documents failure modes in types. ? propagates errors ergonomically while staying explicit in signatures.",
+          "level": "middle"
+        },
+        {
+          "question": "What is the difference between impl Trait and dyn Trait?",
+          "answer": "impl Trait in return position hides a concrete type statically resolved at compile time with monomorphization. dyn Trait is a fat pointer with vtable for runtime polymorphism on the heap or stack via references. impl Trait is zero-cost; dyn Trait adds indirection but enables heterogeneous collections. async fn returns opaque impl Future types similarly.",
+          "level": "middle"
+        },
+        {
+          "question": "When do you derive traits versus implement manually?",
+          "answer": "Derive works for Debug, Clone, PartialEq, and many standard traits when fields support them. Manual impls customize behavior like ordering not matching equality or Send bounds. Newtype wrappers derive on inner fields with transparent semantics. Orphan rules require local newtypes to implement foreign traits.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain the orphan rule for trait implementations.",
+          "answer": "You may implement a trait for a type only if you own the trait or the type in your crate. Prevents conflicting impls across crates for the same pair. Wrapper types around foreign types are the idiomatic extension point. Blanket impls like impl<T: Display> ToString are powerful but can break coherence if overlapping.",
+          "level": "senior"
+        },
+        {
+          "question": "What are associated types in traits?",
+          "answer": "They name output types inside a trait, like Iterator::Item. One impl per type determines associated types unlike generic methods with multiple type params. They simplify signatures for iterators and async streams. GATs generalize associated types to lifetimes and generics on traits.",
+          "level": "senior"
+        },
+        {
+          "question": "How does pattern matching with enums improve safety?",
+          "answer": "match must cover all variants, so refactors adding variants become compile errors until handled. Option and Result force nil handling at call sites. Destructuring nested enums clarifies protocol state machines. if let and while let sugar common single-pattern cases.",
+          "level": "middle"
+        },
+        {
+          "question": "What is From and Into used for?",
+          "answer": "From enables one-way conversions with impl From<A> for B and auto Into. Prefer From for clear conversion direction in APIs accepting impl Into<T>. TryFrom handles fallible conversions without panics. They reduce boilerplate compared to ad hoc constructor functions.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you model errors in a library crate?",
+          "answer": "Define a small enum or struct error type implementing std::error::Error and Display. thiserror reduces boilerplate; anyhow suits applications aggregating errors. Libraries avoid anyhow in public APIs to keep errors typed for callers. Provide context with map_err and #[source] chains.",
+          "level": "middle"
+        },
+        {
+          "question": "What is zero-sized type (ZST) usage?",
+          "answer": "Types like () or marker structs consume no runtime space but carry type information. PhantomData marks ownership of lifetimes or types without storing them. State machine types encode protocol phases in the type system. Misusing ZST markers can still affect codegen via monomorphization.",
+          "level": "middle"
+        },
+        {
+          "question": "When prefer enum over trait object for variants?",
+          "answer": "Closed sets of variants with known behavior fit enums with match exhaustiveness. Open extension across crates favors traits and dyn. Enums enable inlined dispatch without vtable indirection. Hybrid approaches use enum of boxed dyn for plugin registries.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply Result in day-to-day Types & Traits work?",
+          "answer": "Result<T, E> models success or failure as values, forcing callers to handle errors explicitly. The ? operator propagates errors ergonomically while keeping signatures honest. Libraries expose typed errors; applications may aggregate with anyhow-style wrappers at the boundary.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply Result correctly in Types & Traits?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve Option in Types & Traits?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on match exhaustiveness in Types & Traits architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize if let across a large Types & Traits codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to while let, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use enum variants?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize newtype pattern across a large Types & Traits codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve trait objects in Types & Traits?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use dyn Trait?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply impl Trait correctly in Types & Traits?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve associated types in Types & Traits?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use generic traits?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize trait bounds across a large Types & Traits codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to where clauses, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on orphan rule in Types & Traits architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply blanket impls correctly in Types & Traits?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to marker traits, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use Send?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Sync?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to Sized, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on Unsize in Types & Traits architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply From and Into correctly in Types & Traits?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does TryFrom matter for Types & Traits work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Async & Concurrency",
+      "description": "async/await, executors, channels, and safe parallelism patterns.",
+      "cards": [
+        {
+          "question": "What does async fn desugar to in Rust?",
+          "answer": "An async fn returns impl Future<Output = T> that runs incrementally when polled. The compiler transforms await points into state machine code. Nothing executes until the future is spawned on a runtime or awaited. async blocks capture variables similarly to closures.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Send and Sync and why do they matter for async?",
+          "answer": "Send types can move across thread boundaries; Sync means shared references are Send. Async tasks often require Send because executors may migrate them between threads. Rc and RefCell are not Send; Arc and Mutex are. Non-Sync futures cannot be held across await in multi-thread runtimes without care.",
+          "level": "senior"
+        },
+        {
+          "question": "Compare tokio::spawn versus block_on for CLI tools.",
+          "answer": "block_on runs a runtime on the current thread until the future completes, suitable for small binaries. spawn schedules concurrent tasks on worker threads for servers. Mixing block_on inside async tasks can deadlock nested runtimes. Prefer tokio::main or async main for consistent entry.",
+          "level": "middle"
+        },
+        {
+          "question": "How do mpsc channels differ from async channels in tokio?",
+          "answer": "std::sync::mpsc blocks threads; async channels await send and recv without blocking threads. Bounded channels apply backpressure when consumers lag producers. select! merges multiple async sources for timeouts and cancellation. Choose channel depth from memory and latency budgets.",
+          "level": "middle"
+        },
+        {
+          "question": "What causes async cancellation and how handle it?",
+          "answer": "Dropping a future stops polling at next await, potentially leaving resources open. Use scopes like tokio::select! with explicit shutdown or Drop guards for locks. tokio::time::timeout wraps slow operations. Structured concurrency crates group child tasks lifetimes with parents.",
+          "level": "senior"
+        },
+        {
+          "question": "When use Mutex versus RwLock in async code?",
+          "answer": "Async Mutex from tokio yields the task instead of blocking threads when contended. Std Mutex in async can stall the executor if held across await points. RwLock helps read-heavy caches with occasional writes. Keep critical sections short and never await while holding std locks.",
+          "level": "middle"
+        },
+        {
+          "question": "What is pin and why are some futures Unpin-sensitive?",
+          "answer": "Self-referential async state machines must not move after poll starts; Pin fixes address in memory. Most futures are Unpin and need no special handling. Pin<Box<dyn Future>> is common for heap-stored trait objects. Violating pin contracts causes subtle use-after-move bugs.",
+          "level": "junior"
+        },
+        {
+          "question": "How does rayon parallelize CPU-bound work from async servers?",
+          "answer": "rayon thread pools run compute jobs without blocking async worker threads. spawn_blocking in tokio offloads blocking IO and heavy CPU similarly. Keep async tasks for IO multiplexing; delegate matmul or compression to dedicated pools. Oversubscription hurts when both stacks fight for cores.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain atomics and Ordering for lock-free counters.",
+          "answer": "AtomicU64 fetch_add with Ordering::Relaxed is enough for statistics. Release-acquire pairs publish data visible to other threads after counters increment. SeqCst is simplest but slower; use when reasoning cost is high. Lock-free structures still require careful design beyond atomics alone.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall with std::thread::sleep in async services?",
+          "answer": "sleep blocks an OS thread, reducing executor capacity under load. Use tokio::time::sleep for async delays that yield the task. Long blocking calls belong in spawn_blocking with limits. Timeouts should integrate with cancellation tokens for graceful shutdown.",
+          "level": "middle"
+        },
+        {
+          "question": "What is async fn?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to Future trait, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use Poll?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply Waker correctly in Async & Concurrency?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to Executor, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use Tokio runtime?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is async std?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to spawn, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on JoinHandle in Async & Concurrency architecture?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply select correctly in Async & Concurrency?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve timeout in Async & Concurrency?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see sleep in a Async & Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize interval across a large Async & Concurrency codebase?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve channels async in Async & Concurrency?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on mpsc in Async & Concurrency architecture?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "junior"
+        },
+        {
+          "question": "What is broadcast?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to watch channel, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see oneshot in a Async & Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is backpressure?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve buffered streams in Async & Concurrency?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see Stream trait in a Async & Concurrency codebase?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize pin projections across a large Async & Concurrency codebase?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve Send bounds in Async & Concurrency?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "Unsafe & FFI",
+      "description": "FFI, unsafe Rust, memory layout, and building reliable low-level components.",
+      "cards": [
+        {
+          "question": "When is unsafe required in Rust?",
+          "answer": "For dereferencing raw pointers, calling unsafe functions, accessing mutable statics, and implementing unsafe traits. Safe abstractions can wrap unsafe internals if invariants are enforced at API boundaries. unsafe does not disable the borrow checker; it trusts the programmer for listed operations. Minimize unsafe blocks and document safety preconditions.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you call C libraries from Rust safely?",
+          "answer": "Use bindgen or manual extern blocks for signatures and link native libs. Wrap raw pointers in structs with Drop for resource cleanup. Validate C API preconditions before unsafe calls and convert errors to Result. Test FFI on all target platforms in CI.",
+          "level": "junior"
+        },
+        {
+          "question": "What is MaybeUninit and why avoid uninitialized reads?",
+          "answer": "MaybeUninit<T> reserves memory without claiming T is initialized, avoiding undefined behavior on large structs. assume_init reads after you prove initialization. Useful for buffers filled by IO or C callbacks. mem::zeroed is only safe for types allowing all-zero bit patterns.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain repr(C) and layout compatibility.",
+          "answer": "repr(C) fixes field order and alignment for C interop structs. Padding and size must match C headers on each platform. repr(packed) reduces padding but may cause unaligned access penalties. Automated tests comparing sizes with static_assert in C catch drift.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you implement Send manually and when is it unsafe?",
+          "answer": "Send is auto derived unless containing non-Send fields like raw pointers. unsafe impl Send for a wrapper documents that raw pointer usage is synchronized externally. Incorrect Send impls allow data races at compile-approved sites. Prefer Arc<Mutex<...>> over manual Send when possible.",
+          "level": "junior"
+        },
+        {
+          "question": "What tools find undefined behavior besides the borrow checker?",
+          "answer": "Miri interprets Rust bytecode to detect UB in unsafe and std usage. AddressSanitizer via rustc flags catches heap issues in native tests. Clippy lints flag suspicious unsafe patterns. Fuzz targets with cargo-fuzz stress parser invariants.",
+          "level": "senior"
+        },
+        {
+          "question": "How map OS errors into Rust types?",
+          "answer": "std::io::Error wraps OS error codes from syscalls. Platform-specific crates expose errno details when needed. Convert to domain errors at boundaries instead of leaking io::Error everywhere. Retry policies belong above the thin OS wrapper layer.",
+          "level": "middle"
+        },
+        {
+          "question": "What is stack overflow risk in recursive Rust code?",
+          "answer": "Deep recursion consumes stack frames until overflow, aborting the process. Iterative algorithms or explicit stacks on the heap avoid limits. #![recursion_limit] raises macro recursion only, not runtime stack. Tail recursion is not guaranteed; do not rely on it for safety.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you share buffers with io_uring or mmap?",
+          "answer": "Pin buffers and keep them alive for the duration of kernel operations. Use slices with lifetimes tied to owning structures in safe wrappers. Unsafe code registers buffer addresses with the ring. Dropping owners while IO is in flight is UB without cancellation.",
+          "level": "middle"
+        },
+        {
+          "question": "Why avoid panic across FFI boundaries?",
+          "answer": "Unwinding Rust panic into C is undefined behavior unless abort strategy is used. Catch panics at the FFI edge and map to error codes. C++ interop may require std::panic::catch_unwind at boundaries. Document that C callers must not rely on Rust panics propagating.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply unsafe blocks in day-to-day Unsafe & FFI work?",
+          "answer": "unsafe blocks opt into compiler-trusted invariants for raw pointers, FFI, and certain intrinsics. Keep unsafe small, document safety preconditions, and expose safe APIs that maintain invariants. Validate with Miri, tests, and fuzzing because memory bugs become exploitable across trust boundaries.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply unsafe blocks correctly in Unsafe & FFI?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does unsafe fn matter for Unsafe & FFI work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use unsafe traits?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is raw pointers?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does dereferencing rules matter for Unsafe & FFI work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on slice from raw parts in Unsafe & FFI architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply CString correctly in Unsafe & FFI?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve CStr in Unsafe & FFI?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use extern C?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply bindgen correctly in Unsafe & FFI?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to cbindgen, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see repr C in a Unsafe & FFI codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is repr Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to padding in FFI, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use MaybeUninit?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize assume_init across a large Unsafe & FFI codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve zeroed memory in Unsafe & FFI?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use panic across FFI?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is catch_unwind?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve Send manual impl in Unsafe & FFI?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on Sync manual impl in Unsafe & FFI architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply Miri correctly in Unsafe & FFI?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "Ecosystem",
+      "description": "Cargo, testing, clippy, docs, and shipping Rust services and binaries.",
+      "cards": [
+        {
+          "question": "How do Cargo workspaces organize multi-crate projects?",
+          "answer": "A root Cargo.toml lists member crates sharing lockfile and target directory. Dependencies path-local between crates enable fast iteration. Workspace-level lints and profiles apply uniformly. Publish crates independently with aligned version bumps.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the difference between dev-dependencies and build-dependencies?",
+          "answer": "dev-dependencies compile only for tests and examples like mockall or criterion. build-dependencies run at compile time in build.rs for code generation. Normal dependencies link into the library or binary artifact. Keeping dev-deps out of release reduces attack surface slightly.",
+          "level": "middle"
+        },
+        {
+          "question": "How do feature flags control optional functionality?",
+          "answer": "Features in Cargo.toml gate optional deps and cfg attributes in code. Default features should be minimal for library consumers. Document feature interactions to avoid incompatible combos. CI should build --no-default-features and all-features matrices.",
+          "level": "junior"
+        },
+        {
+          "question": "What does cargo clippy -- -D warnings achieve in CI?",
+          "answer": "Treats clippy lints as errors, preventing regressions in idiomatic code. Catches redundant clones, needless borrows, and async anti-patterns early. Pin clippy version with toolchain files for stable CI. Allow lints locally only with tracked issues.",
+          "level": "middle"
+        },
+        {
+          "question": "How benchmark with criterion or cargo bench?",
+          "answer": "criterion provides statistical analysis and graphs for microbenchmarks. Built-in bench harness is nightly-oriented; criterion runs on stable. Isolate setup from measured loops and prevent LLVM from optimizing away work. Store baselines to detect perf regressions in PRs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is rustfmt's role in team workflows?",
+          "answer": "Automatic formatting removes style debates and diff noise. rustfmt.toml configures edition-specific rules consistently. Run fmt in pre-commit or CI before merge. Pair with clippy for idioms fmt does not enforce.",
+          "level": "senior"
+        },
+        {
+          "question": "How document public APIs with cargo doc and examples?",
+          "answer": "Doc comments support markdown and runnable examples tested via cargo test. pub use reexports should be documented at the stable path users import. Include error conditions and safety sections on unsafe wrappers. docs.rs builds docs for crates.io releases automatically.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain cargo audit and dependency supply chain hygiene.",
+          "answer": "cargo audit checks lockfile against RustSec advisory database. Dependabot or renovate bump vulnerable crates proactively. Pin versions in applications; libraries keep semver ranges flexible. Vendoring sources helps air-gapped builds at maintenance cost.",
+          "level": "junior"
+        },
+        {
+          "question": "How cross-compile Rust for ARM or musl targets?",
+          "answer": "rustup target add and linker configuration in .cargo/config.toml point to cross toolchains. musl targets produce static-friendly binaries; gnu targets use dynamic libc. Test on QEMU or hardware agents in CI. Avoid assuming x86 SIMD in shared crates without cfg gates.",
+          "level": "middle"
+        },
+        {
+          "question": "What deployment patterns suit Rust microservices?",
+          "answer": "Single static binary simplifies containers and reduces base image size. Graceful shutdown handles SIGTERM by stopping accept and draining async tasks. Health checks expose readiness separate from liveness. Observability via tracing crates integrates with OpenTelemetry collectors.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Cargo.toml?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve workspaces in Ecosystem?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see features flags in a Ecosystem codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply dev-dependencies correctly in Ecosystem?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve build-dependencies in Ecosystem?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on profiles release in Ecosystem architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is LTO rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does codegen units matter for Ecosystem work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use rustup toolchains?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply rustfmt correctly in Ecosystem?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does clippy matter for Ecosystem work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on cargo test in Ecosystem architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply cargo bench correctly in Ecosystem?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does criterion matter for Ecosystem work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use cargo doc?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is docs.rs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to semver, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use cargo publish?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply crates.io correctly in Ecosystem?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does cargo audit matter for Ecosystem work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use cargo deny?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize dependabot across a large Ecosystem codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to cross compile, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Systems Design in Rust",
+      "description": "Service architecture, reliability, security, and operating Rust at scale.",
+      "cards": [
+        {
+          "question": "How would you design a production approach around error handling strategy in Systems Design in Rust?",
+          "answer": "Senior work on error handling strategy in Systems Design in Rust means setting standards, not only fixing bugs. Define ownership boundaries, observability, and rollback paths before scaling usage across services or devices. Expect follow-ups on failure isolation, security, and long-term cost once error handling strategy becomes load-bearing.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize error handling strategy across a large Systems Design in Rust codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve layered architecture in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see hexagonal ports in a Systems Design in Rust codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply configuration loading correctly in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve graceful shutdown in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see health checks in a Systems Design in Rust codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is metrics exposition?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to tracing propagation, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see idempotency keys in a Systems Design in Rust codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply retry policies correctly in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does circuit breakers matter for Systems Design in Rust work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use rate limiting?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize connection pooling across a large Systems Design in Rust codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to backpressure HTTP, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use zero-copy parsing?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply buffer pools correctly in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve memory budgets in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use CPU budgets?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply task supervision trees correctly in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve plugin architectures in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see dynamic loading limits in a Systems Design in Rust codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is semver API design?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve feature combinatorics in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on security reviews unsafe in Systems Design in Rust architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply threat modeling services correctly in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to secrets management, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on TLS rustls in Systems Design in Rust architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is mTLS services?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve auth middleware in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use RBAC models?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply multi-tenant isolation correctly in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve data migration in Systems Design in Rust?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        }
+      ]
+    }
+  ]
+}

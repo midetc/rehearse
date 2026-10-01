@@ -1,0 +1,1449 @@
+{
+  "slug": "devops",
+  "name": "DevOps",
+  "description": "Automate delivery, infrastructure, and reliable operations.",
+  "categories": [
+    {
+      "name": "Linux & Networking",
+      "description": "Shell, processes, permissions, DNS, TCP/IP, and troubleshooting on Linux hosts.",
+      "cards": [
+        {
+          "question": "How do you find which process listens on port 443?",
+          "answer": "Run ss -tlnp or lsof -i :443 to see the listener and owning PID. Match the PID with ps or read /proc/pid/cmdline to identify the service. On legacy hosts netstat -tlnp gives similar data.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the difference between hard and soft links?",
+          "answer": "Hard links share the same inode; the file data survives until all hard links are removed. Symbolic links store a path and break if the target moves or is deleted. Hard links cannot span filesystems or usually point at directories.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain permissions rwx for user, group, and others.",
+          "answer": "Each triplet grants read, write, and execute on files or directories. Directories use execute to allow traversing entries. chmod accepts octal like 750 or symbolic u+rx.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you check disk usage by directory?",
+          "answer": "du -h --max-depth=1 sorts folder sizes quickly on a mount. df -h shows filesystem free space at the block level. Investigate sudden growth with du on suspect paths and log directories.",
+          "level": "junior"
+        },
+        {
+          "question": "What does load average represent on Linux?",
+          "answer": "Load average is the exponentially weighted count of runnable and uninterruptible tasks. Values above CPU count suggest queuing or blocked I/O. Pair load with CPU, iowait, and D-state processes for context.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you trace DNS resolution on a Linux host?",
+          "answer": "Use dig or getent hosts to test resolver behavior. Inspect /etc/resolv.conf and nsswitch.conf for search domains and sources. tcpdump on port 53 reveals upstream timeouts or wrong answers.",
+          "level": "junior"
+        },
+        {
+          "question": "Describe the TCP three-way handshake.",
+          "answer": "The client sends SYN, the server replies SYN-ACK, and the client completes with ACK. Only then is the connection established for data. Each new connection pays at least one round-trip time before the first byte.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the difference between TCP and UDP?",
+          "answer": "TCP provides reliable ordered delivery with retransmissions and flow control. UDP is connectionless with minimal overhead and no delivery guarantees. Choose TCP for most application protocols and UDP for latency-sensitive or broadcast patterns.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you add a persistent static route?",
+          "answer": "Use ip route add via ip route add default via gateway or specific prefixes on RHEL-style systems with nmcli or netplan on Ubuntu. Persist routes in distro-specific config so reboots do not drop them. Verify with ip route get to a test destination.",
+          "level": "junior"
+        },
+        {
+          "question": "What is an inode and why can you run out of them?",
+          "answer": "An inode stores metadata and block pointers for a file without the name. A filesystem can have free space but zero free inodes if many tiny files exist. df -i shows inode usage; find with delete policies may be required.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you find large files quickly?",
+          "answer": "find /mount -xdev -type f -size +100M -printf '%s %p\n' sorted by size locates heavy objects. logrotate and application retention policies often explain growth. Ensure you search the correct mount with -xdev to avoid crossing filesystems.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain stdout, stderr, and redirecting both.",
+          "answer": "File descriptors 1 and 2 are stdout and stderr; they can redirect independently or together with 2>&1. Pipelines connect stdout of one process to stdin of another. Use tee when you need a console copy and a log file simultaneously.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the purpose of /etc/hosts?",
+          "answer": "It provides static hostname-to-IP mappings before or instead of DNS. Entries override resolver results for matching names when nsswitch lists files first. Use sparingly in production to avoid drift across fleets.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you list open files for a process?",
+          "answer": "lsof -p PID or ls -l /proc/PID/fd shows descriptors including sockets and pipes. High counts may indicate connection leaks or log handles not rotated. ulimit -n shows per-process limits.",
+          "level": "middle"
+        },
+        {
+          "question": "What is SSH agent forwarding and its risk?",
+          "answer": "Agent forwarding lets a remote host use your local agent to hop further without copying private keys. A compromised remote can abuse the forwarded agent to authenticate elsewhere. Disable forwarding unless strictly needed and use ProxyJump instead when possible.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you debug 'Connection refused' vs 'Timeout'?",
+          "answer": "Refused means nothing accepted the connection or a firewall rejected actively on the path. Timeout suggests filtering dropping packets or an unreachable route. Test with telnet, nc, or curl -v from the same network namespace as the client.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain NAT and why conntrack matters.",
+          "answer": "NAT rewrites addresses or ports so return packets reach the correct translator. Connection tracking stores state for each flow through SNAT or DNAT rules. Exhausted conntrack tables cause random drop behavior under heavy connection churn.",
+          "level": "middle"
+        },
+        {
+          "question": "What is the TIME_WAIT state?",
+          "answer": "After close, endpoints hold TIME_WAIT to catch delayed duplicates on the same quadruple. High churn servers can accumulate many TIME_WAIT sockets. Tuning tw_reuse and proper connection pooling reduce pressure while preserving safety.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you inspect routing and policy rules?",
+          "answer": "ip route show and ip rule list reveal tables beyond the main table. Policy routing sends traffic via different gateways based on source or mark. Misconfigured rules cause asymmetric routing and mysterious one-way connectivity.",
+          "level": "middle"
+        },
+        {
+          "question": "What tools help capture packets on Linux?",
+          "answer": "tcpdump and Wireshark via dumpcap filter by host, port, or protocol. Capture on the correct interface and namespace when using containers. Use rotating captures with size limits to avoid filling disks during incidents.",
+          "level": "middle"
+        },
+        {
+          "question": "How do systemd units differ from init scripts?",
+          "answer": "Units declare dependencies, restart policies, and cgroups limits declaratively. journald aggregates logs with metadata like _PID and _COMM. systemctl enable --now activates on boot with clearer failure modes than legacy scripts.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a zombie process?",
+          "answer": "A zombie is a terminated child not yet reaped by its parent; it consumes a process table slot only. Persistent zombies indicate a parent bug ignoring SIGCHLD. Kill or fix the parent, not the zombie entry directly.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you limit memory for a service?",
+          "answer": "Use systemd MemoryMax or cgroup v2 memory.max for durable caps. ulimit -v applies only to shell-spawned processes unless wrapped. Validate under load because OOM kills may still occur at the cgroup boundary.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain SELinux enforcing vs permissive.",
+          "answer": "Enforcing blocks operations not allowed by policy; permissive logs denials without blocking. audit2why and audit logs translate AVC messages into missing rules or file contexts. Disabling SELinux globally is rarely the right fix in regulated environments.",
+          "level": "middle"
+        },
+        {
+          "question": "What is the difference between kill and kill -9?",
+          "answer": "SIGTERM allows graceful shutdown handlers to run. SIGKILL cannot be caught and should be a last resort after timeouts. Orchestrators usually send TERM then KILL after a grace period.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you schedule recurring jobs reliably?",
+          "answer": "Prefer systemd timers or cron with flock and logged wrappers over bare cron lines. Ensure timezone and daylight-saving behavior are explicit. Monitor for missed runs with heartbeat metrics or dead-man alerts.",
+          "level": "middle"
+        },
+        {
+          "question": "What is MTU and path MTU discovery?",
+          "answer": "MTU is the largest L3 packet payload on a link without fragmentation. PMTUD learns the smallest MTU along a path using DF probes. Black-hole PMTUD shows up as hangs on large transfers but success on small pings.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you troubleshoot high iowait?",
+          "answer": "Identify D-state processes and the backing device with iostat -x and pidstat. Check for failing disks, saturated NFS, or runaway logging. Move hot data to faster media or batch fsync-heavy workloads.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain epoll vs select for scalability.",
+          "answer": "select and poll scale poorly with large fd sets due to linear scans. epoll registers interest once and returns ready fds efficiently for many idle connections. That is why high-concurrency servers on Linux prefer epoll.",
+          "level": "middle"
+        },
+        {
+          "question": "What is ARP and gratuitous ARP used for?",
+          "answer": "ARP maps IPv4 addresses to MAC addresses on a local segment. Gratuitous ARP announces ownership during failover or address moves. Stale ARP caches cause traffic to hit the wrong host after VIP migration.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you verify TLS certificate expiry from CLI?",
+          "answer": "openssl s_client -connect host:443 shows the chain and notAfter dates. Automate checks with monitoring plugins before users hit browser errors. Remember to validate the full chain including intermediates served by the load balancer.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the role of /proc and /sys?",
+          "answer": "/proc exposes process and kernel tunables as virtual files; /sys exposes device and driver attributes. Many diagnostics read /proc/net, /proc/meminfo, or sysfs power and block settings. They disappear when the kernel is not running— they are not normal disk files.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you bind a service to a non-privileged port?",
+          "answer": "Processes need CAP_NET_BIND_SERVICE or to listen on ports above 1024 without capability. Reverse proxies often terminate on 443 and forward to high ports. Avoid running entire apps as root just to bind 80.",
+          "level": "senior"
+        },
+        {
+          "question": "Describe SNAT vs DNAT.",
+          "answer": "DNAT changes destination before routing, commonly publishing internal services. SNAT or MASQUERADE rewrites source after routing so replies return via the gateway. Both require conntrack for return path symmetry.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you investigate intermittent latency?",
+          "answer": "Collect mtr or ping statistics over time windows and compare paths. Check NIC offload settings, bufferbloat, and cross-AZ traffic in cloud environments. Correlate with application traces to see if delay is network or server-side queuing.",
+          "level": "senior"
+        },
+        {
+          "question": "What is SO_REUSEADDR?",
+          "answer": "It allows binding to a port in TIME_WAIT under controlled conditions for server restarts. It does not override an actively listening socket. Understand platform nuances before enabling in custom servers.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you rotate logs without restarting the app?",
+          "answer": "Prefer signaling the daemon to reopen logs on HUP when supported. logrotate copytruncate risks lost lines for apps that keep stale inode handles. Centralizing via journald or a sidecar agent reduces file-handle rotation pain.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain Linux capabilities vs full root.",
+          "answer": "Capabilities split traditional root powers into granular bits like NET_ADMIN or SYS_PTRACE. Drop caps in service units or containers to shrink blast radius. setuid binaries grant selective caps but remain sensitive to misuse.",
+          "level": "senior"
+        },
+        {
+          "question": "What is conntrack max and nf_conntrack buckets?",
+          "answer": "These kernel tunables cap tracked connection entries for NAT and stateful firewalls. Exhaustion causes dropped new flows while old entries linger until timeout. Size based on peak connection rate and tune timeouts for your workload.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you debug DNS split-horizon issues?",
+          "answer": "Internal and external views may return different records for the same name. Compare dig against public resolvers versus corporate resolvers. Document which clients must use which view to avoid chasing phantom outages.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Docker",
+      "description": "Images, containers, networking, volumes, and production-oriented container practices.",
+      "cards": [
+        {
+          "question": "What is the difference between an image and a container?",
+          "answer": "An image is an immutable layered filesystem template; a container is a running instance with a writable layer. Many containers can share read-only image layers. Deleting a container removes its writable layer but not the base image.",
+          "level": "junior"
+        },
+        {
+          "question": "Why use multi-stage Docker builds?",
+          "answer": "Earlier stages compile or fetch artifacts; the final stage copies only runtime bits. That shrinks attack surface and image size by excluding compilers and caches. It also speeds deploys and reduces storage costs.",
+          "level": "junior"
+        },
+        {
+          "question": "How do COPY and ADD differ?",
+          "answer": "COPY simply copies local context files into the image. ADD can extract local tar archives and fetch remote URLs, which surprises reproducibility. Prefer COPY unless you explicitly need archive extraction.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a Docker volume vs bind mount?",
+          "answer": "Volumes are managed by Docker with predictable lifecycle and portability across hosts. Bind mounts map host paths directly, coupling containers to node layout. Use volumes for persistent app data; bind mounts for dev workflows cautiously.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain bridge, host, and none network modes.",
+          "answer": "Bridge is default NAT networking on docker0. Host shares the host network namespace for maximum performance and simplest ports. none isolates networking entirely for batch or security-sensitive workloads.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you reduce image size?",
+          "answer": "Choose slim bases, combine RUN layers thoughtfully, and remove package caches in the same layer they were created. Use .dockerignore to keep build context small. Scan images to find accidental large blobs.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Docker HEALTHCHECK?",
+          "answer": "It defines a command whose exit status marks container health for orchestrators. Unhealthy containers can restart or stop receiving traffic depending on platform. Keep checks lightweight and representative of real readiness.",
+          "level": "junior"
+        },
+        {
+          "question": "Why avoid running as root in containers?",
+          "answer": "Container escapes or kernel bugs grant host impact proportional to container privileges. Use USER directives, read-only rootfs, and dropped capabilities. Root also simplifies accidental permission changes on mounted volumes.",
+          "level": "junior"
+        },
+        {
+          "question": "How does layer caching affect Dockerfile order?",
+          "answer": "Instructions invalidate cache from the changed line downward. Place rarely changing steps early and volatile COPY late. Pin dependency versions so cache hits remain meaningful.",
+          "level": "junior"
+        },
+        {
+          "question": "What is docker compose used for?",
+          "answer": "Compose defines multi-container apps with networks, volumes, and env in YAML. docker compose up brings the stack locally or on a single host. For multi-node production, migrate to Kubernetes or swarm with equivalent manifests.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you inspect container logs?",
+          "answer": "docker logs streams stdout/stderr; configure logging drivers for centralized collection. Log rotation via json-file options prevents disk fill on long-lived nodes. Correlate container ID labels in Loki or ELK.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain container exit codes.",
+          "answer": "Exit code 0 means success; non-zero signals application-defined or signal termination. Orchestrators use restart policies based on exit codes. Investigate OOM kills via dmesg and docker inspect OOMKilled flag.",
+          "level": "junior"
+        },
+        {
+          "question": "What is --init for?",
+          "answer": "It runs tini as PID 1 to reap zombies when the main process does not handle child signals well. Without a proper init, zombie accumulation can break health checks. Many minimal images benefit from explicit init wrappers.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you pass secrets to containers?",
+          "answer": "Avoid baking secrets into images or plain env in compose files committed to git. Use runtime secret mounts, vault agents, or orchestrator secret objects. Rotate credentials without rebuilding images when using external secret stores.",
+          "level": "middle"
+        },
+        {
+          "question": "What is containerd vs Docker Engine?",
+          "answer": "Docker Engine is the developer-facing CLI and API; containerd is the lower-level runtime managing images and containers. Kubernetes often talks to containerd directly via CRI. Understanding the stack helps when debugging pull or snapshot errors.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you debug 'no space left on device' for Docker?",
+          "answer": "Docker stores layers and volumes under /var/lib/docker by default. docker system df shows image, container, and volume usage. Prune unused objects carefully after confirming nothing important references them.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain USER namespace remapping.",
+          "answer": "It maps container root to an unprivileged host UID range. Compromises inside the container face reduced host permissions. Enable only with consistent volume ownership planning.",
+          "level": "middle"
+        },
+        {
+          "question": "What are Docker buildkit advantages?",
+          "answer": "BuildKit improves parallel builds, secrets handling, and cache export. DOCKER_BUILDKIT=1 enables modern frontend features. Remote cache backends speed CI pipelines sharing layers across runners.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you limit container CPU and memory?",
+          "answer": "Use --cpus, --memory, and compose deploy resources limits. Without limits, a noisy neighbor can starve the node. Align limits with application benchmarks, not guesswork.",
+          "level": "middle"
+        },
+        {
+          "question": "What is an entrypoint vs cmd?",
+          "answer": "ENTRYPOINT defines the main executable; CMD supplies default arguments overridden at run. Shell form vs exec form changes signal handling for PID 1. Prefer exec form for clean SIGTERM propagation.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you scan images for CVEs?",
+          "answer": "Integrate Trivy, Grype, or registry scanning in CI and admission control. Fix by rebuilding on patched bases rather than hot-patching running containers. Track SLA by severity for compliance.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain overlay2 storage driver.",
+          "answer": "overlay2 stacks read-only lowerdirs with a writable upperdir per container. It is the default driver on modern Linux with good performance. Incompatible filesystems like some NFS mounts break overlay expectations.",
+          "level": "middle"
+        },
+        {
+          "question": "What happens on docker pull?",
+          "answer": "The client resolves the manifest, fetches missing layers, and verifies digests. Authenticated registries require login or credential helpers. Air-gapped environments mirror registries internally.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you connect containers on custom networks?",
+          "answer": "docker network create then attach containers for automatic DNS names by service alias. Default bridge lacks embedded DNS between containers unless linked legacy patterns. Compose creates a project-scoped network automatically.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a .dockerignore file?",
+          "answer": "It excludes files from build context sent to the daemon. Large contexts slow builds and leak secrets if not ignored. Mirror .gitignore patterns plus CI artifacts.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you run one-off commands in a running stack?",
+          "answer": "docker compose exec service command runs with the service env and links. exec differs from run which creates a new container. Use exec for debugging; run for migrations with one-shot containers.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain read-only root filesystem.",
+          "answer": "Mount root read-only and use tmpfs or volumes for writable paths. It limits malware persistence and accidental config drift. Pair with dropped capabilities for defense in depth.",
+          "level": "middle"
+        },
+        {
+          "question": "What is distroless?",
+          "answer": "Distroless images contain application and runtime libraries without shells or package managers. They reduce CVE surface and force debugging via ephemeral debug sidecars. Build must happen in prior stages copying artifacts in.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you tag and promote images?",
+          "answer": "Use immutable digests for deploys and semantic tags for human promotion stages. Avoid mutable latest in production pipelines. Sign images with cosign for supply-chain verification.",
+          "level": "middle"
+        },
+        {
+          "question": "What causes 'permission denied' on volume mounts?",
+          "answer": "UID inside the container may not match host directory ownership. Fix with user namespaces, init chown, or matching USER in Dockerfile to host GID. Document required host permissions in runbooks.",
+          "level": "middle"
+        },
+        {
+          "question": "How do Docker restart policies work?",
+          "answer": "no, on-failure, always, and unless-stopped control daemon behavior on exit. Orchestrators may override with their own controllers. align policy with stateful data recovery procedures.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain docker build --target.",
+          "answer": "Multi-stage Dockerfiles name stages; --target stops at a chosen stage for intermediate artifacts. Useful for CI jobs needing only test binaries. Keeps final image lean while reusing earlier layers.",
+          "level": "senior"
+        },
+        {
+          "question": "What is container escape?",
+          "answer": "Exploits leverage kernel bugs or misconfigured privileges to affect the host. Mitigate with seccomp, AppArmor, minimal caps, and timely kernel patches. Treat rootful Docker on multi-tenant hosts as high risk.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you view resource usage live?",
+          "answer": "docker stats shows CPU, memory, and network per container. For historical data export cAdvisor or node-level metrics. Set alerts on memory working set approaching limits.",
+          "level": "senior"
+        },
+        {
+          "question": "What is docker save vs export?",
+          "answer": "save preserves layers and metadata for image transfer tarballs. export flattens a container filesystem without history. Prefer save/load or registry push for reproducible transfers.",
+          "level": "senior"
+        },
+        {
+          "question": "How do healthchecks interact with depends_on?",
+          "answer": "Compose depends_on waits for container start, not health, unless condition syntax is used. Misunderstanding this causes race conditions on boot. Use health-aware conditions or retry loops in apps.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain IPC and PID namespace sharing.",
+          "answer": "Sharing PID namespace lets containers see each other's processes— rare and risky. IPC sharing enables shared memory between co-located containers. Default isolation is usually correct unless explicitly designing sidecar patterns.",
+          "level": "senior"
+        },
+        {
+          "question": "What is build context security?",
+          "answer": "Sending the entire repo to the daemon can include secrets if .dockerignore fails. Use BuildKit secret mounts so credentials never land in layers. Review CI logs for accidental context leaks.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you pin base image digests?",
+          "answer": "Reference sha256 digests in FROM lines for reproducibility. Renovate or dependabot can bump digests after CI passes. Still rebuild when upstream patches the same tag silently.",
+          "level": "senior"
+        },
+        {
+          "question": "What is docker compose profiles?",
+          "answer": "Profiles tag services so only selected groups start with --profile flags. Useful for optional observability or debug sidecars locally. Document default profile behavior for new contributors.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Kubernetes",
+      "description": "Workloads, networking, storage, scaling, and day-2 cluster operations.",
+      "cards": [
+        {
+          "question": "What is a Pod in Kubernetes?",
+          "answer": "A Pod is the smallest schedulable unit, usually one or more tightly coupled containers sharing network and volumes. Pods are ephemeral; controllers recreate them on failure. You rarely create bare Pods in production— Deployments and StatefulSets manage them.",
+          "level": "junior"
+        },
+        {
+          "question": "How do Deployments differ from StatefulSets?",
+          "answer": "Deployments manage stateless replicas with random pod names and shared PVC templates optional. StatefulSets provide stable network IDs and ordered storage for databases and queues. Choose based on identity and disk stickiness requirements.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain Services ClusterIP vs NodePort vs LoadBalancer.",
+          "answer": "ClusterIP exposes an internal virtual IP inside the cluster. NodePort publishes on each node IP at a high port. LoadBalancer integrates with cloud L4/L7 to provision external endpoints automatically.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a liveness vs readiness probe?",
+          "answer": "Liveness restarts unhealthy containers; readiness removes them from Service endpoints until ready. Misconfigured liveness causes restart loops during slow starts. Readiness should reflect ability to serve traffic, not full dependency health unless intentional.",
+          "level": "junior"
+        },
+        {
+          "question": "How does kube-scheduler pick a node?",
+          "answer": "It filters nodes by resources, taints, affinity, and topology spread constraints then scores remaining candidates. Custom schedulers or profiles can override default scoring. Pending pods show events explaining unschedululable reasons.",
+          "level": "junior"
+        },
+        {
+          "question": "What are requests and limits?",
+          "answer": "Requests guarantee minimal CPU/memory for scheduling; limits cap maximum usage. CPU is compressible; exceeding memory limit may OOMKill the container. Set requests from measured usage, limits to protect the node.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain ConfigMap vs Secret.",
+          "answer": "Both inject configuration as env vars or mounted files. Secrets are base64-encoded at rest with optional encryption at rest enabled. Neither replaces vault integration for high-sensitivity credentials rotation.",
+          "level": "junior"
+        },
+        {
+          "question": "What is an Ingress?",
+          "answer": "Ingress defines HTTP routing rules to Services via an ingress controller implementing the spec. TLS termination and path-based routing live here. It is L7; not a replacement for all Service types.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you debug CrashLoopBackOff?",
+          "answer": "kubectl logs --previous shows the last terminated instance. Describe the pod for probe failures, OOMKilled, or image pull errors. Fix command, env, or dependencies then roll out a new revision.",
+          "level": "junior"
+        },
+        {
+          "question": "What is etcd's role?",
+          "answer": "etcd is the consistent key-value store holding cluster desired state. Loss or corruption is catastrophic; backups and quorum matter. Only control plane components should talk to etcd directly.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain taints and tolerations.",
+          "answer": "Taints repel pods unless they tolerate the key-value-effect triple. Use them for dedicated GPU nodes or system workloads. Tolerations do not guarantee scheduling— affinity still applies.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a DaemonSet?",
+          "answer": "It ensures one pod per matching node, common for agents like node-exporter or CNI plugins. Updates roll node by node depending on strategy. Removing a DaemonSet deletes its pods cluster-wide.",
+          "level": "junior"
+        },
+        {
+          "question": "How does rolling update work?",
+          "answer": "Deployment maxUnavailable and maxSurge control old vs new pods during change. Surge temporarily increases capacity; unavailable allows dipping below desired count. Pause and resume support canary analysis manually.",
+          "level": "junior"
+        },
+        {
+          "question": "What is HPA?",
+          "answer": "Horizontal Pod Autoscaler scales replica count based on metrics like CPU or custom metrics from Prometheus adapter. It needs properly set requests and metrics pipeline availability. Cooldown windows prevent flapping.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain RBAC in Kubernetes.",
+          "answer": "Roles bind verbs to resources; RoleBindings attach subjects to roles within a namespace. ClusterRoles cover cluster-scoped resources. Principle of least privilege: avoid cluster-admin for apps.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a PersistentVolumeClaim?",
+          "answer": "PVCs request storage class, size, and access mode; PVs bind dynamically or statically. StatefulSets use volumeClaimTemplates for per-pod disks. Reclaim policy Retain vs Delete affects data lifecycle on release.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you drain a node safely?",
+          "answer": "kubectl drain cordons and evicts pods respecting PDBs. DaemonSets may ignore drain unless forced carefully. Uncordon returns the node to scheduling after maintenance.",
+          "level": "middle"
+        },
+        {
+          "question": "What are PodDisruptionBudgets?",
+          "answer": "PDBs limit voluntary disruptions like drains during upgrades. minAvailable or maxUnavailable protects quorum services. Ignoring PDBs blocks drains until adjusted or pods moved.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain CNI networking briefly.",
+          "answer": "CNI plugins assign pod IPs and configure routes on nodes. Overlay vs BGP models differ in cloud compatibility and performance. NetworkPolicy requires a supporting CNI like Calico or Cilium.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a sidecar container?",
+          "answer": "A sidecar extends the main container lifecycle in the same pod— logging, proxy, or mesh agents. They share network namespace localhost ports. Keep sidecars lightweight to avoid resource steal from app containers.",
+          "level": "middle"
+        },
+        {
+          "question": "How do Init Containers work?",
+          "answer": "Init containers run sequentially before app containers start, ideal for migrations or waiting on dependencies. Failures block pod start with clear logs. Keep init work idempotent and bounded in time.",
+          "level": "middle"
+        },
+        {
+          "question": "What causes ImagePullBackOff?",
+          "answer": "Wrong tag, missing registry credentials, rate limits, or air-gap without mirror. Check imagePullSecrets and service account bindings. crane or skopeo copy can seed private registries offline.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain kube-proxy modes.",
+          "answer": "iptables or ipvs implement Service virtual IP load balancing to backends. ipvs scales better for large service counts. Both depend on healthy endpoints from readiness.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a ValidatingAdmissionWebhook?",
+          "answer": "It rejects or mutates API requests centrally— policy enforcement, defaults, or security gates. Failure policy Fail blocks requests if webhook is down— design HA webhooks carefully. Common in OPA Gatekeeper and Kyverno.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you view cluster events?",
+          "answer": "kubectl get events --sort-by=.lastTimestamp surfaces scheduling and pull issues. Events are short-lived; ship them to logging for history. Correlate with controller logs for deeper traces.",
+          "level": "middle"
+        },
+        {
+          "question": "What is the difference between ReplicaSet and Deployment?",
+          "answer": "ReplicaSet maintains a stable pod set; Deployment owns ReplicaSets and manages rollouts. Editing a ReplicaSet directly is bypassed by Deployment controller. Use Deployments for versioned app management.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain resource quotas and limit ranges.",
+          "answer": "ResourceQuota caps aggregate namespace consumption by resource name. LimitRange sets defaults and min/max per pod or container. They prevent one tenant from starving others on shared clusters.",
+          "level": "middle"
+        },
+        {
+          "question": "What is cluster autoscaler?",
+          "answer": "It adds nodes when pending pods cannot schedule and removes underutilized nodes after cooldown. It respects taints, PDBs, and cloud quotas. Misconfigured requests can cause expensive over-provisioning.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you run kubectl debug?",
+          "answer": "Ephemeral debug containers attach to a running pod namespace for distroless troubleshooting. Copy binaries via kubectl cp when policy allows. Prefer dedicated debug images over modifying production images.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a ServiceAccount?",
+          "answer": "Pods authenticate to the API using mounted tokens bound to RBAC. Legacy long-lived tokens differ from bound tokens with audience and expiry. Rotate and scope tokens per workload.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain topology spread constraints.",
+          "answer": "They spread pods across zones or hosts for HA beyond simple anti-affinity. maxSkew defines allowed imbalance. Combine with PDB for resilient rollouts during zone outages.",
+          "level": "senior"
+        },
+        {
+          "question": "What is Helm used for?",
+          "answer": "Helm packages Kubernetes manifests as charts with templated values and release lifecycle. Upgrades, rollbacks, and hooks coordinate complex apps. Pin chart versions and review rendered YAML in CI.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you manage secrets rotation in K8s?",
+          "answer": "Mount secrets as volumes; updates propagate to files asynchronously. Restart pods or use reloader sidecars when apps cache credentials. External secrets operators sync from vault on interval.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the API server's role?",
+          "answer": "It validates and persists object changes to etcd, then notifies controllers. All kubectl traffic goes through it with authn/authz. Protect it with private networking and audit logging.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain Finalizers.",
+          "answer": "Finalizers block object deletion until controllers complete cleanup— volumes, external DNS, or custom hooks. Stuck terminating namespaces often have orphaned finalizers. Remove finalizers only when sure cleanup is unnecessary.",
+          "level": "senior"
+        },
+        {
+          "question": "What is Kustomize?",
+          "answer": "It overlays patches on base manifests without templating language. kubectl apply -k builds the composite. GitOps tools often render kustomize or helm before sync.",
+          "level": "senior"
+        },
+        {
+          "question": "How do NetworkPolicies work?",
+          "answer": "They define ingress/egress allow lists by pod selector and namespace labels. Default deny requires explicit permits for DNS and control plane paths. Test policies in staging— misrules cause silent timeouts.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the difference between exec and attach?",
+          "answer": "exec runs a new process in the container; attach connects to stdin/stdout of PID 1. attach is for interactive debugging of running main processes. Both require RBAC permissions audited in production.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain VPA vs HPA.",
+          "answer": "VPA adjusts requests/limits recommendations or automatically for right-sizing. HPA changes replica count. Using both on the same metric without coordination can fight; split CPU scaling vs memory right-sizing carefully.",
+          "level": "senior"
+        },
+        {
+          "question": "What is GitOps with Kubernetes?",
+          "answer": "Git holds desired manifests; controllers like Argo CD or Flux reconcile cluster state continuously. Drift detection and automated sync improve auditability. Protect main branches and use promotion flows between environments.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "CI/CD",
+      "description": "Pipelines, deployment strategies, artifacts, and delivery metrics.",
+      "cards": [
+        {
+          "question": "What is continuous integration?",
+          "answer": "Developers integrate changes frequently into a shared branch with automated builds and tests. Fast feedback catches defects before they compound. CI is the foundation before continuous delivery or deployment.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you structure a pipeline stages?",
+          "answer": "Typical order: checkout, lint, unit test, build artifact, integration test, security scan, deploy to staging, smoke, promote. Fail fast on cheap stages; parallelize independent jobs. Keep artifacts immutable between stages.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain blue-green deployment.",
+          "answer": "Two identical environments swap traffic after validating the idle color. Rollback is reverting the load balancer pointer. Requires double capacity or shared data compatibility during switch.",
+          "level": "junior"
+        },
+        {
+          "question": "What is canary release?",
+          "answer": "A small traffic slice hits the new version while metrics are watched. Automated analysis promotes or rolls back based on SLOs. Feature flags complement canaries for user-level control.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you cache dependencies in CI?",
+          "answer": "Use lockfiles and cache keys based on their hashes. Restore caches before install steps; save after successful resolution. Avoid caching secrets or stale corrupted stores without TTL.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a build artifact?",
+          "answer": "A versioned binary, image, or package produced once and promoted across environments. Rebuilding on deploy introduces non-determinism. Store artifacts in registries or object storage with retention policies.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain trunk-based vs GitFlow.",
+          "answer": "Trunk-based favors short-lived branches merging daily to main with feature flags. GitFlow uses long-lived develop/release branches— heavier for continuous delivery. Most cloud-native teams prefer trunk with strong CI gates.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you gate merges on tests?",
+          "answer": "Branch protection requires status checks from CI before merge. Required reviewers and signed commits add governance. Keep main always green to avoid stop-the-line fire drills.",
+          "level": "junior"
+        },
+        {
+          "question": "What is infrastructure pipeline?",
+          "answer": "Terraform or Pulumi plans run in CI with policy checks before apply jobs on approved paths. Separate plan and apply roles with manual approval for production. Store remote state with locking.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you handle secrets in CI?",
+          "answer": "Use platform secret stores, OIDC to cloud roles, and never echo secrets in logs. Mask variables and rotate on leak. Short-lived tokens beat long-lived PATs in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain semantic versioning in releases.",
+          "answer": "MAJOR breaks compatibility, MINOR adds features, PATCH fixes bugs. Automate tags from conventional commits when discipline exists. Consumers rely on semver for dependency upgrades.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a flaky test policy?",
+          "answer": "Quarantine flaky tests with tickets and deadlines; do not silently retry without ownership. Track flake rate as a quality metric. Fixing root cause beats increasing timeout globally.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you parallelize test suites?",
+          "answer": "Split by timing files or test modules across workers with merged junit reports. Shared databases need isolation per shard. Balance parallelism against resource costs on shared runners.",
+          "level": "junior"
+        },
+        {
+          "question": "What is deployment rollback?",
+          "answer": "Revert to previous known-good artifact or Kubernetes revision quickly. Automate rollback triggers on error rate SLO breaches. Practice rollbacks so they work under incident stress.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain idempotent deploy scripts.",
+          "answer": "Running twice should not corrupt state— use declarative tools or guarded migrations. Scripts check current version before destructive steps. Idempotency simplifies retries after transient failures.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a release train?",
+          "answer": "A fixed cadence ships whatever is ready, reducing big-bang releases. Scope slips to next train instead of delaying arbitrarily. Requires mature feature flags and backward compatibility.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you version database migrations?",
+          "answer": "Migrations run in CI against ephemeral databases matching prod engine version. Backward-compatible expand-contract pattern allows app rollback without schema rollback. Never edit applied migration history in prod.",
+          "level": "middle"
+        },
+        {
+          "question": "What is DORA metrics?",
+          "answer": "Deployment frequency, lead time, change failure rate, and MTTR measure delivery performance. They correlate with organizational practices, not individual heroics. Improve by automation and small batches.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain pipeline as code.",
+          "answer": "Jenkinsfile, GitLab CI YAML, or GitHub Actions live in git with review. Reproducible history beats click-configured jobs. Template shared workflows for consistency across repos.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you promote images between environments?",
+          "answer": "Tag or digest promoted through dev, staging, prod registries or same registry with different deploy triggers. Same digest guarantees identical bits tested in staging reach prod. Block mutable tag overwrites in prod policies.",
+          "level": "middle"
+        },
+        {
+          "question": "What is smoke testing post-deploy?",
+          "answer": "Minimal critical path checks validate the deployment is alive before wider traffic. Automate against staging then prod immediately after deploy. Fail smoke triggers rollback or incident response.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you manage long-running pipelines?",
+          "answer": "Split heavy suites to nightly while PR runs fast subset. Use workflow dispatch for manual full runs. Visualize stage durations to find bottlenecks.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain artifact signing in CI.",
+          "answer": "Sign containers or binaries with cosign or Sigstore in the pipeline. Verify signatures at deploy admission. Supply-chain attacks make signing a baseline control.",
+          "level": "middle"
+        },
+        {
+          "question": "What is environment drift detection?",
+          "answer": "Scheduled compares live infra to git desired state; alerts on divergence. Drift often comes from manual kubectl edits. GitOps reduces undetected drift.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you do zero-downtime deploys?",
+          "answer": "Rolling updates, connection draining on load balancers, and backward-compatible APIs keep service available. Readiness probes remove instances before termination. Database changes must tolerate old and new code simultaneously during rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a manual approval gate?",
+          "answer": "Human confirmation before prod deploy after automated checks pass. Document who can approve and audit trails. Use sparingly— prefer automated quality gates when mature.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain feature flags vs branches.",
+          "answer": "Flags decouple deploy from release, hiding incomplete work in prod binaries. Branches alone delay integration risk. Flags need lifecycle cleanup to avoid debt.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you run CI on monorepos?",
+          "answer": "Path filters trigger only affected project pipelines. Shared libraries version internally with clear dependency graphs. Cache and test selection tools reduce redundant work.",
+          "level": "middle"
+        },
+        {
+          "question": "What is shift-left security in CI?",
+          "answer": "SAST, dependency scanning, and IaC lint run on every PR. Fail builds on critical CVEs with waiver process. Developers fix issues when context is fresh.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you handle pipeline failures on main?",
+          "answer": "Stop merges, fix or revert quickly, and communicate status. Bisect commits if failure cause unclear. Postmortem recurring failures to improve tests or flakiness.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain immutable infrastructure.",
+          "answer": "Servers and containers are replaced rather than patched in place. New AMI or image version rolls out via automation. Reduces snowflake configuration drift.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a deployment freeze?",
+          "answer": "A calendar window blocks risky changes during peak business events. Emergency fixes follow exception process. Plan freezes with stakeholders early.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you test infrastructure code?",
+          "answer": "Terratest, kitchen-terraform, or policy-as-code tests validate modules before apply. Mock providers where possible. Run plan-only on PR against ephemeral backends.",
+          "level": "senior"
+        },
+        {
+          "question": "What is progressive delivery?",
+          "answer": "Combines canaries, metrics analysis, and automated promotion or rollback. Tools like Argo Rollouts or Flagger integrate with service meshes. Reduces blast radius of bad releases.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain build matrix strategies.",
+          "answer": "Test multiple language versions or OS targets in parallel jobs. Keep matrix small to control cost. Fail fast cancels siblings when one cell fails if configured.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you document runbooks in CI?",
+          "answer": "Link deploy jobs to runbook URLs and change tickets. Post-deploy comments in chat with version and diff summary. On-call knows what changed when alerts fire.",
+          "level": "senior"
+        },
+        {
+          "question": "What is continuous delivery vs deployment?",
+          "answer": "Delivery means always releasable but human decides when to prod. Deployment automates prod push after gates. Choose based on regulatory and risk tolerance.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you integrate code coverage gates?",
+          "answer": "Track trend rather than arbitrary 100 percent. Block only if coverage drops on changed lines in critical modules. Coverage without assertion quality misleads.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain rollback vs roll-forward.",
+          "answer": "Rollback restores old version; roll-forward patches forward when rollback is unsafe due to schema changes. Design migrations to allow rollback when possible. Incidents pick the faster recovery path.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a CI runner hygiene?",
+          "answer": "Ephemeral runners reduce cross-job contamination. Pin tool versions and clean workspaces. Self-hosted runners need patching and isolation as strictly as prod nodes.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Cloud (AWS/GCP basics)",
+      "description": "Core cloud identity, networking, compute, storage, and cost-aware design on AWS and GCP.",
+      "cards": [
+        {
+          "question": "What is an AWS Availability Zone?",
+          "answer": "An AZ is an isolated datacenter within a region with low-latency links to sibling AZs. Spread workloads across AZs for HA. AZ failure is a design scenario, not a surprise.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain IAM users vs roles.",
+          "answer": "Users are long-lived identities; roles provide temporary credentials via STS assumption. Services and humans should prefer roles with federation. Rotate access keys rarely used and audit last used metrics.",
+          "level": "junior"
+        },
+        {
+          "question": "What is an S3 bucket policy vs ACL?",
+          "answer": "Bucket policies are JSON resource policies attached to buckets; ACLs are legacy coarse grants. Prefer policies with explicit deny and encryption requirements. Block public access at account level by default.",
+          "level": "junior"
+        },
+        {
+          "question": "How does GCP IAM differ conceptually?",
+          "answer": "GCP binds roles to members on resources hierarchically— org, folder, project. Predefined roles bundle permissions; custom roles trim least privilege. Conditional IAM adds attribute-based restrictions.",
+          "level": "junior"
+        },
+        {
+          "question": "What is auto scaling group behavior?",
+          "answer": "ASG maintains desired capacity between min and max based on policies or predictive scaling. Health checks replace unhealthy instances. Combine with ALB health checks for app-aware replacement.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain VPC subnets public vs private.",
+          "answer": "Public subnets route 0.0.0.0/0 to an Internet Gateway; private subnets use NAT for egress. Place workloads without public IPs in private subnets. NACLs and security groups layer defense.",
+          "level": "junior"
+        },
+        {
+          "question": "What is AWS RDS Multi-AZ?",
+          "answer": "Synchronous standby in another AZ for failover on primary failure. Not read scaling— use replicas for reads. Failover DNS update causes brief connection blips clients must retry.",
+          "level": "junior"
+        },
+        {
+          "question": "How do GCP Cloud Run and AWS Lambda compare?",
+          "answer": "Both run event-driven scale-to-zero workloads with managed runtimes. Cloud Run serves HTTP containers; Lambda supports many event sources. Cold starts and concurrency limits affect design for both.",
+          "level": "junior"
+        },
+        {
+          "question": "What is an Application Load Balancer?",
+          "answer": "Layer 7 HTTP routing with path and host rules and TLS termination. Target groups register instances or IPs health-checked independently. Sticky sessions optional when stateful sessions cannot migrate.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain AWS CloudWatch vs GCP Cloud Monitoring.",
+          "answer": "Both ingest metrics, logs, and alarms from native services. CloudWatch Logs Insights and GCP Log Analytics query structured logs. Export to Prometheus or third parties for unified observability stacks.",
+          "level": "junior"
+        },
+        {
+          "question": "What is GCP VPC shared vs standalone?",
+          "answer": "Shared VPC hosts subnets in a host project for service projects to attach workloads. Centralizes network admin and IP planning. Requires careful IAM on network admin vs project teams.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you design S3 lifecycle rules?",
+          "answer": "Transition to IA or Glacier by age; expire incomplete multipart uploads. Align with compliance retention before deletion. Monitor storage class analytics for mis-tiered objects.",
+          "level": "junior"
+        },
+        {
+          "question": "What is AWS STS AssumeRole?",
+          "answer": "Exchanges trust for temporary credentials scoped to a role session. Cross-account access uses trust policies on the role. Session tags propagate for ABAC policies.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain GCP service accounts keys risk.",
+          "answer": "Downloaded JSON keys are long-lived secrets prone to leak. Prefer workload identity federation without keys on GCE/GKE. Rotate and audit keys if legacy requires them.",
+          "level": "middle"
+        },
+        {
+          "question": "What is an EC2 instance profile?",
+          "answer": "It attaches an IAM role to instances delivering credentials via metadata service. IMDSv2 requires session-oriented tokens mitigating SSRF theft. Scope roles minimally per workload type.",
+          "level": "middle"
+        },
+        {
+          "question": "How does GCP Cloud Storage compare to S3?",
+          "answer": "Both offer object storage with versioning, lifecycle, and uniform or fine-grained access. Signed URLs grant time-limited access. Choose region and dual-region for latency and DR requirements.",
+          "level": "middle"
+        },
+        {
+          "question": "What is AWS Route 53 routing policy?",
+          "answer": "Simple, weighted, latency, failover, and geolocation policies steer DNS answers. Health checks enable automatic failover records. TTL affects propagation speed during incidents.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain GCP firewall rules vs AWS security groups.",
+          "answer": "GCP rules are VPC-level with tags/targets; AWS SGs are stateful per ENI. Both default deny inbound; document required east-west paths. Log denied flows where supported for audits.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a NAT gateway cost pitfall?",
+          "answer": "Per-hour and per-GB charges accumulate for all private egress. VPC endpoints for S3 and Dynamo reduce NAT load. Monitor data processing charges in cost explorer.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you encrypt data at rest in cloud?",
+          "answer": "Enable default encryption on buckets and disks with KMS or CMEK. RDS and Cloud SQL support transparent encryption with key rotation policies. Compliance may require customer-managed keys.",
+          "level": "middle"
+        },
+        {
+          "question": "What is AWS Organizations SCP?",
+          "answer": "Service Control Policies cap maximum permissions for accounts in an OU. They do not grant access— only limit. Use to block unapproved regions or risky services org-wide.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain GCP billing budgets and alerts.",
+          "answer": "Budgets trigger notifications at percentage thresholds of spend. They do not stop usage— automation can call Cloud Functions to act. Tag projects for chargeback visibility.",
+          "level": "middle"
+        },
+        {
+          "question": "What is spot/preemptible instance strategy?",
+          "answer": "Use for fault-tolerant batch work with checkpointing. Mix with on-demand for baseline capacity. Interruption notices differ— AWS two-minute, GCP often immediate with lower price.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you design multi-region DR?",
+          "answer": "Active-passive with DNS failover or active-active with conflict-aware data layers. RPO/RTO drive replication choice— async replication tolerates more loss for cost. Test failover quarterly, not only on paper.",
+          "level": "middle"
+        },
+        {
+          "question": "What is AWS EBS vs instance store?",
+          "answer": "EBS is network-attached persistent block storage; instance store is local ephemeral high performance. Databases usually on EBS with snapshots; caches may use instance store accepting loss.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain GCP Persistent Disk types.",
+          "answer": "Standard, balanced, SSD, and extreme tiers trade cost and IOPS. Resize online where supported. Snapshots incremental for backup and clone new disks.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a VPC peering limitation?",
+          "answer": "Peering is non-transitive and CIDRs must not overlap. Full mesh peering scales poorly; use hub transit gateways or Cloud VPN hubs instead for many spokes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do AWS Lambda concurrency limits work?",
+          "answer": "Account and per-function reserved concurrency cap parallel executions. Throttling returns 429 when exceeded. Provisioned concurrency reduces cold starts at cost.",
+          "level": "middle"
+        },
+        {
+          "question": "What is GCP Cloud Armor?",
+          "answer": "WAF and DDoS protection at the load balancing edge. Rules block OWASP patterns and geo restrictions. Integrate with Cloud CDN for static asset protection.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain AWS KMS envelope encryption.",
+          "answer": "Data keys encrypt content; KMS encrypts data keys stored alongside ciphertext. Master keys never leave HSM boundary. Audit key usage in CloudTrail.",
+          "level": "senior"
+        },
+        {
+          "question": "What is infrastructure tagging strategy?",
+          "answer": "Mandatory tags for owner, environment, cost center, and data classification enable automation and billing reports. Enforce with SCPs or org policies. Untagged resources become orphan cost leaks.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you troubleshoot S3 403 AccessDenied?",
+          "answer": "Check bucket policy, object ACL, IAM policy, and explicit denies including SCP and boundary policies. VPC endpoint policies can deny unexpectedly. Use IAM policy simulator with resource ARNs.",
+          "level": "senior"
+        },
+        {
+          "question": "What is GCP Workload Identity on GKE?",
+          "answer": "Maps Kubernetes service accounts to GCP service accounts without JSON keys. Federation tokens mint short-lived GCP credentials. Preferred pattern for pod-to-GCP API access.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain AWS Direct Connect vs VPN.",
+          "answer": "Direct Connect is dedicated private connectivity with predictable latency; VPN is encrypted over internet. Hybrid setups use both for redundancy. BGP advertises on-prem and cloud routes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a landing zone?",
+          "answer": "Opinionated multi-account baseline with logging, guardrails, and networking hub. Accelerates secure onboarding of new workloads. Customize guardrails as org maturity grows.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you choose instance types?",
+          "answer": "Profile CPU, memory, network, and disk needs with benchmarks not guesswork. Graviton or AMD alternatives may cut cost after validation. Right-size with metrics after steady state.",
+          "level": "senior"
+        },
+        {
+          "question": "What is AWS Secrets Manager vs SSM Parameter Store?",
+          "answer": "Secrets Manager adds rotation integrations and higher cost; Parameter Store tiers secure strings cheaply at scale. Both integrate with Lambda and ECS task definitions. Prefer rotation for database passwords.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain GCP Cloud SQL high availability.",
+          "answer": "Regional HA maintains standby in another zone with automatic failover. Read replicas serve analytics load. Connection pooling outside the database handles reconnect storms after failover.",
+          "level": "senior"
+        },
+        {
+          "question": "What is cross-account S3 access pattern?",
+          "answer": "Bucket policy trusts consumer account roles; consumer role grants s3:GetObject on bucket ARN. Avoid ACL cross-account complexity. Log data events for sensitive buckets.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you estimate cloud egress costs?",
+          "answer": "Inter-AZ and internet egress often dominate surprise bills. Keep traffic in-region and use CDN for static assets. Architecture reviews should include data transfer line items.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Observability",
+      "description": "Metrics, logs, traces, SLOs, alerting, and incident-ready telemetry.",
+      "cards": [
+        {
+          "question": "What are the three pillars of observability?",
+          "answer": "Metrics, logs, and traces answer different questions at different granularity. Metrics trend and alert; logs explain events; traces follow request paths. Use them together during incidents rather than relying on one alone.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain RED metrics for services.",
+          "answer": "Rate, Errors, and Duration summarize request-oriented service health. They map cleanly to SLO dashboards and autoscaling signals. Extend with saturation metrics from USE for resources.",
+          "level": "junior"
+        },
+        {
+          "question": "What is USE methodology?",
+          "answer": "Utilization, Saturation, and Errors apply to resources like CPU, disk, and network interfaces. High utilization with saturation queues signals bottlenecks. Pair with application RED for full picture.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you define an SLO?",
+          "answer": "Pick a SLI such as success rate or latency threshold over a window. SLO sets target like 99.9 percent monthly with error budget policy. Error budget guides release aggressiveness when burning.",
+          "level": "junior"
+        },
+        {
+          "question": "What is exemplar in Prometheus?",
+          "answer": "Exemplars link histogram buckets to trace IDs for jumping from metrics to traces. Requires compatible backends and instrumentation. Speeds root cause when tail latency spikes.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain log structured logging.",
+          "answer": "JSON fields enable reliable parsing and indexed queries. Include trace_id, user_id, and request_id consistently. Unstructured printf logs slow searches during outages.",
+          "level": "junior"
+        },
+        {
+          "question": "What is distributed tracing?",
+          "answer": "Traces stitch spans across services with shared trace context headers. Sampling balances cost versus coverage— tail-based sampling keeps errors. OpenTelemetry standardizes instrumentation across languages.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you reduce alert fatigue?",
+          "answer": "Alert on user-impacting SLO burn or symptoms, not every threshold twitch. Page only actionable events with runbooks. Regularly review fired alerts and tune or delete noisy rules.",
+          "level": "junior"
+        },
+        {
+          "question": "What is cardinality in metrics?",
+          "answer": "High-cardinality labels like user IDs explode time series count and cost. Aggregate or drop labels at ingest for high volume paths. Review metric naming conventions in design reviews.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain Prometheus pull vs push.",
+          "answer": "Prometheus scrapes exporters on intervals; Pushgateway handles short-lived batch jobs only. Pull simplifies service discovery in Kubernetes. Long-term storage uses remote write to Mimir or Thanos.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Grafana Loki?",
+          "answer": "Loki indexes log labels not full text by default, lowering cost versus ELK for Kubernetes logs. LogQL queries correlate with Prometheus metrics in Grafana. Pair with object storage backend for retention.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you implement health checks for monitoring?",
+          "answer": "Synthetic probes hit critical endpoints from outside the cluster. Blackbox exporter measures DNS, TLS expiry, and HTTP status globally. Complement internal whitebox metrics.",
+          "level": "junior"
+        },
+        {
+          "question": "What is an SLI vs SLA vs SLO?",
+          "answer": "SLI is measured indicator; SLO is internal target; SLA is contractual promise often with penalties. SLOs should be stricter than SLAs to leave buffer. Document all three to avoid confusion.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain OpenTelemetry collectors.",
+          "answer": "Collectors receive, process, and export telemetry with processors for batching and redaction. Deploy as agents daemonset or gateway mode. Centralize tail sampling at gateway when possible.",
+          "level": "middle"
+        },
+        {
+          "question": "What is eBPF observability?",
+          "answer": "Kernel programs capture network and syscall events with low overhead via Cilium Hubble or Pixie. Useful when you cannot modify legacy apps. Requires compatible kernels and privileges.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you monitor queues and brokers?",
+          "answer": "Track depth, age of oldest message, consumer lag, and error DLQ rates. Alert on sustained lag growth not momentary spikes during deploys. Scale consumers with lag-driven autoscaling.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a runbook link in alerts?",
+          "answer": "Every page includes owner, severity, dashboard links, and mitigation steps. Runbooks evolve from incident notes. Missing runbooks delay response— treat as debt.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain golden signals per Google SRE.",
+          "answer": "Latency, traffic, errors, and saturation cover most user-facing systems. Adapt definitions per service type— batch jobs emphasize throughput and backlog. Dashboards should default to these four.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you debug high p99 latency?",
+          "answer": "Compare p50 vs p99 in traces to find slow dependencies or lock contention. Check GC logs, thread pools, and downstream timeouts. Tail sampling preserves problematic traces.",
+          "level": "middle"
+        },
+        {
+          "question": "What is log sampling?",
+          "answer": "Sample debug logs at high volume while always keeping errors. Dynamic sampling increases rate when errors rise. Balance cost with forensic needs after incidents.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain metric histograms vs summaries.",
+          "answer": "Histograms bucket observations client-side for aggregatable quantiles in Prometheus. Summaries calculate quantiles per instance— harder to aggregate globally. Prefer histograms for service SLIs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is on-call rotation best practice?",
+          "answer": "Follow-the-sun or weekly rotations with clear handoffs and escalation paths. Limit consecutive nights to prevent burnout. Post-incident reviews feed back into monitoring gaps.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you monitor Kubernetes itself?",
+          "answer": "kube-state-metrics for object counts; node-exporter for hardware; cAdvisor for container resources. Monitor control plane components in managed offerings via provider metrics. Alert on pending pods and crashloops sustained.",
+          "level": "middle"
+        },
+        {
+          "question": "What is anomaly detection in monitoring?",
+          "answer": "Baselines learn seasonality to flag deviations without static thresholds. Useful for traffic growth patterns. Validate false positive rate before paging on anomalies alone.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain log retention and compliance.",
+          "answer": "Retention days balance cost with audit requirements. Immutable storage or WORM buckets protect regulated logs. PII scrubbing at ingest reduces compliance scope.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a status page?",
+          "answer": "Communicates user-visible incidents and maintenance externally. Integrate with incident tools to reduce duplicate support tickets. Practice writing customer-friendly updates during drills.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you test alerting pipelines?",
+          "answer": "Fire synthetic alerts or use tools like Prometheus alert test rules in staging. Verify notification routes to correct channels. Broken PagerDuty integrations fail silently without drills.",
+          "level": "middle"
+        },
+        {
+          "question": "What is RED vs USE together?",
+          "answer": "RED on the service; USE on each resource the service depends on. During saturation, USE explains why RED degrades. Dashboard rows should align both for one-click drilldown.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain trace context propagation.",
+          "answer": "W3C traceparent header carries trace and span IDs across HTTP and gRPC. Broken propagation shows disconnected spans in UI. Auto-instrumentation libraries handle most frameworks when enabled.",
+          "level": "middle"
+        },
+        {
+          "question": "What is monitoring vs observability?",
+          "answer": "Monitoring watches known failure modes; observability enables ad-hoc questions via high-cardinality exploration. You need both— monitoring for paging, observability for unknown unknowns during novel failures.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you handle PII in logs?",
+          "answer": "Redact at source or processor; restrict access with RBAC on log systems. Never log secrets or full payment data. Regular audits sample production logs for violations.",
+          "level": "senior"
+        },
+        {
+          "question": "What is SLO error budget policy?",
+          "answer": "When budget burns fast, freeze risky releases and focus on reliability work. When budget is healthy, allow experimentation velocity. Make policy explicit so product and eng agree.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain ELK stack components.",
+          "answer": "Elasticsearch stores and queries; Logstash or Beats ingests; Kibana visualizes. Heavy indexing cost drives some teams to Loki or cloud-native logging. Size shards and retention for query performance.",
+          "level": "senior"
+        },
+        {
+          "question": "What is continuous profiling?",
+          "answer": "Always-on CPU and heap profiles reveal hot paths in production with low overhead. Compare profiles across releases to catch regressions. Parca and Pyroscope integrate with Grafana.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you monitor batch jobs?",
+          "answer": "Track success rate, runtime duration trends, and last successful run timestamp. Dead-man alerts fire if a daily job misses its window. Log structured exit codes for failure taxonomy.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a service level indicator for queues?",
+          "answer": "Processing lag seconds or fraction of messages processed within SLA time. Combine with DLQ rate for poison messages. Autoscale on lag derivative, not absolute alone.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain multi-tenant observability isolation.",
+          "answer": "Separate indexes or tenants per customer for data isolation in SaaS. Rate limit noisy tenants ingestion. Billing may pass through observability costs via per-tenant metrics.",
+          "level": "senior"
+        },
+        {
+          "question": "What is incident severity classification?",
+          "answer": "SEV1 user-wide outage vs SEV3 minor internal issue guides response scale. Definitions documented prevent debate mid-incident. Match alert severity to incident class consistently.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you correlate deploys with metrics?",
+          "answer": "Annotate dashboards with deploy events from CI webhooks. Change correlation is the first hypothesis on new spikes. Require deploy markers in incident timelines.",
+          "level": "senior"
+        },
+        {
+          "question": "What is observability cost control?",
+          "answer": "Sample traces, drop debug logs, and aggregate high-cardinality metrics. Review top expensive tenants or services monthly. Budget alerts on observability vendor bills too.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Security & IaC",
+      "description": "Identity, hardening, supply chain, policy-as-code, and secure infrastructure delivery.",
+      "cards": [
+        {
+          "question": "What is least privilege in cloud IAM?",
+          "answer": "Grant only permissions required for the task duration. Regularly audit unused permissions with access analyzer tools. Temporary roles beat standing admin access for humans.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain defense in depth.",
+          "answer": "Multiple independent controls— network, identity, app, data— so one failure does not compromise all. Layer WAF, SGs, mTLS, and encryption together. No single control is sufficient alone.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Terraform state sensitivity?",
+          "answer": "State files contain secrets and resource attributes in plaintext. Store remote state encrypted with locking in S3 or Terraform Cloud. Restrict state access as strongly as production credentials.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you scan IaC for misconfigurations?",
+          "answer": "Checkov, tfsec, or OPA policies run in CI on every plan. Block public S3, open SG 0.0.0.0/0, and unencrypted disks. Fix modules at source to propagate fixes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is SBOM?",
+          "answer": "Software Bill of Materials lists components and versions in an artifact. Feeds vulnerability matching after build. Generate in CI and store alongside signed images.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain mTLS between services.",
+          "answer": "Both client and server present certificates validated against a trust CA. Prevents impersonation inside the network even after perimeter breach. Service meshes automate cert rotation.",
+          "level": "junior"
+        },
+        {
+          "question": "What is secrets rotation?",
+          "answer": "Periodic credential change limits blast radius of leaks. Automate database and API key rotation with dual-credential overlap windows. Monitor failed auth after rotation for missed clients.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you implement pod security standards?",
+          "answer": "Restricted policy disallows privileged pods and host namespaces. Enforce via admission policy on namespaces by label. Migrate legacy workloads before cluster-wide enforcement.",
+          "level": "junior"
+        },
+        {
+          "question": "What is CIS benchmark?",
+          "answer": "Community-hardening guidelines for OS, Kubernetes, and cloud services. Automated scanners report compliance drift. Prioritize critical failures over informational findings.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain AWS GuardDuty or GCP Security Command Center.",
+          "answer": "Managed threat detection correlates CloudTrail or audit logs with threat intel. Findings need tuning to reduce noise. Integrate with SOAR or ticketing for response workflows.",
+          "level": "junior"
+        },
+        {
+          "question": "What is supply chain attack mitigation?",
+          "answer": "Pin dependencies, verify signatures, and use private registries with admission control. Reproducible builds detect tampering. Monitor for typosquat packages in install scripts.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you handle CVE in base images?",
+          "answer": "Rebuild and redeploy on patched bases; do not apt-get inside running prod containers. SLA by severity drives patch cadence. Track outstanding CVEs per service dashboard.",
+          "level": "junior"
+        },
+        {
+          "question": "What is OPA Gatekeeper?",
+          "answer": "Kubernetes admission enforcing Rego policies on create/update. Examples: required labels, banned latest tags, resource limits mandatory. Test policies in dry-run before enforce mode.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain zero trust networking.",
+          "answer": "Never trust based on network location alone; verify identity and context per request. Micro-segmentation and policy engines replace flat VPC trust. Starts with strong identity and device posture.",
+          "level": "middle"
+        },
+        {
+          "question": "What is encryption in transit?",
+          "answer": "TLS 1.2+ for HTTP and encrypted wire protocols for databases. Disable weak ciphers and monitor cert expiry centrally. Internal east-west TLS matters in zero trust models.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you audit Kubernetes RBAC?",
+          "answer": "who-can and rbac-lookup tools show effective permissions. Periodic review of cluster-admin bindings. Remove unused service account permissions after workload decommission.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a break-glass account?",
+          "answer": "Emergency admin access stored offline with usage alerting. Every use triggers review. Prefer shorter incident-based elevation over always-on shared root passwords.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain SAST vs DAST.",
+          "answer": "SAST analyzes source without running; DAST probes running apps for vulnerabilities. Run both in pipeline complementary to dependency scanning. False positives need triage workflows.",
+          "level": "middle"
+        },
+        {
+          "question": "What is WAF rule tuning?",
+          "answer": "Start with OWASP core rule set in count mode before block. Custom rules for app-specific paths reduce false positives. Review blocked request samples weekly.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you secure Terraform CI?",
+          "answer": "Separate plan and apply credentials; apply only from protected branches. Use speculative plans on PR without credentials to apply. Sign commits and require reviews for module changes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is IAM permission boundary?",
+          "answer": "Caps maximum permissions an identity can receive even if policies grant more. Useful for delegated admin in large orgs. Combine with SCP for defense layers.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain container image provenance.",
+          "answer": "SLSA levels document build integrity from source to artifact. Attestations stored in registry metadata. Verify at deploy time with admission controllers.",
+          "level": "middle"
+        },
+        {
+          "question": "What is network segmentation for PCI?",
+          "answer": "Isolate cardholder data environment with strict ACLs and no direct internet. Jump hosts for admin access with logging. Scope reduction minimizes audit surface.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you respond to leaked AWS keys?",
+          "answer": "Deactivate immediately, rotate dependent secrets, and search CloudTrail for usage. Determine blast radius before re-enabling services. Root cause often committed .env in git history.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Kyverno?",
+          "answer": "Kubernetes native policy engine using YAML policies instead of Rego. Generate, mutate, validate, and cleanup resources. Popular for image registry restrictions and label standards.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain CSPM.",
+          "answer": "Cloud Security Posture Management continuously evaluates config against benchmarks. Finds public buckets and overly permissive SG rules. Integrate findings into same ticketing as app vulns.",
+          "level": "middle"
+        },
+        {
+          "question": "What is secure defaults for new accounts?",
+          "answer": "Disable root API keys, enable MFA, turn on CloudTrail and config recording day one. Landing zones codify these baselines. Drift detection catches manual weakening.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you protect CI from poisoned PRs?",
+          "answer": "Require maintainer approval for fork PR workflows accessing secrets. Limit token permissions to least for fork builds. Use path filters so untrusted code cannot exfiltrate credentials.",
+          "level": "middle"
+        },
+        {
+          "question": "What is HSM-backed KMS?",
+          "answer": "Master keys never leave hardware security modules. Regulatory regimes may mandate HSM for key material. Latency and cost higher than software keys— use where required.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain Terraform module versioning.",
+          "answer": "Pin module sources to git refs or registry versions not floating main. Breaking module changes semver bump. Consumers read changelogs before upgrading.",
+          "level": "senior"
+        },
+        {
+          "question": "What is admission control for images?",
+          "answer": "Only allow images from approved registries and pass CVE severity thresholds. Cosign signature verification at deploy blocks unsigned builds. Exceptions need time-bound waiver records.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you harden SSH access?",
+          "answer": "Disable password auth; use short-lived certificates via bastion or SSM Session Manager. No direct SSH to prod from internet. Log sessions centrally.",
+          "level": "senior"
+        },
+        {
+          "question": "What is data classification?",
+          "answer": "Labels like public, internal, confidential drive encryption and access controls. Automation applies tags at storage creation. Misclassification risks compliance violations.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain blast radius of cluster-admin.",
+          "answer": "Compromise grants full cluster and often cloud metadata exfil paths. Reserve for break-glass automation with audit. Namespace-scoped admins for app teams instead.",
+          "level": "senior"
+        },
+        {
+          "question": "What is secure software development lifecycle?",
+          "answer": "Threat modeling, security requirements, and testing gates embedded in design through deploy. Security champions in squads bridge expertise. Metrics track mean time to remediate vulns.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you validate TLS configurations?",
+          "answer": "ssllabs or testssl.sh grade external endpoints. Internal services use cert-manager with auto-renew. Disable TLS 1.0/1.1 everywhere.",
+          "level": "senior"
+        },
+        {
+          "question": "What is immutable audit logs?",
+          "answer": "Append-only storage or WORM for CloudTrail and GCP audit logs prevents attacker cover-up. Ship to separate account or project. Alert on logging pipeline disable attempts.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain just-in-time access.",
+          "answer": "Users request elevated roles approved for time window via workflow. Automatically revokes after expiry. Reduces standing privilege accumulation.",
+          "level": "senior"
+        },
+        {
+          "question": "What is Terraform drift vs config drift?",
+          "answer": "Terraform drift is live infra differing from state; config drift is runtime files changed on servers. Both violate git-as-source-of-truth. Reconcile or import deliberately, not silently.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you secure service mesh?",
+          "answer": "Strict mTLS mode, authorization policies on identities, and disable legacy plaintext ports. Rotate CA roots on schedule. Monitor for proxies bypassing mesh.",
+          "level": "senior"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,943 @@
+{
+  "slug": "qa",
+  "name": "QA Engineer",
+  "description": "Design tests and catch bugs before users do.",
+  "categories": [
+    {
+      "name": "Testing Fundamentals",
+      "description": "Core QA vocabulary, levels of testing, and lifecycle basics.",
+      "cards": [
+        {
+          "question": "What is the difference between QA and QC?",
+          "answer": "QA focuses on process improvement to prevent defects; QC focuses on finding defects in the product. QA shapes how work is done; QC validates outputs against requirements. Both contribute to quality but at different layers.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a test case?",
+          "answer": "Documented steps, data, and expected result verifying a requirement. Good cases are atomic, repeatable, and traceable to specs. Maintain them as living documents when features evolve.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain verification vs validation.",
+          "answer": "Verification asks did we build it right against specs; validation asks did we build the right thing for user needs. Reviews and inspections verify; UAT validates business fit. Both are necessary before release.",
+          "level": "junior"
+        },
+        {
+          "question": "What is regression testing?",
+          "answer": "Re-running tests after changes to ensure existing behavior still works. Scope grows with product size— automate the stable core. Risk-based selection prevents endless full regression every sprint.",
+          "level": "junior"
+        },
+        {
+          "question": "What is exploratory testing?",
+          "answer": "Simultaneous learning, test design, and execution without heavy scripts. Charters time-box missions on risky areas. Complements scripted tests for unknown unknowns.",
+          "level": "junior"
+        },
+        {
+          "question": "Define smoke vs sanity testing.",
+          "answer": "Smoke is a shallow pass on critical paths after a build. Sanity is narrower, focused on a changed area after a fix. Both are quick gates before deeper testing.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a defect life cycle?",
+          "answer": "States like New, Assigned, Fixed, Retest, Closed track progress. Rejected or Deferred need documented reasons. Clear workflow prevents lost bugs and duplicate reports.",
+          "level": "junior"
+        },
+        {
+          "question": "What is equivalence partitioning?",
+          "answer": "Divide inputs into classes expected to behave similarly and pick one representative per class. Reduces redundant cases while maintaining coverage. Invalid partitions deserve equal attention.",
+          "level": "junior"
+        },
+        {
+          "question": "What is boundary value analysis?",
+          "answer": "Defects cluster at edges of valid ranges— test min, max, just inside and outside. Pair with equivalence classes for numeric and date fields. Off-by-one errors are common catches.",
+          "level": "junior"
+        },
+        {
+          "question": "What is UAT?",
+          "answer": "End users or product owners validate the system against business scenarios before go-live. UAT sign-off is often contractual. Prepare realistic data and environments mirroring production constraints.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain test environment parity.",
+          "answer": "Environments should match prod topology and integrations closely enough to trust results. Over-simplified staging hides integration bugs. Document acceptable differences like scaled-down hardware.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a test plan?",
+          "answer": "Scope, approach, resources, schedule, and exit criteria for a test effort. It aligns stakeholders on what will and will not be tested. Update when scope or timelines shift materially.",
+          "level": "junior"
+        },
+        {
+          "question": "What is ad hoc testing?",
+          "answer": "Informal testing without documentation— useful for quick feedback but not repeatable. Capture interesting findings into formal cases afterward. Not a substitute for planned coverage on releases.",
+          "level": "middle"
+        },
+        {
+          "question": "Define severity vs priority of bugs.",
+          "answer": "Severity is impact on system or users; priority is order of fixing given business context. A cosmetic bug can be high priority near a launch. Document both separately in the tracker.",
+          "level": "middle"
+        },
+        {
+          "question": "What is RTM?",
+          "answer": "Requirements Traceability Matrix maps requirements to test cases ensuring coverage. Gaps show untested requirements before release. Maintain links when requirements split or merge.",
+          "level": "middle"
+        },
+        {
+          "question": "What is alpha vs beta testing?",
+          "answer": "Alpha is internal pre-release; beta is limited external users in real conditions. Beta feedback drives polish before GA. Monitor crashes and support channels closely during beta.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain positive vs negative testing.",
+          "answer": "Positive confirms expected behavior with valid inputs. Negative probes invalid inputs, permissions, and error handling. Security and robustness depend heavily on negative cases.",
+          "level": "middle"
+        },
+        {
+          "question": "What is test data management?",
+          "answer": "Realistic, privacy-safe data fuels meaningful tests. Mask or synthesize PII for non-prod. Refresh schedules prevent stale schemas diverging from prod.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a blocking bug?",
+          "answer": "Prevents further testing of a major area until fixed. Mark clearly in reports to adjust schedule. Distinguish from critical user-facing defects affecting release go/no-go.",
+          "level": "middle"
+        },
+        {
+          "question": "What is entry and exit criteria?",
+          "answer": "Entry defines prerequisites to start testing; exit defines conditions to stop such as pass rate and open sev thresholds. Agreed upfront avoids endless test cycles. Stakeholders sign exit for release decisions.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain static vs dynamic testing.",
+          "answer": "Static reviews requirements and code without execution— inspections, walkthroughs. Dynamic runs the software with inputs. Early static catches cheap defects before build costs accumulate.",
+          "level": "middle"
+        },
+        {
+          "question": "What is compatibility testing?",
+          "answer": "Verify app behavior across browsers, OS versions, devices, and resolutions per matrix. Prioritize matrix rows by analytics traffic share. Automate top combinations first.",
+          "level": "middle"
+        },
+        {
+          "question": "What is localization testing?",
+          "answer": "Validate translations, formats, currencies, and RTL layouts for target locales. Pseudo-localization finds truncation issues early. Legal text may need native speaker review.",
+          "level": "middle"
+        },
+        {
+          "question": "What is accessibility testing basics?",
+          "answer": "Check keyboard navigation, screen reader labels, contrast ratios, and ARIA roles against WCAG targets. Automated tools catch ~30 percent; manual review required for flows. Include disabled users in UAT when possible.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a test oracle?",
+          "answer": "Mechanism to determine pass or fail— expected output, spec, or another trusted program. Ambiguous oracles cause false passes. Define oracles before executing long suites.",
+          "level": "senior"
+        },
+        {
+          "question": "What is risk-based testing?",
+          "answer": "Allocate effort proportional to failure impact and likelihood. High-risk modules get deeper coverage; low-risk get smoke only. Reassess risk each release as architecture changes.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain white box vs black box.",
+          "answer": "White box uses internal structure knowledge for path coverage. Black box tests externally without code visibility. Gray box mixes both— typical for API testers with schema knowledge.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a test harness?",
+          "answer": "Infrastructure scaffolding executing tests and collecting results— runners, fixtures, and reporting. A good harness isolates flakiness sources. Invest once; all suites benefit.",
+          "level": "senior"
+        },
+        {
+          "question": "What is confirmation testing?",
+          "answer": "Retest a fixed defect on the same build or next to verify the fix. Also called re-testing. Distinct from regression which checks surrounding areas.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a test summary report?",
+          "answer": "Summarizes execution results, defects, coverage gaps, and recommendation for stakeholders. Written for decision makers not only engineers. Honest about deferred scope builds trust.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Test Design",
+      "description": "Techniques to choose cases, cover risks, and model system behavior.",
+      "cards": [
+        {
+          "question": "What is decision table testing?",
+          "answer": "Tables map combinations of conditions to expected actions, ideal for business rules. Reduces missed combinations versus ad hoc cases. Maintain tables when rules change.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain state transition testing.",
+          "answer": "Model states and valid transitions; test disallowed transitions too. Good for workflows like order status. Diagrams communicate coverage to non-testers.",
+          "level": "junior"
+        },
+        {
+          "question": "What is pairwise testing?",
+          "answer": "Covers all pairs of parameter values with fewer cases than full factorial. Tools generate orthogonal arrays. Apply when interactions between two factors dominate failures.",
+          "level": "junior"
+        },
+        {
+          "question": "What is use case testing?",
+          "answer": "Derives scenarios from actor goals in use case documents. Covers main and alternate flows including exceptions. Keeps tests aligned with user journeys.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you test error messages?",
+          "answer": "Verify clarity, correct code, no stack traces to users, and safe wording without leaking internals. Localization applies to errors too. Log detailed errors server-side only.",
+          "level": "junior"
+        },
+        {
+          "question": "What is combinatorial explosion problem?",
+          "answer": "Full Cartesian product of parameters grows unwieldy. Pairwise or risk-based sampling pragmatically limits count. Document assumed independence when simplifying.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain CRUD test design.",
+          "answer": "Create, Read, Update, Delete operations each need happy and sad paths. Permissions differ per operation— test role matrix. Idempotent deletes and duplicate creates deserve cases.",
+          "level": "junior"
+        },
+        {
+          "question": "What is session and cookie testing?",
+          "answer": "Expiry, secure and HttpOnly flags, rotation on login, and fixation resistance. Test logout invalidates server session. Cross-subdomain cookie scope causes subtle bugs.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you design tests for pagination?",
+          "answer": "First page, last page, empty result, page size boundaries, and concurrent updates during paging. Stable sort keys prevent duplicates across pages. Cursor tokens need expiry cases.",
+          "level": "junior"
+        },
+        {
+          "question": "What is domain testing?",
+          "answer": "Focus on input domains from specifications— types, ranges, and constraints. Combines equivalence and boundary techniques formally. Useful for calculation-heavy modules.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain cause-effect graphing.",
+          "answer": "Links causes (inputs) to effects (outputs) then converts to decision tables. Finds redundant or missing rule cases. Helps when requirements are rule-heavy.",
+          "level": "junior"
+        },
+        {
+          "question": "What is checklist-based testing?",
+          "answer": "Experience-based lists for areas like installation or compatibility. Fast for releases with stable products. Update checklists after incidents reveal gaps.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you test date and time?",
+          "answer": "Time zones, DST transitions, leap years, and clock skew scenarios. Never assume server local time equals user zone. Use frozen clocks in unit tests where possible.",
+          "level": "middle"
+        },
+        {
+          "question": "What is pairwise vs orthogonal array?",
+          "answer": "Both reduce combination count; orthogonal arrays have mathematical structure for specific strengths. Choose based on parameter count and interaction order assumed. Document coverage strength in test plan.",
+          "level": "middle"
+        },
+        {
+          "question": "Design tests for file upload.",
+          "answer": "Size limits, type allow list, virus scan hook, duplicate names, and interrupted uploads. Verify storage path authorization between tenants. Progress and cancel UX need cases too.",
+          "level": "middle"
+        },
+        {
+          "question": "What is tour testing?",
+          "answer": "Guided exploratory tours like money tour or config tour across the app. Each tour focuses on a theme. Time-box and debrief findings into tickets.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you test role-based access?",
+          "answer": "Matrix of roles vs actions with positive and negative cells. Horizontal escalation between users same role level. Default-deny for new features until roles updated.",
+          "level": "middle"
+        },
+        {
+          "question": "What is error guessing?",
+          "answer": "Experience predicts where developers often fail— nulls, division by zero, empty strings. Not systematic alone but seeds exploratory charters. Pair juniors with seniors for knowledge transfer.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain model-based testing.",
+          "answer": "Abstract model generates tests automatically for transitions or data flows. Upfront modeling cost pays off on stable complex domains. Tools vary in learning curve.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you test search functionality?",
+          "answer": "Exact match, partial, fuzzy, special characters, SQL injection strings safely, empty query, and performance on large indexes. Highlighting and sort order need expectations.",
+          "level": "middle"
+        },
+        {
+          "question": "What is thread safety testing?",
+          "answer": "Concurrent operations on shared resources under load or scripted parallelism. Race bugs are intermittent— stress repeats help. Use tools appropriate to stack.",
+          "level": "middle"
+        },
+        {
+          "question": "Design cases for payment flows.",
+          "answer": "Success, decline, timeout, idempotent retry, partial capture, refund, and webhook ordering. Never use real cards in test— use provider sandboxes. PCI scope stays out of dev laptops.",
+          "level": "middle"
+        },
+        {
+          "question": "What is heuristic test strategy?",
+          "answer": "Heuristics like SFDPOT or RCRCRC guide exploratory coverage dimensions. They are mnemonics not replacements for requirements trace. Share heuristics in team wiki.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you test caching?",
+          "answer": "Verify cache hit/miss behavior, TTL expiry, invalidation on update, and stale reads acceptable by design. CDN cache headers differ from app cache. Purge APIs need authorization tests.",
+          "level": "middle"
+        },
+        {
+          "question": "What is A/B test validation?",
+          "answer": "Ensure assignment consistency, metric collection, and no cross-contamination between variants. QA confirms experiment toggles off restores control behavior. Statistical analysis is product; QA guards implementation integrity.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain boundary on string fields.",
+          "answer": "Min length, max length, unicode, emoji, trimming, and null vs empty string semantics. Database column limits may truncate silently. Validation messages should match spec.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you test email notifications?",
+          "answer": "Trigger conditions, template content, links, unsubscribe compliance, and delivery in sandbox inboxes. Async delays require polling or webhooks in tests. Localization of templates included.",
+          "level": "senior"
+        },
+        {
+          "question": "What is soap opera testing?",
+          "answer": "Long realistic scenarios chaining many steps mimicking dramatic user days. Finds integration and state accumulation bugs. Expensive— run on major releases or nightly.",
+          "level": "senior"
+        },
+        {
+          "question": "Design tests for offline mode.",
+          "answer": "Queue actions offline, sync on reconnect, conflict resolution rules, and user messaging. Airplane mode on mobile devices for manual passes. Automate API stubs simulating disconnect.",
+          "level": "senior"
+        },
+        {
+          "question": "What is charter for exploratory session?",
+          "answer": "Mission, scope, time box, and notes template for one session. Review charters in group debriefs. Metrics: areas covered and issues filed.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Test Automation",
+      "description": "Frameworks, stability, CI integration, and maintainable automated checks.",
+      "cards": [
+        {
+          "question": "What should you automate first?",
+          "answer": "Stable high-value smoke and core regressions with clear oracles. Avoid automating volatile UI experiments early. ROI rises when tests run every commit.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain the test automation pyramid.",
+          "answer": "Many unit tests, fewer integration, thin UI E2E on top. Inverted pyramids slow CI and flake. Adjust per architecture but keep fast feedback base wide.",
+          "level": "junior"
+        },
+        {
+          "question": "What is page object model?",
+          "answer": "Encapsulate locators and actions per page or component. UI changes update one class not every test. Keep objects small and composable.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you reduce flaky UI tests?",
+          "answer": "Stable data-testid selectors, explicit waits on conditions, isolated data per test. Quarantine flakes until root-caused. Retries mask problems— fix causality.",
+          "level": "junior"
+        },
+        {
+          "question": "When prefer API tests over UI?",
+          "answer": "API tests validate business rules faster with less brittleness. UI covers layout and cross-browser journeys. Combine API setup with thin UI smoke.",
+          "level": "junior"
+        },
+        {
+          "question": "What is CI integration for automation?",
+          "answer": "Run smoke on PR; fuller suite on main or nightly. Parallel shards with junit merge. Collect screenshots and logs on failure artifacts.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain test data factories.",
+          "answer": "Programmatic builders create entities with sensible defaults and overrides. Faster than static JSON fixtures drifting from schema. Tear down or use unique IDs in shared envs.",
+          "level": "junior"
+        },
+        {
+          "question": "What is BDD with Gherkin?",
+          "answer": "Given-When-Then scenarios readable by stakeholders executed by Cucumber or similar. Keep steps reusable not one-off prose per case. Living documentation when synced with code.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you handle async in tests?",
+          "answer": "Await proper conditions not fixed sleeps. Poll with timeout and clear failure messages. Framework-specific async utilities beat busy loops.",
+          "level": "junior"
+        },
+        {
+          "question": "What is visual regression testing?",
+          "answer": "Screenshot compare detects unintended UI shifts. Baseline updates need review not blind approve. Mask dynamic regions like timestamps.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain parallel test isolation.",
+          "answer": "Each worker owns data namespace or database schema. Shared mutable state causes order-dependent failures. Containerized dependencies per job help.",
+          "level": "junior"
+        },
+        {
+          "question": "What is contract test in automation context?",
+          "answer": "Consumer-driven contracts verify provider compatibility without full E2E. Run in CI for both sides. Complements but does not replace critical path E2E.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you version test code?",
+          "answer": "Same repo or mono-repo adjacent to app with PR review. Tag releases with app versions for traceability. Deprecate obsolete tests actively.",
+          "level": "middle"
+        },
+        {
+          "question": "What is keyword-driven framework?",
+          "answer": "Tests compose reusable keywords mapping to actions. Non-coders can assemble scenarios in spreadsheets— tradeoff maintenance cost. Modern code-first frameworks often replace this.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain mocking external services.",
+          "answer": "Stub third parties unavailable in CI with WireMock or similar. Over-mocking hides integration bugs— reserve for true externals. Record-replay helps realistic stubs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is mobile automation difference?",
+          "answer": "Appium drives native and hybrid apps with platform-specific capabilities. Device farms or emulators in CI. Flakier than web— invest in stable locators.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you test microservices in automation?",
+          "answer": "Service-level contract and integration tests per boundary plus selective E2E through gateway. Testcontainers spin real databases in JVM tests. Map failures to owning team quickly.",
+          "level": "middle"
+        },
+        {
+          "question": "What is shift-left in automation?",
+          "answer": "Developers write unit and component tests; QA focuses integration and risk charters. Pair on missing unit coverage for complex modules. Fail builds on agreed coverage drops in critical paths.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain reporting for automation failures.",
+          "answer": "Clear step, URL, screenshot, network log, and build ID in report. Link to known flake tickets. Separate infra failures from product defects in dashboards.",
+          "level": "middle"
+        },
+        {
+          "question": "What is self-healing locators?",
+          "answer": "ML adjusts broken selectors— use cautiously. Can hide real UI regressions if abused. Prefer stable design-for-test attributes from devs.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you maintain automation debt?",
+          "answer": "Regular prune of obsolete tests and refactor duplicated helpers. Track maintenance time vs value in retros. Delete tests that never fail but cost run time.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Playwright vs Selenium?",
+          "answer": "Playwright offers auto-wait, tracing, and modern browser automation APIs. Selenium has broader legacy grid ecosystems. Pick based on team skills and browser matrix.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain test tagging.",
+          "answer": "Tags like @smoke @regression filter CI jobs. Document tag meanings in README. Avoid tag explosion without ownership.",
+          "level": "middle"
+        },
+        {
+          "question": "What is headless CI execution?",
+          "answer": "Browsers run without UI faster in pipelines. Some bugs appear only headed— schedule periodic headed runs. GPU and font differences rarely affect functional tests.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you automate accessibility checks?",
+          "answer": "axe-core integration in E2E catches many violations. Manual keyboard passes still required for compliance sign-off. Fail CI on critical a11y violations when policy matures.",
+          "level": "senior"
+        },
+        {
+          "question": "What is data-driven testing?",
+          "answer": "Same test logic iterates rows from CSV or JSON datasets. Separates data from code for clarity. Validate schema of data files in CI too.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain hybrid automation.",
+          "answer": "Mix vendor codeless tools with custom code for complex flows. Governance prevents siloed unmaintainable scripts. Central patterns library helps.",
+          "level": "senior"
+        },
+        {
+          "question": "What is flake detection analytics?",
+          "answer": "Track tests that fail then pass without code change. Rank by flake rate for fixing priority. Some CI products compute automatically.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you test feature flags in automation?",
+          "answer": "Parameterize runs with flag on/off matrices for affected suites. Clean up flag-specific tests when flag removed. Mock flag service in unit layer.",
+          "level": "senior"
+        },
+        {
+          "question": "What is automation exit criteria?",
+          "answer": "Agreed coverage of regression catalog, stable pass rate over N runs, and run time within CI budget. Document manual-only areas explicitly. Revisit each major architecture change.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "API Testing",
+      "description": "REST and API verification, contracts, auth, and integration checks.",
+      "cards": [
+        {
+          "question": "What do REST API tests verify beyond status codes?",
+          "answer": "Schema, headers, body fields, pagination, and error contract for invalid inputs. Idempotency and rate limits where specified. Compare responses to OpenAPI spec automatically.",
+          "level": "junior"
+        },
+        {
+          "question": "How test authentication on APIs?",
+          "answer": "Missing token, expired token, wrong scope, and horizontal access between users. Error bodies must not leak stack traces. Automate role matrices as data-driven tests.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Postman/Newman in CI?",
+          "answer": "Collections executable headless in pipelines with environment files. Newman reports junit for gates. Keep secrets in CI variables not committed collections.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain JSON schema validation.",
+          "answer": "Assert response matches schema for types and required fields. Catches silent field drops in releases. Version schemas with API semver.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you test GraphQL APIs?",
+          "answer": "Validate correct data shape, error extensions, query cost limits, and authorization per field. Introspection disabled in prod should be tested in staging policy. Batch queries for load characteristics.",
+          "level": "junior"
+        },
+        {
+          "question": "What is idempotency key testing?",
+          "answer": "Repeat POST with same key should not duplicate side effects. Verify server returns same result on replay. Critical for payment and order APIs.",
+          "level": "junior"
+        },
+        {
+          "question": "How test file upload APIs?",
+          "answer": "Size cap, MIME validation, checksum, virus scan stub, and unauthorized download attempts. Multipart boundary edge cases. Resume interrupted upload if supported.",
+          "level": "junior"
+        },
+        {
+          "question": "What is OAuth2 flow testing?",
+          "answer": "Authorization code, client credentials, refresh rotation, and revoked token behavior. PKCE required for public clients. Never log tokens in test output.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain contract testing with Pact.",
+          "answer": "Consumer defines expected interactions; provider verifies in CI. Catches breaking changes early. Provider states setup test data carefully.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you test webhooks?",
+          "answer": "Expose test receiver; assert payload signature, retry backoff, and ordering. Simulate provider downtime and duplicate deliveries. Idempotent processing required on consumer side.",
+          "level": "junior"
+        },
+        {
+          "question": "What is negative API testing?",
+          "answer": "Malformed JSON, wrong content-type, overflow fields, and injection strings safely in test env. Expect consistent error format and HTTP codes per spec. Document undocumented 500s as bugs.",
+          "level": "junior"
+        },
+        {
+          "question": "How test API versioning?",
+          "answer": "Old clients on v1 still work while v2 ships; sunset headers communicated. Breaking changes only in major version. Integration tests pin both versions during transition.",
+          "level": "junior"
+        },
+        {
+          "question": "What is load testing APIs separately?",
+          "answer": "Functional pass first; then k6 or Gatling on representative endpoints. Watch error rate under load not just latency. Shared staging hardware skews results— note environment.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain HATEOAS testing if used.",
+          "answer": "Links in responses navigate workflow states correctly. Broken hrefs block clients relying on discovery. Less common in modern JSON APIs but test if promised.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you test rate limiting?",
+          "answer": "Exceed quota and expect 429 with Retry-After header. Different limits per API key tier. Reset window behavior documented and verified.",
+          "level": "middle"
+        },
+        {
+          "question": "What is chakram/supertest style?",
+          "answer": "In-process HTTP tests against app without network hop for speed. Good for Node Express layers. Still need separate contract tests against deployed env.",
+          "level": "middle"
+        },
+        {
+          "question": "How test pagination cursors?",
+          "answer": "Walk until empty; no duplicates on static dataset. Invalid cursor returns safe error. Concurrent writes document expected anomalies.",
+          "level": "middle"
+        },
+        {
+          "question": "What is SOAP API testing basics?",
+          "answer": "WSDL defines operations; XML assert nodes and faults. Still prevalent in enterprise integrations. Tools like SoapUI generate baseline requests.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain mTLS client cert tests.",
+          "answer": "Present valid, expired, and wrong CN certs expecting pass or fail appropriately. Revocation checking if enabled. Automate cert generation in fixture scripts.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you mock time-dependent APIs?",
+          "answer": "Freeze clock injection or test hooks returning fixed timestamps. Token expiry boundaries need controlled time. Avoid flaky midnight failures.",
+          "level": "middle"
+        },
+        {
+          "question": "What is API fuzz testing?",
+          "answer": "Randomized inputs hunt crashes and 500 errors. Run in isolated env with monitoring. Findings triaged separately from functional suite.",
+          "level": "middle"
+        },
+        {
+          "question": "How test bulk endpoints?",
+          "answer": "Partial success responses, batch size limits, and transactional semantics all-or-nothing vs best-effort. Timeout on huge payloads. Document max items per request.",
+          "level": "middle"
+        },
+        {
+          "question": "What is header contract testing?",
+          "answer": "ETag, Cache-Control, Correlation-Id, and Content-Type must match spec. Missing security headers flagged in security suite. CORS preflight OPTIONS covered.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain testing gRPC services.",
+          "answer": "Protobuf contracts version carefully; breaking field changes fail compatibility checks. grpcurl for manual; automated clients in same language often faster. Status codes map from rich error model.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you test long polling or SSE?",
+          "answer": "Hold connection open; assert events sequence and reconnect behavior. Timeouts and proxy buffering issues appear in staging. Automate with client libraries supporting async read.",
+          "level": "senior"
+        },
+        {
+          "question": "What is consumer-driven contract ownership?",
+          "answer": "Consumer team publishes pacts; provider CI verifies. Communication channel for evolving fields. Prevents integration surprise on deploy day.",
+          "level": "senior"
+        },
+        {
+          "question": "How test API localization?",
+          "answer": "Accept-Language header switches message strings and formatted dates. Fallback locale when unsupported. Error messages localized consistently with UI.",
+          "level": "senior"
+        },
+        {
+          "question": "What is snapshot testing for JSON?",
+          "answer": "Compare full response to stored golden file— brittle if data volatile. Use selective field assertions instead for dynamic IDs. Snapshots ok for stable reference payloads.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain testing DELETE safety.",
+          "answer": "Soft delete vs hard delete semantics. Unauthorized delete returns 403 not 404 information leak. Cascade rules on related resources verified.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you organize API test folders?",
+          "answer": "By resource or user journey mirroring product domains. Shared auth fixture at suite level. Clear naming maps failures to owning squad.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Performance & Security Testing",
+      "description": "Load and resilience testing plus security validation within QA scope.",
+      "cards": [
+        {
+          "question": "What is performance testing goal?",
+          "answer": "Validate response time, throughput, and stability under expected and peak load. Find bottlenecks before users do. Define success criteria before running tools.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain load vs stress vs soak.",
+          "answer": "Load is expected traffic; stress exceeds limits to find breaking point; soak holds moderate load for hours exposing leaks. Each answers different risk questions. Schedule soak before major releases.",
+          "level": "junior"
+        },
+        {
+          "question": "What metrics matter in perf tests?",
+          "answer": "p95/p99 latency, error rate, throughput, and resource utilization on app and DB. Averages hide tail pain. Compare against SLO targets not arbitrary numbers.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you design perf scenarios?",
+          "answer": "Model think time and mix from production analytics. Ramp up gradually to observe scaling curve. Seed realistic data volume not empty databases.",
+          "level": "junior"
+        },
+        {
+          "question": "What causes misleading perf results?",
+          "answer": "Cold cache, tiny datasets, shared staging hardware, and disabled features unlike prod. Warm up before measuring. Document environmental assumptions in report.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain baseline and benchmark.",
+          "answer": "Baseline captures current release; future runs compare regressions. Store results in trend database. Alert on threshold regression in CI for critical endpoints.",
+          "level": "junior"
+        },
+        {
+          "question": "What is security testing in QA scope?",
+          "answer": "Validate authZ, input validation, session handling, and security headers within test charters. Not full pentest replacement but catches obvious gaps. Escalate findings with severity like functional bugs.",
+          "level": "junior"
+        },
+        {
+          "question": "What is OWASP Top 10 relevance?",
+          "answer": "Common web risks like injection and broken access control guide test ideas. Map cases to categories in test plan. Developers fix; QA verifies mitigations.",
+          "level": "junior"
+        },
+        {
+          "question": "How test SQL injection safely?",
+          "answer": "Use known safe payloads in test env only producing expected errors or sanitization. Never on production. Automated DAST tools supplement manual vectors.",
+          "level": "junior"
+        },
+        {
+          "question": "What is XSS testing approach?",
+          "answer": "Inject script strings in reflected and stored contexts expecting encoding or CSP block. Verify DOM-based XSS in rich client apps. Report bypasses with reproduction steps minimally exposing users.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain CSRF protection testing.",
+          "answer": "State-changing requests without token should fail. SameSite cookies and double-submit patterns verified. Login CSRF also considered on sensitive apps.",
+          "level": "junior"
+        },
+        {
+          "question": "What is penetration test handoff?",
+          "answer": "QA shares test accounts, scope URLs, and known integrations before external pentest. Retest fixes before closure report. Duplicate pentest findings become regression cases where feasible.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you test session timeout?",
+          "answer": "Idle and absolute timeout expirations redirect to login. Sensitive actions re-auth if required. Concurrent session policy per product spec.",
+          "level": "middle"
+        },
+        {
+          "question": "What is security regression suite?",
+          "answer": "Automated checks for auth matrix, headers, and known CVE patches after upgrades. Run smaller suite on each release. Complement annual pentest.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain performance NFR traceability.",
+          "answer": "Non-functional requirements link to perf test cases like max concurrent users. Sign off when NFRs met or waivers approved. Product owns NFR definitions.",
+          "level": "middle"
+        },
+        {
+          "question": "What tools for load testing?",
+          "answer": "k6, JMeter, Gatling chosen by team skills and protocol support. Distributed generators for large scale. Monitor server side during runs not only client stats.",
+          "level": "middle"
+        },
+        {
+          "question": "How test TLS and cipher config?",
+          "answer": "testssl or SSL Labs on staging public endpoints. Weak protocols should fail policy. Cert expiry monitored same as functional monitors.",
+          "level": "middle"
+        },
+        {
+          "question": "What is race condition security bug?",
+          "answer": "Double spend or duplicate grant under parallel requests. Automate parallel curl or scripted threads in test env. Fix often needs transactional locking on server.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain data exposure in API errors.",
+          "answer": "Errors must not reveal stack, SQL, or internal IDs unnecessarily. QA cases probe verbose error modes disabled in prod config. Log server-side detail instead.",
+          "level": "middle"
+        },
+        {
+          "question": "What is performance test environment?",
+          "answer": "Dedicated hardware or isolated cloud stack sized like prod fraction. Contention from other teams invalidates numbers. Label reports with env fingerprint.",
+          "level": "middle"
+        },
+        {
+          "question": "How test brute force protections?",
+          "answer": "Account lockout or CAPTCHA after N failures. Rate limit by IP and account. Verify lockout reset and support unlock flow.",
+          "level": "middle"
+        },
+        {
+          "question": "What is sensitive data in logs QA check?",
+          "answer": "Search logs during tests for credit cards or passwords accidentally logged. Automated grep patterns in log review checklist. Fail release if PII found in debug enabled prod.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain scalability testing.",
+          "answer": "Increase load until linear scaling breaks identifying first bottleneck. Often database connections or thread pools. Results feed capacity planning.",
+          "level": "middle"
+        },
+        {
+          "question": "What is client-side perf testing?",
+          "answer": "Lighthouse metrics for web— LCP, CLS, INP. Mobile app startup time and memory. Set budgets in CI for critical pages where tooling supports.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you test CDN behavior?",
+          "answer": "Cache hit ratio, purge effectiveness, and geo routing. Stale content after deploy mitigated by purge automation. Origin shield under load tested.",
+          "level": "senior"
+        },
+        {
+          "question": "What is security chaos idea?",
+          "answer": "Game days injecting revoked certs or expired tokens in staging. Validates monitoring and graceful degradation. Coordinate with SRE to avoid false prod alerts.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain perf test data volume.",
+          "answer": "Tests on empty DB mislead query planner behavior. Seed proportional rows to prod tables. Anonymized prod subset import common approach.",
+          "level": "senior"
+        },
+        {
+          "question": "What is vulnerability scanning in QA pipeline?",
+          "answer": "Dependency and container scans gate releases on critical CVEs. WAivers need expiry and owner. QA tracks scan dashboard like test dashboards.",
+          "level": "senior"
+        },
+        {
+          "question": "How test content security policy?",
+          "answer": "Verify inline scripts blocked when CSP enforced. Report-only mode first in staging. Breakages caught before enforce breaks prod UI.",
+          "level": "senior"
+        },
+        {
+          "question": "What is perf sign-off criteria?",
+          "answer": "All NFR scenarios pass thresholds, no critical resource leaks in soak, and no regression beyond agreed percent from baseline. Document residual risks if waivers exist.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Process & Soft Skills",
+      "description": "Defect lifecycle, collaboration, metrics, and release communication.",
+      "cards": [
+        {
+          "question": "What makes a good bug report?",
+          "answer": "Clear title, minimal repro steps, expected vs actual, environment, logs, and severity. Attach screenshots or HAR when useful. Link requirement or build for bisect.",
+          "level": "junior"
+        },
+        {
+          "question": "How do severity and priority differ?",
+          "answer": "Severity is user or system impact; priority is fix order given business context. Document both fields separately. Revisit priority as release date nears.",
+          "level": "junior"
+        },
+        {
+          "question": "What metrics help QA without gaming?",
+          "answer": "Escaped defects, cycle time to fix, flaky rate trends, and coverage of risk areas. Avoid raw case count vanity metrics. Pair numbers with qualitative release notes.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain definition of done for QA.",
+          "answer": "Acceptance criteria met, agreed automation updated, docs refreshed, no open blockers for scope. QA signs on evidence not activity. Embedded in workflow tool checklist.",
+          "level": "junior"
+        },
+        {
+          "question": "What is shift-left testing?",
+          "answer": "Involve QA in requirements and design reviews early. Write test ideas before code merges. Cheaper defects found upstream.",
+          "level": "junior"
+        },
+        {
+          "question": "How handle is-it-a-bug disagreements?",
+          "answer": "Refer to specs and product owner for ambiguous behavior. Document decision for consistency. Reproduction video reduces debate.",
+          "level": "junior"
+        },
+        {
+          "question": "What belongs in test summary for executives?",
+          "answer": "Scope, pass/fail by area, open defects by severity, go/no-go recommendation, and deferred risks. Plain language outcomes. No jargon without explanation.",
+          "level": "junior"
+        },
+        {
+          "question": "How manage regression across frequent releases?",
+          "answer": "Risk-based catalog tagged by feature and failure history. Automate core; rotate exploratory on changes. Retire obsolete cases.",
+          "level": "junior"
+        },
+        {
+          "question": "What is root cause analysis after escape?",
+          "answer": "Timeline introduction to detection gap; corrective actions on tests and process. Blameless tone encourages honesty. Track action item completion.",
+          "level": "junior"
+        },
+        {
+          "question": "How coordinate QA with continuous delivery?",
+          "answer": "Fast automated gates, feature flags, and monitoring as safety net. QA charters risks per change rather than big-bang signoff. Evidence-based release decisions.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain three amigos meeting.",
+          "answer": "Dev, QA, and product refine story acceptance together before sprint work. Shared understanding reduces rework. Minutes capture edge cases discovered.",
+          "level": "junior"
+        },
+        {
+          "question": "What is test strategy document?",
+          "answer": "High-level approach for program or release— scope, tools, environments, and risks. Differs from detailed test plan per phase. Living doc updated annually or on architecture shifts.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you estimate testing effort?",
+          "answer": "Break by feature risk, automation reuse, and env setup needs. Historical velocity on similar stories helps. Buffer for integration unknowns explicitly.",
+          "level": "middle"
+        },
+        {
+          "question": "What is quality gate?",
+          "answer": "Objective criteria blocking promotion— pass rate, open sev1 count, perf thresholds. Automated where possible. Waivers require named approver.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain bug triage meeting.",
+          "answer": "Regular review of new defects prioritizing and assigning. Duplicate detection and severity calibration happen here. Time-box to keep flow moving.",
+          "level": "middle"
+        },
+        {
+          "question": "What is whole team quality?",
+          "answer": "Testing is everyone's job; QA coaches and focuses on risk. Developers own unit tests; ops owns prod monitoring feedback loop. Reduces QA bottleneck myth.",
+          "level": "middle"
+        },
+        {
+          "question": "How communicate release risk?",
+          "answer": "Residual risk list with mitigations and monitoring plans. Honest no-go saves reputation. Post-release hypercare when risk accepted.",
+          "level": "middle"
+        },
+        {
+          "question": "What is pairing dev and QA?",
+          "answer": "QA pairs on story implementation clarifying acceptance live. Shortens feedback loop within sprint. Builds mutual respect and shared ownership.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain test debt.",
+          "answer": "Skipped automation, outdated cases, and missing env parity accumulate interest. Schedule paydown sprints like tech debt. Track visibly in backlog.",
+          "level": "middle"
+        },
+        {
+          "question": "What is crowdtesting?",
+          "answer": "External testers on real devices and locales supplement core team. Good for diversity of exploration. Manage NDAs and data privacy carefully.",
+          "level": "middle"
+        },
+        {
+          "question": "How onboard new QA to product?",
+          "answer": "Structured domain doc, shadowing incidents, and guided bug fixes first weeks. Buddy assigns increasing charter complexity. Feedback loop on documentation gaps.",
+          "level": "middle"
+        },
+        {
+          "question": "What is compliance testing?",
+          "answer": "Validate regulatory requirements— audit trails, retention, consent flows. Checklists from legal mapped to cases. Evidence pack for auditors on request.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain stakeholder management for QA.",
+          "answer": "Regular status without alarmism; escalate blockers early. Translate technical risk to business impact language. Build trust with consistent quality signals.",
+          "level": "middle"
+        },
+        {
+          "question": "What is hypercare post-release?",
+          "answer": "Increased monitoring and rapid response window after major launch. QA on standby for quick verification of hotfixes. Defined duration and exit to normal support.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you say no to unsafe release?",
+          "answer": "Present data— open defects, untested areas, perf regressions. Offer options— scope cut, flag off, delay. Document decision makers accepting risk if override.",
+          "level": "senior"
+        },
+        {
+          "question": "What is learning from production bugs?",
+          "answer": "Each escape gets retrospective test or monitor addition. Trend analysis on component hotspots. Close loop visible to team morale.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain QA in Agile ceremonies.",
+          "answer": "Active in planning, refinement, standup blockers, review demos, retro process tweaks. Skip-only when truly no test impact that sprint. Voice risk early in planning poker.",
+          "level": "senior"
+        },
+        {
+          "question": "What is cross-functional release checklist?",
+          "answer": "Dev, QA, ops, support sign items— migrations run, comms sent, rollback tested. Single shared doc per release train. Prevents forgotten toggle or doc update.",
+          "level": "senior"
+        },
+        {
+          "question": "How maintain domain knowledge as QA?",
+          "answer": "Notes on integrations, quirks, and historical incidents in team wiki. Rotate feature ownership among QA members. Avoid single bus factor on complex modules.",
+          "level": "senior"
+        },
+        {
+          "question": "What is ethical responsibility of QA?",
+          "answer": "Report quality issues honestly even under schedule pressure. Protect user privacy in test data handling. Speak up when safety or compliance at stake.",
+          "level": "senior"
+        }
+      ]
+    }
+  ]
+}

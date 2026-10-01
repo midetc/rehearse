@@ -1,0 +1,1555 @@
+{
+  "slug": "python-developer",
+  "name": "Python Developer",
+  "description": "Interview prep for Python backend, web, data, and systems roles.",
+  "categories": [
+    {
+      "name": "Python Core",
+      "description": "Syntax, types, scoping, builtins, and everyday language mechanics.",
+      "cards": [
+        {
+          "question": "What is the difference between a list and a tuple in Python?",
+          "answer": "Lists are mutable sequences; tuples are immutable. Tuples can be used as dict keys and in sets when their elements are hashable, which lists cannot. Tuples often represent fixed records or return multiple values with lower overhead. Choose lists when you need in-place updates; choose tuples for stable, hashable data.",
+          "level": "junior"
+        },
+        {
+          "question": "How does Python resolve names with the LEGB rule?",
+          "answer": "Python looks up names in order: Local, Enclosing, Global, Built-in. A name in an inner function can read enclosing variables unless you assign locally, which makes it local unless you use nonlocal or global. Understanding LEGB prevents subtle bugs with closures and module-level constants. It also explains why shadowing builtins like list is dangerous.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the difference between == and is?",
+          "answer": "== compares value equality via __eq__; is checks object identity (same id in memory). Two equal strings may be different objects; small integers and interned strings may be cached and compare identical with is. Use == for business logic comparisons. Reserve is for None, singleton checks, and identity-sensitive APIs.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain mutable versus immutable types and pass-by-object-reference.",
+          "answer": "Python passes references to objects, not copies. Rebinding a parameter does not affect the caller; mutating a shared object does. Immutable types (int, str, tuple) cannot change in place, so updates create new objects. This matters for default arguments like def f(x=[]): where the same list is reused across calls unless you use None as a sentinel.",
+          "level": "senior"
+        },
+        {
+          "question": "When are list comprehensions preferable to explicit loops?",
+          "answer": "Comprehensions are concise for simple map/filter transforms and often faster because the loop runs in C. They improve readability when the expression is one line and side-effect free. Prefer a loop when logic is complex, you need break/continue, or multiple statements are required. Generator expressions save memory for large lazy pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do *args and **kwargs work in function signatures?",
+          "answer": "*args collects extra positional arguments as a tuple; **kwargs collects extra keyword arguments as a dict. In definitions, * can also force keyword-only parameters after it. In calls, * unpacks iterables and ** unpacks mappings into arguments. They enable wrappers and APIs that forward arguments to inner functions cleanly.",
+          "level": "junior"
+        },
+        {
+          "question": "How do decorators work in Python?",
+          "answer": "A decorator is a callable that takes a function and returns a replacement, applied with @syntax at definition time. The original function object is passed to the decorator immediately when the module loads. Common uses include logging, access control, caching, and registering routes. functools.wraps preserves metadata like __name__ on the wrapped function.",
+          "level": "junior"
+        },
+        {
+          "question": "What are context managers and how does the with statement work?",
+          "answer": "Context managers implement __enter__ and __exit__ to set up and tear down resources reliably. with guarantees __exit__ runs even on exceptions, which is ideal for files, locks, and transactions. contextlib.contextmanager lets you write them with yield in a generator. They reduce leaked handles and duplicated try/finally boilerplate.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the GIL and how does it affect multithreaded Python?",
+          "answer": "The Global Interpreter Lock allows only one thread to execute Python bytecode at a time in CPython. CPU-bound threads do not scale across cores for pure Python work because they contend for the GIL. I/O-bound threads still help because they release the GIL while waiting. For CPU parallelism use multiprocessing, native extensions, or subprocess workers.",
+          "level": "senior"
+        },
+        {
+          "question": "What are descriptors and when would you use them?",
+          "answer": "Descriptors define __get__, __set__, or __delete__ and power attributes like properties, class methods, and ORM fields. Access on an instance triggers descriptor protocol on the class attribute. They centralize validation and lazy computation in reusable objects. Frameworks use them heavily; everyday code often uses @property instead for simple cases.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize list versus tuple across teams working on Python Core?",
+          "answer": "Lists are mutable sequences; tuples are immutable. Tuples can be dict keys when all elements are hashable. Tuples suit fixed records and multiple return values with less overhead than lists.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain LEGB scoping in the context of Python Core.",
+          "answer": "LEGB orders lookup: Local, Enclosing, Global, Built-in. Assignment binds locally unless nonlocal or global is declared. This explains closures and why inner functions see outer variables until reassigned.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or observe behavior related to == versus is?",
+          "answer": "== compares values via __eq__; is compares object identity. Never use is for numeric or string equality except None and small cached ints. Identity checks matter for sentinel objects and singletons.",
+          "level": "middle"
+        },
+        {
+          "question": "What is mutable default arguments?",
+          "answer": "Default values are evaluated once at function definition time. A mutable default like [] is shared across calls unless you use None and create a new list inside. This is a classic interview bug in accumulators and caches.",
+          "level": "junior"
+        },
+        {
+          "question": "What bugs or performance issues involve list comprehensions in Python Core?",
+          "answer": "Comprehensions express map/filter transforms compactly and run quickly in CPython. Use them when the expression is simple and side-effect free. Prefer loops when you need break, continue, or multi-step logic.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or observe behavior related to *args and **kwargs?",
+          "answer": "*args gathers extra positional parameters; **kwargs gathers keyword parameters. A bare * in the signature forces keyword-only parameters after it. They enable decorators and wrappers that forward calls transparently.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply decorators correctly in Python Core?",
+          "answer": "Decorators apply a callable to a function at definition time using @syntax. They wrap behavior such as auth, timing, or registration. Use functools.wraps to preserve __name__ and __doc__ on the wrapped function.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain context managers in the context of Python Core.",
+          "answer": "Context managers is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use the GIL correctly in Python Core?",
+          "answer": "CPython's GIL lets one thread run bytecode at a time. Threads still help for I/O that releases the GIL. Use multiprocessing or native code for CPU-bound parallelism across cores.",
+          "level": "middle"
+        },
+        {
+          "question": "What is descriptors?",
+          "answer": "Descriptors implement __get__, __set__, or __delete__ and power properties and ORM fields. Access goes through the descriptor protocol on the class. They centralize validation and lazy computation in reusable objects.",
+          "level": "junior"
+        },
+        {
+          "question": "What is f-strings and when do you use it?",
+          "answer": "F-strings is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does import system introduce in Python Core?",
+          "answer": "Import system is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is copy versus deepcopy and when do you use it?",
+          "answer": "Copy versus deepcopy is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with __repr__ and __str__ in Python Core?",
+          "answer": "  repr   and   str   is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with dict merge operators in Python Core?",
+          "answer": "Dict merge operators is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use itertools correctly in Python Core?",
+          "answer": "Itertools is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around generators at scale in Python Core?",
+          "answer": "Generators is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain yield from in the context of Python Core.",
+          "answer": "Yield from is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use property decorator correctly in Python Core?",
+          "answer": "Property decorator is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain staticmethod and classmethod in the context of Python Core.",
+          "answer": "Staticmethod and classmethod is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around dataclasses at scale in Python Core?",
+          "answer": "Dataclasses is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is typing Optional and Union and when do you use it?",
+          "answer": "Static typing and linting catch whole classes of bugs before runtime. Gradually tighten mypy strictness on new modules. Automate format and lint in CI so reviews focus on design.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with Protocol structural typing in Python Core?",
+          "answer": "Static typing and linting catch whole classes of bugs before runtime. Gradually tighten mypy strictness on new modules. Automate format and lint in CI so reviews focus on design.",
+          "level": "middle"
+        },
+        {
+          "question": "What is EAFP versus LBAE and when do you use it?",
+          "answer": "Eafp versus lbae is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use bytes and str correctly in Python Core?",
+          "answer": "Bytes and str is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with pathlib in Python Core?",
+          "answer": "Pathlib is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain enumerate and zip in the context of Python Core.",
+          "answer": "Enumerate and zip is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use walrus operator correctly in Python Core?",
+          "answer": "Walrus operator is a practical Python Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "Data Structures",
+      "description": "Built-in and standard collections, complexity, and choosing structures.",
+      "cards": [
+        {
+          "question": "How do you apply list time complexity correctly in Data Structures?",
+          "answer": "Indexing and append on CPython lists are amortized O(1); insert or delete in the middle is O(n). Sorting is O(n log n). Pick deque for O(1) pops from the left when modeling queues.",
+          "level": "middle"
+        },
+        {
+          "question": "What is dict hash tables and when do you use it?",
+          "answer": "Hash maps offer average O(1) lookup with a good hash function and load factor control. Keys need consistent equals and hashCode or __hash__ and __eq__. Resizing rehashes buckets when load grows.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with set operations in Data Structures?",
+          "answer": "Set operations is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around collections.deque at scale in Data Structures?",
+          "answer": "collections.deque gives O(1) append/pop at both ends; lists are costly at the front. heapq implements a min-heap for priority queues; bisect maintains sorted lists. Pick APIs matching required operations.",
+          "level": "senior"
+        },
+        {
+          "question": "What is collections.Counter and when do you use it?",
+          "answer": "Collections counter is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does collections.defaultdict introduce in Data Structures?",
+          "answer": "Collections defaultdict is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use heapq correctly in Data Structures?",
+          "answer": "collections.deque gives O(1) append/pop at both ends; lists are costly at the front. heapq implements a min-heap for priority queues; bisect maintains sorted lists. Pick APIs matching required operations.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does bisect introduce in Data Structures?",
+          "answer": "collections.deque gives O(1) append/pop at both ends; lists are costly at the front. heapq implements a min-heap for priority queues; bisect maintains sorted lists. Pick APIs matching required operations.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with OrderedDict history in Data Structures?",
+          "answer": "Ordereddict history is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with array module in Data Structures?",
+          "answer": "Array module is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does namedtuple introduce in Data Structures?",
+          "answer": "Namedtuple is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does ChainMap introduce in Data Structures?",
+          "answer": "Chainmap is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use UserDict patterns correctly in Data Structures?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain immutable mappings in the context of Data Structures.",
+          "answer": "Immutable mappings is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around graph adjacency lists at scale in Data Structures?",
+          "answer": "Graph adjacency lists is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is tree traversals and when do you use it?",
+          "answer": "Tree traversals is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does BFS versus DFS introduce in Data Structures?",
+          "answer": "Bfs versus dfs is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain priority queues in the context of Data Structures.",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "junior"
+        },
+        {
+          "question": "What is LRU cache design and when do you use it?",
+          "answer": "Caches trade freshness for latency; define TTL and invalidation explicitly. Protect against stampedes with single-flight or jittered expiry. Monitor hit ratio and memory eviction behavior.",
+          "level": "junior"
+        },
+        {
+          "question": "What is trie structures and when do you use it?",
+          "answer": "Trie structures is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use union-find correctly in Data Structures?",
+          "answer": "Union-find is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is sliding window and when do you use it?",
+          "answer": "Sliding window is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is two pointers and when do you use it?",
+          "answer": "Two pointers is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use big-O for sorting correctly in Data Structures?",
+          "answer": "State time and space complexity for operations you rely on in hot paths. CPython list append is amortized O(1); middle insert is O(n). Choose structures to match access patterns, not habit.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with stable sorting in Data Structures?",
+          "answer": "Stable sorting is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around Timsort behavior at scale in Data Structures?",
+          "answer": "Timsort behavior is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use in-place algorithms correctly in Data Structures?",
+          "answer": "In-place algorithms is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does memory overhead of lists introduce in Data Structures?",
+          "answer": "Memory overhead of lists is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain compact sequences in the context of Data Structures.",
+          "answer": "Compact sequences is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is struct module and when do you use it?",
+          "answer": "Struct module is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use memoryview correctly in Data Structures?",
+          "answer": "Memoryview is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain NumPy ndarray overview in the context of Data Structures.",
+          "answer": "Numpy ndarray overview is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with pandas Series index in Data Structures?",
+          "answer": "Indexes speed filters and joins on matching columns at the cost of write overhead and storage. Use EXPLAIN to verify the planner uses the expected index. Composite indexes follow left-prefix rules for multi-column queries.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with hashable requirements in Data Structures?",
+          "answer": "Hashable requirements is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use collision handling correctly in Data Structures?",
+          "answer": "Collision handling is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with amortized append in Data Structures?",
+          "answer": "Amortized append is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does deque maxlen introduce in Data Structures?",
+          "answer": "collections.deque gives O(1) append/pop at both ends; lists are costly at the front. heapq implements a min-heap for priority queues; bisect maintains sorted lists. Pick APIs matching required operations.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with ring buffers in Data Structures?",
+          "answer": "Ring buffers is a practical Data Structures topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "OOP & Design",
+      "description": "Classes, protocols, composition, and maintainable Python architecture.",
+      "cards": [
+        {
+          "question": "What is the purpose of __init__ versus __new__?",
+          "answer": "__new__ creates the instance and runs before __init__; __init__ initializes the existing object. Most classes only customize __init__. Override __new__ for immutable subclasses, singletons, or wrapping C extension allocation. Returning a non-instance from __new__ skips __init__ on that object.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain class attributes versus instance attributes.",
+          "answer": "Class attributes are shared on the class object; instance attributes live in each instance __dict__ or slots. Mutating a mutable class attribute through one instance affects all unless rebound on the instance. Functions defined in class body become descriptors bound as methods on access. Clear separation avoids accidental shared state bugs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is duck typing and how does it relate to protocols?",
+          "answer": "Duck typing means behavior matters, not explicit inheritance: if it quacks, use it. typing.Protocol formalizes structural subtyping for static checkers without runtime inheritance. This keeps APIs flexible and test-friendly with simple fakes. It aligns with Python EAFP style: try the operation and handle failure.",
+          "level": "senior"
+        },
+        {
+          "question": "When should you use __slots__?",
+          "answer": "__slots__ restricts allowed attributes and can reduce memory per instance by avoiding per-object __dict__. It speeds attribute access slightly and prevents arbitrary attribute assignment. Subclasses must declare their own slots if the parent uses them. Use for many small instances; skip when you need dynamic attributes or weakrefs unless configured.",
+          "level": "middle"
+        },
+        {
+          "question": "How does method resolution order work with multiple inheritance?",
+          "answer": "Python uses C3 linearization to produce MRO: the order in which bases are searched for attributes. super() follows MRO, not just the parent class, which enables cooperative multiple inheritance. Diamond hierarchies resolve consistently if each class calls super() correctly. Inspect Class.mro() when debugging unexpected overrides.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the difference between composition and inheritance?",
+          "answer": "Inheritance is an is-a relationship and couples subclasses to base implementation changes. Composition delegates behavior to contained objects and favors has-a relationships. Composition reduces fragile base class problems and eases testing with swapped collaborators. Prefer inheritance for true subtype polymorphism; otherwise compose small focused objects.",
+          "level": "senior"
+        },
+        {
+          "question": "How do abstract base classes help design?",
+          "answer": "abc.ABC and @abstractmethod document required methods and fail at instantiation if unimplemented. They guide plugin implementations without heavy runtime cost beyond checks. They complement protocols: ABCs for explicit registration, protocols for structural typing. Use them at framework boundaries where contracts must be enforced.",
+          "level": "middle"
+        },
+        {
+          "question": "What are dataclasses and when to use them over plain classes?",
+          "answer": "dataclasses generate __init__, __repr__, and comparison from field declarations with less boilerplate. They support defaults, factories, frozen immutability, and slots in recent Python versions. Use them for data carriers and DTOs, not rich domain models with complex invariants. Combine with validators or __post_init__ for simple rules.",
+          "level": "senior"
+        },
+        {
+          "question": "How should you design modules and packages to avoid circular imports?",
+          "answer": "Keep imports at module level acyclic by moving shared types to a thin models or typing module. Defer imports inside functions for optional or heavy dependencies. Prefer dependency injection over importing concrete implementations both ways. Refactor god modules that mix ORM, HTTP, and utilities into layered packages.",
+          "level": "junior"
+        },
+        {
+          "question": "What is dependency injection in Python applications?",
+          "answer": "Dependencies are supplied from outside rather than hard-coded inside a class or function. Constructor injection makes requirements explicit and enables tests with fakes. Frameworks like FastAPI inject parameters via type hints and providers. Manual factories or app containers work well in Django services without a heavy DI framework.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the purpose of __init__ versus __new__?",
+          "answer": "__new__ creates the instance and runs before __init__; __init__ initializes the existing object. Most classes only customize __init__. Override __new__ for immutable subclasses, singletons, or wrapping C extension allocation. Returning a non-instance from __new__ skips __init__ on that object.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain class attributes versus instance attributes.",
+          "answer": "Class attributes are shared on the class object; instance attributes live in each instance __dict__ or slots. Mutating a mutable class attribute through one instance affects all unless rebound on the instance. Functions defined in class body become descriptors bound as methods on access. Clear separation avoids accidental shared state bugs.",
+          "level": "senior"
+        },
+        {
+          "question": "What is duck typing and how does it relate to protocols?",
+          "answer": "Duck typing means behavior matters, not explicit inheritance: if it quacks, use it. typing.Protocol formalizes structural subtyping for static checkers without runtime inheritance. This keeps APIs flexible and test-friendly with simple fakes. It aligns with Python EAFP style: try the operation and handle failure.",
+          "level": "senior"
+        },
+        {
+          "question": "When should you use __slots__?",
+          "answer": "__slots__ restricts allowed attributes and can reduce memory per instance by avoiding per-object __dict__. It speeds attribute access slightly and prevents arbitrary attribute assignment. Subclasses must declare their own slots if the parent uses them. Use for many small instances; skip when you need dynamic attributes or weakrefs unless configured.",
+          "level": "middle"
+        },
+        {
+          "question": "How does method resolution order work with multiple inheritance?",
+          "answer": "Python uses C3 linearization to produce MRO: the order in which bases are searched for attributes. super() follows MRO, not just the parent class, which enables cooperative multiple inheritance. Diamond hierarchies resolve consistently if each class calls super() correctly. Inspect Class.mro() when debugging unexpected overrides.",
+          "level": "middle"
+        },
+        {
+          "question": "What is the difference between composition and inheritance?",
+          "answer": "Inheritance is an is-a relationship and couples subclasses to base implementation changes. Composition delegates behavior to contained objects and favors has-a relationships. Composition reduces fragile base class problems and eases testing with swapped collaborators. Prefer inheritance for true subtype polymorphism; otherwise compose small focused objects.",
+          "level": "middle"
+        },
+        {
+          "question": "How do abstract base classes help design?",
+          "answer": "abc.ABC and @abstractmethod document required methods and fail at instantiation if unimplemented. They guide plugin implementations without heavy runtime cost beyond checks. They complement protocols: ABCs for explicit registration, protocols for structural typing. Use them at framework boundaries where contracts must be enforced.",
+          "level": "senior"
+        },
+        {
+          "question": "What are dataclasses and when to use them over plain classes?",
+          "answer": "dataclasses generate __init__, __repr__, and comparison from field declarations with less boilerplate. They support defaults, factories, frozen immutability, and slots in recent Python versions. Use them for data carriers and DTOs, not rich domain models with complex invariants. Combine with validators or __post_init__ for simple rules.",
+          "level": "junior"
+        },
+        {
+          "question": "How should you design modules and packages to avoid circular imports?",
+          "answer": "Keep imports at module level acyclic by moving shared types to a thin models or typing module. Defer imports inside functions for optional or heavy dependencies. Prefer dependency injection over importing concrete implementations both ways. Refactor god modules that mix ORM, HTTP, and utilities into layered packages.",
+          "level": "senior"
+        },
+        {
+          "question": "What is dependency injection in Python applications?",
+          "answer": "Dependencies are supplied from outside rather than hard-coded inside a class or function. Constructor injection makes requirements explicit and enables tests with fakes. Frameworks like FastAPI inject parameters via type hints and providers. Manual factories or app containers work well in Django services without a heavy DI framework.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does __init__ versus __new__ introduce in OOP & Design?",
+          "answer": "  init   versus   new   is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with class versus instance attributes in OOP & Design?",
+          "answer": "Class versus instance attributes is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around duck typing at scale in OOP & Design?",
+          "answer": "Static typing and linting catch whole classes of bugs before runtime. Gradually tighten mypy strictness on new modules. Automate format and lint in CI so reviews focus on design.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use abstract base classes correctly in OOP & Design?",
+          "answer": "Abstract base classes is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is composition versus inheritance and when do you use it?",
+          "answer": "Composition versus inheritance is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use MRO and super correctly in OOP & Design?",
+          "answer": "Mro and super is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around __slots__ at scale in OOP & Design?",
+          "answer": "  slots   is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain dependency injection in the context of OOP & Design.",
+          "answer": "Dependency injection is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use SOLID in Python correctly in OOP & Design?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use repository pattern correctly in OOP & Design?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain service layer in the context of OOP & Design.",
+          "answer": "Service layer is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around domain exceptions at scale in OOP & Design?",
+          "answer": "Domain exceptions is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with value objects in OOP & Design?",
+          "answer": "Value objects is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is entity identity and when do you use it?",
+          "answer": "JPA maps objects to tables with a persistence context tracking changes. Flush sends SQL before queries that need fresh state. Tune fetch joins to avoid N+1 and lazy initialization surprises in APIs.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does factory functions introduce in OOP & Design?",
+          "answer": "Factory functions is a practical OOP & Design topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with builder pattern in OOP & Design?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use strategy pattern correctly in OOP & Design?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain observer pattern in the context of OOP & Design.",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Web Frameworks",
+      "description": "HTTP, Django, Flask, FastAPI, security, and production APIs.",
+      "cards": [
+        {
+          "question": "How does the Django request/response cycle work?",
+          "answer": "WSGI or ASGI hands an environ to Django, which runs middleware, resolves URL to view, executes the view, and returns HttpResponse. Middleware can short-circuit before the view. Templates and serializers render content after business logic. Understanding order matters for auth, CSRF, and exception handling.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the Django ORM select_related versus prefetch_related?",
+          "answer": "select_related follows foreign keys and one-to-one with SQL JOINs in one query. prefetch_related runs a separate query for many-to-many and reverse foreign keys and joins in Python. Use them to fix N+1 query problems on list endpoints. Over-fetching wide joins can hurt; profile query counts in development.",
+          "level": "junior"
+        },
+        {
+          "question": "How do Django migrations fit into team workflow?",
+          "answer": "Migrations version schema changes as Python operations applied in order. Each developer generates migrations for model changes and commits them with code. Squashing reduces history but needs care on long-lived branches. Never edit applied migrations in production; add new operations instead. Run migrate in CI before deploy.",
+          "level": "junior"
+        },
+        {
+          "question": "What is CSRF protection and how does Django implement it?",
+          "answer": "CSRF prevents browsers from submitting state-changing requests with a victim session cookie. Django requires a token on unsafe methods for cookie-based sessions, embedded in forms or headers for AJAX. SameSite cookies and HTTPS reduce risk further. Token validation is skipped for exempt views only when safe, such as some API token auth.",
+          "level": "junior"
+        },
+        {
+          "question": "When would you choose FastAPI over Django?",
+          "answer": "FastAPI suits async microservices, OpenAPI-first REST, and high-throughput APIs with Pydantic validation. Django fits monoliths with admin, ORM, auth, and server-rendered pages in one stack. Many teams use Django for core product and FastAPI for specialized services. The choice depends on team skills and integration needs, not raw speed alone.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you structure REST error responses consistently?",
+          "answer": "Return appropriate HTTP status codes with a machine-readable body: code, message, and field errors for validation. Avoid leaking stack traces or internal IDs in production. Log correlation ids server-side for support. DRF exception handlers and FastAPI exception handlers centralize mapping from domain errors to responses.",
+          "level": "junior"
+        },
+        {
+          "question": "What is middleware and give a practical use case?",
+          "answer": "Middleware wraps the request/response pipeline with shared cross-cutting logic. Examples include authentication, request logging, timing, security headers, and tenant resolution. Order defines whether auth runs before or after routing. Keep middleware thin; heavy work belongs in services or background jobs.",
+          "level": "middle"
+        },
+        {
+          "question": "How do sessions and JWT authentication differ for web APIs?",
+          "answer": "Sessions store server-side state keyed by a cookie; revocation is immediate but needs storage and stickiness at scale. JWTs are stateless signed tokens validated per request; scaling is easier but revocation and rotation need extra design. Hybrid patterns use short-lived access tokens plus refresh tokens stored securely. Pick based on clients, logout requirements, and infrastructure.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common causes of slow Django views and how do you fix them?",
+          "answer": "N+1 ORM access, missing indexes, synchronous external HTTP, and large template rendering dominate. Use django-debug-toolbar or logging of query counts, add indexes matching filters, cache hot reads, and offload slow IO to Celery. Pagination and selective fields in serializers keep payloads small. Measure before optimizing random layers.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you test Django views or API endpoints?",
+          "answer": "Use Django TestCase or pytest-django with the client to hit URLs and assert status and JSON. Factory patterns build model data faster than fixtures. Mock external services at boundaries, not the ORM, for integration confidence. Test permissions and edge validation explicitly; happy path alone misses regressions.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain Django request cycle in the context of Web Frameworks.",
+          "answer": "Pick frameworks based on team skills, async needs, and built-in features like admin or OpenAPI. Keep views thin and push rules into services. Test permissions and validation on every public endpoint.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Django ORM select_related and when do you use it?",
+          "answer": "Pick frameworks based on team skills, async needs, and built-in features like admin or OpenAPI. Keep views thin and push rules into services. Test permissions and validation on every public endpoint.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does prefetch_related introduce in Web Frameworks?",
+          "answer": "select_related joins foreign keys in one query; prefetch_related runs a second query for collections and joins in Python. Use them deliberately on list endpoints. Over-wide joins can hurt more than N+1 fixes.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with Django migrations in Web Frameworks?",
+          "answer": "Ship schema changes in expand-contract steps compatible with rolling deploys. Backfill in batches and dual-write when needed. Never rewrite applied migration history in production.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain CSRF protection in the context of Web Frameworks.",
+          "answer": "Validate and sanitize at trust boundaries. Use framework middleware for CSRF on cookie sessions; encode output against XSS. For APIs, prefer short-lived tokens, rotation, and least-privilege scopes.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain Django middleware in the context of Web Frameworks.",
+          "answer": "Pick frameworks based on team skills, async needs, and built-in features like admin or OpenAPI. Keep views thin and push rules into services. Test permissions and validation on every public endpoint.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with Django signals in Web Frameworks?",
+          "answer": "Pick frameworks based on team skills, async needs, and built-in features like admin or OpenAPI. Keep views thin and push rules into services. Test permissions and validation on every public endpoint.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with class-based views in Web Frameworks?",
+          "answer": "Class-based views is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does DRF serializers introduce in Web Frameworks?",
+          "answer": "Drf serializers is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use DRF permissions correctly in Web Frameworks?",
+          "answer": "Drf permissions is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain Flask application factory in the context of Web Frameworks.",
+          "answer": "Pick frameworks based on team skills, async needs, and built-in features like admin or OpenAPI. Keep views thin and push rules into services. Test permissions and validation on every public endpoint.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does Flask blueprints introduce in Web Frameworks?",
+          "answer": "Pick frameworks based on team skills, async needs, and built-in features like admin or OpenAPI. Keep views thin and push rules into services. Test permissions and validation on every public endpoint.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply FastAPI dependency injection correctly in Web Frameworks?",
+          "answer": "The container constructs objects and injects collaborators, usually via constructor injection in Spring. Constructor injection makes dependencies explicit and eases testing with mocks. Avoid field injection in new code because it hides requirements.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with Pydantic validation in Web Frameworks?",
+          "answer": "Pydantic validation is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with OpenAPI generation in Web Frameworks?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with ASGI versus WSGI in Web Frameworks?",
+          "answer": "Asgi versus wsgi is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around session auth at scale in Web Frameworks?",
+          "answer": "Session auth is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is JWT auth and when do you use it?",
+          "answer": "Validate and sanitize at trust boundaries. Use framework middleware for CSRF on cookie sessions; encode output against XSS. For APIs, prefer short-lived tokens, rotation, and least-privilege scopes.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does OAuth2 flows introduce in Web Frameworks?",
+          "answer": "Validate and sanitize at trust boundaries. Use framework middleware for CSRF on cookie sessions; encode output against XSS. For APIs, prefer short-lived tokens, rotation, and least-privilege scopes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is CORS and when do you use it?",
+          "answer": "Cors is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use content negotiation correctly in Web Frameworks?",
+          "answer": "Content negotiation is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around REST status codes at scale in Web Frameworks?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is pagination cursors and when do you use it?",
+          "answer": "Pagination cursors is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain idempotent POST in the context of Web Frameworks.",
+          "answer": "Idempotent post is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with rate limiting in Web Frameworks?",
+          "answer": "Rate limiting is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use template XSS correctly in Web Frameworks?",
+          "answer": "Validate and sanitize at trust boundaries. Use framework middleware for CSRF on cookie sessions; encode output against XSS. For APIs, prefer short-lived tokens, rotation, and least-privilege scopes.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does SQL injection prevention introduce in Web Frameworks?",
+          "answer": "INNER JOIN keeps matching rows; OUTER JOINs preserve a driving table with nulls for misses. Filter early and index join keys. ORMs still need review for N+1 and cartesian products.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with secure cookies in Web Frameworks?",
+          "answer": "Secure cookies is a practical Web Frameworks topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "Databases & SQL",
+      "description": "Relational modeling, ORM, transactions, and query tuning.",
+      "cards": [
+        {
+          "question": "What is a database transaction and ACID properties?",
+          "answer": "A transaction groups operations into one atomic unit: all commit or all roll back. ACID means Atomicity, Consistency, Isolation, Durability under the engine guarantees. Application code should keep transactions short to reduce lock contention. Django atomic() blocks map to BEGIN/COMMIT around ORM work.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain INNER JOIN versus LEFT JOIN with an example use case.",
+          "answer": "INNER JOIN returns rows with matches in both tables. LEFT JOIN keeps all rows from the left table and null-fills missing right side matches. Use LEFT JOIN to list users with optional profiles including users without profiles. INNER JOIN fits strict relationships like orders that must have a customer.",
+          "level": "senior"
+        },
+        {
+          "question": "What is an index and what are trade-offs when adding one?",
+          "answer": "Indexes speed lookups and sorting on indexed columns at the cost of extra storage and slower writes. Composite indexes support multi-column filters with left-prefix rules. Over-indexing hurts insert-heavy workloads. Analyze slow queries with EXPLAIN to index predicates and join keys actually used.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you prevent SQL injection in Python applications?",
+          "answer": "Never interpolate user input into SQL strings. Use parameterized queries via DB-API placeholders or ORM filters that bind values separately. ORM is safe when expressions are structured, not raw string fragments from users. Audit any raw() or extra() usage carefully in code review.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the N+1 query problem?",
+          "answer": "Loading a list then issuing one query per row for related data explodes query count. ORM lazy loading makes this easy to introduce on serializers or templates. Fix with eager loading, prefetch, or joined queries sized to the access pattern. Monitoring query count per request catches it early.",
+          "level": "junior"
+        },
+        {
+          "question": "When would you use select_for_update?",
+          "answer": "select_for_update locks selected rows for the duration of the transaction in supporting databases. Use it when read-modify-write must be serializable, like decrementing inventory or wallet balances. Keep locked sections minimal to avoid deadlocks and timeouts. Alternative patterns include optimistic locking with version columns.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain database normalization versus denormalization.",
+          "answer": "Normalization reduces redundancy and update anomalies by splitting entities into related tables. Denormalization duplicates data for read performance or simpler reporting queries. OLTP systems lean normalized; analytics or hot read paths may denormalize with triggers or batch jobs to sync. Every duplicate column needs a documented update strategy.",
+          "level": "senior"
+        },
+        {
+          "question": "What are migration-safe ways to rename or drop a column in production?",
+          "answer": "Use expand-contract: add new column, dual-write or backfill, switch readers, then drop old column in a later release. Long locks from blocking ALTERs require online migration tools on large tables. Deploy code that tolerates both schemas during transition. Communicate with ops about rollback because down migrations may lose data.",
+          "level": "junior"
+        },
+        {
+          "question": "How do connection pools help and what can go wrong?",
+          "answer": "Pools reuse TCP connections to the database, amortizing handshake cost under load. Exhausting the pool causes timeouts waiting for a free connection. Leaks happen if connections are not returned on error paths. Size pools from DB max connections divided by app instances, and set statement timeouts.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the difference between CharField and TextField in Django?",
+          "answer": "CharField maps to VARCHAR with a max length enforced at validation and often in the database. TextField is for unbounded or large text without a max_length on the model. Some databases index CharField more predictably for exact matches. Choose based on length constraints and query patterns, not convenience alone.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with ACID transactions in Databases & SQL?",
+          "answer": "Transactions group writes atomically with isolation and durability guarantees from the engine. Keep transactions short to reduce lock time. Application code should define rollback on business rule failure.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain INNER JOIN in the context of Databases & SQL.",
+          "answer": "INNER JOIN keeps matching rows; OUTER JOINs preserve a driving table with nulls for misses. Filter early and index join keys. ORMs still need review for N+1 and cartesian products.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use LEFT JOIN correctly in Databases & SQL?",
+          "answer": "INNER JOIN keeps matching rows; OUTER JOINs preserve a driving table with nulls for misses. Filter early and index join keys. ORMs still need review for N+1 and cartesian products.",
+          "level": "middle"
+        },
+        {
+          "question": "What is indexes and when do you use it?",
+          "answer": "Indexes speed filters and joins on matching columns at the cost of write overhead and storage. Use EXPLAIN to verify the planner uses the expected index. Composite indexes follow left-prefix rules for multi-column queries.",
+          "level": "junior"
+        },
+        {
+          "question": "What is SQL injection and when do you use it?",
+          "answer": "INNER JOIN keeps matching rows; OUTER JOINs preserve a driving table with nulls for misses. Filter early and index join keys. ORMs still need review for N+1 and cartesian products.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use N+1 queries correctly in Databases & SQL?",
+          "answer": "N+1 runs one query for a list plus one per row for relations. Fix with eager loading, joins, or batch queries sized to access patterns. Measure query count per HTTP request in development.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with select_for_update in Databases & SQL?",
+          "answer": "Select for update is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use normalization correctly in Databases & SQL?",
+          "answer": "Normalization is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does denormalization introduce in Databases & SQL?",
+          "answer": "Denormalization is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with connection pools in Databases & SQL?",
+          "answer": "Connection pools is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does Django migrations expand-contract introduce in Databases & SQL?",
+          "answer": "Ship schema changes in expand-contract steps compatible with rolling deploys. Backfill in batches and dual-write when needed. Never rewrite applied migration history in production.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use raw SQL safety correctly in Databases & SQL?",
+          "answer": "INNER JOIN keeps matching rows; OUTER JOINs preserve a driving table with nulls for misses. Filter early and index join keys. ORMs still need review for N+1 and cartesian products.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use EXPLAIN plans correctly in Databases & SQL?",
+          "answer": "Indexes speed filters and joins on matching columns at the cost of write overhead and storage. Use EXPLAIN to verify the planner uses the expected index. Composite indexes follow left-prefix rules for multi-column queries.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use covering indexes correctly in Databases & SQL?",
+          "answer": "Indexes speed filters and joins on matching columns at the cost of write overhead and storage. Use EXPLAIN to verify the planner uses the expected index. Composite indexes follow left-prefix rules for multi-column queries.",
+          "level": "middle"
+        },
+        {
+          "question": "What is isolation levels and when do you use it?",
+          "answer": "Isolation levels is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use phantom reads correctly in Databases & SQL?",
+          "answer": "Phantom reads is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is optimistic locking and when do you use it?",
+          "answer": "Optimistic locking is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is pessimistic locking and when do you use it?",
+          "answer": "Pessimistic locking is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use database migrations correctly in Databases & SQL?",
+          "answer": "Ship schema changes in expand-contract steps compatible with rolling deploys. Backfill in batches and dual-write when needed. Never rewrite applied migration history in production.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with Alembic in Databases & SQL?",
+          "answer": "Alembic is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does seed data introduce in Databases & SQL?",
+          "answer": "Seed data is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use read replicas correctly in Databases & SQL?",
+          "answer": "Read replicas is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use write skew correctly in Databases & SQL?",
+          "answer": "Write skew is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is CharField versus TextField and when do you use it?",
+          "answer": "Charfield versus textfield is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does JSONField introduce in Databases & SQL?",
+          "answer": "Jsonfield is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does full-text search introduce in Databases & SQL?",
+          "answer": "Full-text search is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you design systems around window functions at scale in Databases & SQL?",
+          "answer": "Window functions is a practical Databases & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Async & Concurrency",
+      "description": "asyncio, threading, multiprocessing, and task queues.",
+      "cards": [
+        {
+          "question": "When should you use asyncio versus threads in Python?",
+          "answer": "asyncio excels at many concurrent I/O waits with explicit await points on one thread. Threads suit blocking libraries and moderate I/O without rewriting to async APIs. CPU-bound work belongs in processes, not either model, due to the GIL. Mix asyncio with run_in_executor for legacy blocking calls sparingly.",
+          "level": "middle"
+        },
+        {
+          "question": "What is an event loop in asyncio?",
+          "answer": "The event loop schedules coroutines, callbacks, and I/O readiness on a single thread. await yields control so other tasks run while waiting on sockets or timers. asyncio.run() creates and runs the loop for scripts. In web servers, the framework manages the loop lifecycle across requests.",
+          "level": "junior"
+        },
+        {
+          "question": "How do asyncio.create_task and asyncio.gather differ?",
+          "answer": "create_task schedules a coroutine concurrently and returns a Task handle for cancellation or callbacks. gather runs multiple awaitables and collects results, raising on first exception unless return_exceptions is set. Use tasks for fire-and-forget with tracking; gather for coordinated batches like fan-out HTTP calls. Always retain references to tasks until completion to avoid garbage collection surprises.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common asyncio pitfalls in production?",
+          "answer": "Blocking the loop with sync IO or heavy CPU stalls all tasks. Shared mutable state without locks races despite cooperative scheduling. Unbounded task creation can exhaust memory. Timeouts and cancellation must be handled on network clients. Use asyncio.to_thread or executors for blocking sections and semaphores to cap concurrency.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain multiprocessing versus multithreading for CPU work.",
+          "answer": "Multiprocessing spawns separate interpreters with independent GILs, enabling true parallel CPU on multiple cores. Threads share memory but contend on the GIL for Python bytecode. Process pools add serialization overhead via pickle for arguments and results. Choose processes for numeric crunching; threads for I/O when async is unavailable.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a race condition and how do locks help?",
+          "answer": "A race occurs when outcome depends on interleaving of unsynchronized access to shared state. threading.Lock or asyncio.Lock serialize critical sections so updates are atomic. Locks that are too coarse hurt throughput; too fine risk deadlocks. Prefer immutable data or message passing when possible to avoid shared locking.",
+          "level": "junior"
+        },
+        {
+          "question": "How does Celery fit into a Django architecture?",
+          "answer": "Celery runs task callables in worker processes outside the web request path. Brokers like Redis or RabbitMQ queue messages; results backends store outcomes optionally. Use it for email, reports, imports, and retryable side effects. Tasks must be idempotent where retries happen and should not assume request context unless explicitly passed.",
+          "level": "middle"
+        },
+        {
+          "question": "What is backpressure and how do you implement it?",
+          "answer": "Backpressure limits how much work is accepted when downstream is slower than upstream. Without it, queues grow unbounded and latency spikes. Implement with bounded queues, semaphores on async producers, or rate limits at API gateways. Monitor queue depth and reject or shed load with meaningful errors when saturated.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you safely share read-only configuration across workers?",
+          "answer": "Load settings once at process start from environment or config files into immutable structures. Avoid mutating globals after fork without reload in multiprocessing. For hot reload, use a versioned snapshot swapped atomically. Database-backed config needs caching with TTL and invalidation to prevent query storms.",
+          "level": "junior"
+        },
+        {
+          "question": "What does async context manager async with provide?",
+          "answer": "Async context managers implement __aenter__ and __aexit__ for async setup and cleanup, such as aiohttp ClientSession or database pools. They ensure resources close even when coroutines cancel. contextlib.asynccontextmanager builds them from async generators with yield. Pair them with timeouts on network operations.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply asyncio event loop correctly in Async & Concurrency?",
+          "answer": "The event loop schedules coroutines and IO callbacks on one thread. await yields control until the awaitable completes. Never call blocking IO on the loop thread without delegating to a thread pool.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around async versus threads at scale in Async & Concurrency?",
+          "answer": "Size pools from cores and blocking factors; bound queues to apply backpressure. Use structured concurrency patterns and clear lock ordering. Profile under load instead of guessing contention.",
+          "level": "senior"
+        },
+        {
+          "question": "What is create_task and when do you use it?",
+          "answer": "Create task is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use asyncio.gather correctly in Async & Concurrency?",
+          "answer": "The asyncio loop schedules coroutines and IO readiness on one thread. await yields until the awaitable completes. Blocking the loop stalls every task; offload blocking work with to_thread or executors.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does asyncio pitfalls introduce in Async & Concurrency?",
+          "answer": "The asyncio loop schedules coroutines and IO readiness on one thread. await yields until the awaitable completes. Blocking the loop stalls every task; offload blocking work with to_thread or executors.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with multiprocessing pools in Async & Concurrency?",
+          "answer": "Multiprocessing pools is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is threading locks and when do you use it?",
+          "answer": "Size pools from cores and blocking factors; bound queues to apply backpressure. Use structured concurrency patterns and clear lock ordering. Profile under load instead of guessing contention.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with asyncio locks in Async & Concurrency?",
+          "answer": "The asyncio loop schedules coroutines and IO readiness on one thread. await yields until the awaitable completes. Blocking the loop stalls every task; offload blocking work with to_thread or executors.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around Celery architecture at scale in Async & Concurrency?",
+          "answer": "Celery runs tasks out-of-band via a broker and worker processes. Tasks must tolerate retries with idempotent side effects. Pass explicit arguments instead of assuming request context.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain backpressure in the context of Async & Concurrency.",
+          "answer": "Backpressure is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around run_in_executor at scale in Async & Concurrency?",
+          "answer": "Size pools from cores and blocking factors; bound queues to apply backpressure. Use structured concurrency patterns and clear lock ordering. Profile under load instead of guessing contention.",
+          "level": "senior"
+        },
+        {
+          "question": "What architectural tradeoffs involve async context managers in Async & Concurrency?",
+          "answer": "Context managers implement __enter__ and __exit__ so resources close even on exceptions. with is syntactic sugar over that protocol. contextlib.contextmanager builds managers from generators with a single yield.",
+          "level": "senior"
+        },
+        {
+          "question": "What is aiohttp client and when do you use it?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does httpx async introduce in Async & Concurrency?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use websocket asyncio correctly in Async & Concurrency?",
+          "answer": "The asyncio loop schedules coroutines and IO readiness on one thread. await yields until the awaitable completes. Blocking the loop stalls every task; offload blocking work with to_thread or executors.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around graceful shutdown async at scale in Async & Concurrency?",
+          "answer": "Graceful shutdown async is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use queue.Queue correctly in Async & Concurrency?",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with multiprocessing.Queue in Async & Concurrency?",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use shared memory correctly in Async & Concurrency?",
+          "answer": "Shared memory is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain ProcessPoolExecutor in the context of Async & Concurrency.",
+          "answer": "Size pools from cores and blocking factors; bound queues to apply backpressure. Use structured concurrency patterns and clear lock ordering. Profile under load instead of guessing contention.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain ThreadPoolExecutor in the context of Async & Concurrency.",
+          "answer": "Size pools from cores and blocking factors; bound queues to apply backpressure. Use structured concurrency patterns and clear lock ordering. Profile under load instead of guessing contention.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with concurrent futures in Async & Concurrency?",
+          "answer": "Concurrent futures is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use GIL and IO correctly in Async & Concurrency?",
+          "answer": "CPython's GIL lets one thread run bytecode at a time. Threads still help for I/O that releases the GIL. Use multiprocessing or native code for CPU-bound parallelism across cores.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain CPU-bound offload in the context of Async & Concurrency.",
+          "answer": "Cpu-bound offload is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use async generators correctly in Async & Concurrency?",
+          "answer": "Async generators is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is async for and when do you use it?",
+          "answer": "Async for is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is cancellation and when do you use it?",
+          "answer": "Cancellation is a practical Async & Concurrency topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Testing & Tooling",
+      "description": "pytest, packaging, typing, linting, and CI for Python.",
+      "cards": [
+        {
+          "question": "How do you apply pytest fixtures correctly in Testing & Tooling?",
+          "answer": "Fixtures provide setup and teardown via dependency injection in tests. Scope controls lifetime from function to session. Use factories when tests need distinct mutable instances.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does pytest parametrize introduce in Testing & Tooling?",
+          "answer": "Tests should be deterministic, isolated, and fast at the unit layer. Fixtures or lifecycle hooks share expensive setup safely. Assert on behavior and contracts, not implementation details.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use pytest markers correctly in Testing & Tooling?",
+          "answer": "Tests should be deterministic, isolated, and fast at the unit layer. Fixtures or lifecycle hooks share expensive setup safely. Assert on behavior and contracts, not implementation details.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around unittest.mock at scale in Testing & Tooling?",
+          "answer": "Mocks verify interactions; fakes provide lightweight working implementations. Mock at module boundaries, not deep internals. Prefer testing observable behavior over call counts alone.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you design systems around factory_boy at scale in Testing & Tooling?",
+          "answer": "Factory boy is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use coverage.py correctly in Testing & Tooling?",
+          "answer": "Coverage py is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain hypothesis property tests in the context of Testing & Tooling.",
+          "answer": "Hypothesis property tests is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does tox introduce in Testing & Tooling?",
+          "answer": "Tox is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain nox in the context of Testing & Tooling.",
+          "answer": "Nox is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain mypy strict in the context of Testing & Tooling.",
+          "answer": "Static typing and linting catch whole classes of bugs before runtime. Gradually tighten mypy strictness on new modules. Automate format and lint in CI so reviews focus on design.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around ruff linter at scale in Testing & Tooling?",
+          "answer": "Static typing and linting catch whole classes of bugs before runtime. Gradually tighten mypy strictness on new modules. Automate format and lint in CI so reviews focus on design.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with black formatter in Testing & Tooling?",
+          "answer": "Black formatter is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is pre-commit hooks and when do you use it?",
+          "answer": "Pre-commit hooks is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use poetry dependencies correctly in Testing & Tooling?",
+          "answer": "Poetry dependencies is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with pip-tools compile in Testing & Tooling?",
+          "answer": "Pip-tools compile is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain wheel packaging in the context of Testing & Tooling.",
+          "answer": "Wheel packaging is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is semantic versioning and when do you use it?",
+          "answer": "Semantic versioning is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain typing TypedDict in the context of Testing & Tooling.",
+          "answer": "Static typing and linting catch whole classes of bugs before runtime. Gradually tighten mypy strictness on new modules. Automate format and lint in CI so reviews focus on design.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around Protocol typing at scale in Testing & Tooling?",
+          "answer": "Static typing and linting catch whole classes of bugs before runtime. Gradually tighten mypy strictness on new modules. Automate format and lint in CI so reviews focus on design.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with pyproject.toml in Testing & Tooling?",
+          "answer": "Pyproject toml is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use editable installs correctly in Testing & Tooling?",
+          "answer": "Editable installs is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is CI matrices and when do you use it?",
+          "answer": "Ci matrices is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is docker test services and when do you use it?",
+          "answer": "Design services with clear boundaries, health checks, and backward-compatible APIs. Deploy with rolling or canary strategies and observability on golden signals. Plan failure isolation so one dependency cannot take down the fleet.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with testcontainers python in Testing & Tooling?",
+          "answer": "Testcontainers python is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with VCR cassettes in Testing & Tooling?",
+          "answer": "Vcr cassettes is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use snapshot testing correctly in Testing & Tooling?",
+          "answer": "Snapshot testing is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use mutation testing concept correctly in Testing & Tooling?",
+          "answer": "Mutation testing concept is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with benchmark pytest in Testing & Tooling?",
+          "answer": "Tests should be deterministic, isolated, and fast at the unit layer. Fixtures or lifecycle hooks share expensive setup safely. Assert on behavior and contracts, not implementation details.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with profiling pytest in Testing & Tooling?",
+          "answer": "Tests should be deterministic, isolated, and fast at the unit layer. Fixtures or lifecycle hooks share expensive setup safely. Assert on behavior and contracts, not implementation details.",
+          "level": "middle"
+        },
+        {
+          "question": "What is logging in tests and when do you use it?",
+          "answer": "Use traces for latency path, metrics for rates and saturation, logs for rich context with correlation IDs. Define SLOs on user-facing outcomes. Alert on burn rate, not every blip.",
+          "level": "junior"
+        },
+        {
+          "question": "What is freezegun time and when do you use it?",
+          "answer": "Freezegun time is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with responses HTTP mock in Testing & Tooling?",
+          "answer": "Mocks verify interactions; fakes provide lightweight working implementations. Mock at module boundaries, not deep internals. Prefer testing observable behavior over call counts alone.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around test pyramid at scale in Testing & Tooling?",
+          "answer": "Test pyramid is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does integration versus unit introduce in Testing & Tooling?",
+          "answer": "Integration versus unit is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is contract tests and when do you use it?",
+          "answer": "Contract tests is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use load testing locust correctly in Testing & Tooling?",
+          "answer": "Load testing locust is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is security bandit and when do you use it?",
+          "answer": "Security bandit is a practical Testing & Tooling topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Systems Design for Python",
+      "description": "Scaling services, caching, observability, and reliability.",
+      "cards": [
+        {
+          "question": "What is horizontal scaling and when do you use it?",
+          "answer": "Horizontal scaling is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain load balancers in the context of Systems Design for Python.",
+          "answer": "Load balancers is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with sticky sessions in Systems Design for Python?",
+          "answer": "Sticky sessions is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use stateless services correctly in Systems Design for Python?",
+          "answer": "Stateless services is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with Redis caching in Systems Design for Python?",
+          "answer": "Caches trade freshness for latency; define TTL and invalidation explicitly. Protect against stampedes with single-flight or jittered expiry. Monitor hit ratio and memory eviction behavior.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use cache invalidation correctly in Systems Design for Python?",
+          "answer": "Caches trade freshness for latency; define TTL and invalidation explicitly. Protect against stampedes with single-flight or jittered expiry. Monitor hit ratio and memory eviction behavior.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use CDN edge correctly in Systems Design for Python?",
+          "answer": "Cdn edge is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with database sharding in Systems Design for Python?",
+          "answer": "Database sharding is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use message queues correctly in Systems Design for Python?",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with Kafka consumers in Systems Design for Python?",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "middle"
+        },
+        {
+          "question": "What is idempotent handlers and when do you use it?",
+          "answer": "Idempotent handlers is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with saga pattern in Systems Design for Python?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with circuit breakers in Systems Design for Python?",
+          "answer": "Combine timeouts, bounded retries on idempotent ops, and circuit breakers to stop retry storms. Bulkheads limit blast radius per dependency pool. Measure client-side error budgets, not only server health.",
+          "level": "middle"
+        },
+        {
+          "question": "What is retries with jitter and when do you use it?",
+          "answer": "Retries with jitter is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain bulkheads in the context of Systems Design for Python.",
+          "answer": "Combine timeouts, bounded retries on idempotent ops, and circuit breakers to stop retry storms. Bulkheads limit blast radius per dependency pool. Measure client-side error budgets, not only server health.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain rate limiting gateways in the context of Systems Design for Python.",
+          "answer": "Rate limiting gateways is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is OpenTelemetry traces and when do you use it?",
+          "answer": "Use traces for latency path, metrics for rates and saturation, logs for rich context with correlation IDs. Define SLOs on user-facing outcomes. Alert on burn rate, not every blip.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use Prometheus metrics correctly in Systems Design for Python?",
+          "answer": "Use traces for latency path, metrics for rates and saturation, logs for rich context with correlation IDs. Define SLOs on user-facing outcomes. Alert on burn rate, not every blip.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does structured logs introduce in Systems Design for Python?",
+          "answer": "Use traces for latency path, metrics for rates and saturation, logs for rich context with correlation IDs. Define SLOs on user-facing outcomes. Alert on burn rate, not every blip.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does correlation ids introduce in Systems Design for Python?",
+          "answer": "Correlation ids is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does SLO error budgets introduce in Systems Design for Python?",
+          "answer": "Slo error budgets is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you design systems around graceful degradation at scale in Systems Design for Python?",
+          "answer": "Graceful degradation is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is feature flags and when do you use it?",
+          "answer": "Feature flags is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is blue-green deploy and when do you use it?",
+          "answer": "Blue-green deploy is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is canary releases and when do you use it?",
+          "answer": "Canary releases is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is secrets management and when do you use it?",
+          "answer": "Secrets management is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around 12-factor config at scale in Systems Design for Python?",
+          "answer": "12-factor config is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use health versus ready correctly in Systems Design for Python?",
+          "answer": "Health versus ready is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does connection pool sizing introduce in Systems Design for Python?",
+          "answer": "Connection pool sizing is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you design systems around autoscaling signals at scale in Systems Design for Python?",
+          "answer": "Autoscaling signals is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is multi-region failover and when do you use it?",
+          "answer": "Multi-region failover is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is CAP tradeoffs and when do you use it?",
+          "answer": "Cap tradeoffs is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain event-driven architecture in the context of Systems Design for Python.",
+          "answer": "Event-driven architecture is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with CQRS overview in Systems Design for Python?",
+          "answer": "Cqrs overview is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is API versioning and when do you use it?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around backward compatibility at scale in Systems Design for Python?",
+          "answer": "Backward compatibility is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is PII handling and when do you use it?",
+          "answer": "Pii handling is a practical Systems Design for Python topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        }
+      ]
+    }
+  ]
+}
