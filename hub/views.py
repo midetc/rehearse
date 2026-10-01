@@ -213,7 +213,6 @@ def _practice_queue(user, mode: str) -> QuerySet:
         )
     return qs.none()
 
-
 def _next_practice_card(user, mode: str, current_pk: int):
     qs = _practice_queue(user, mode).exclude(pk=current_pk)
     return qs.first()
@@ -229,7 +228,11 @@ def practice_menu(request: HttpRequest) -> HttpResponse:
 @login_required
 def practice_start(request: HttpRequest) -> HttpResponse:
     mode = request.GET.get("mode", "")
-    card = _practice_queue(request.user, mode).first()
+    queue = _practice_queue(request.user, mode)
+    pks = list(queue.values_list("pk", flat=True))
+    request.session["practice_mode"] = mode
+    request.session["practice_pks"] = pks
+    card = queue.first()
     if card is None:
         return render(
             request,
@@ -243,14 +246,22 @@ def practice_start(request: HttpRequest) -> HttpResponse:
 @login_required
 def practice_card(request: HttpRequest, pk: int) -> HttpResponse:
     mode = request.GET.get("mode", "")
+    pks = request.session.get("practice_pks", [])
+    mode = request.session.get("practice_mode", mode)
+
+
     card = get_object_or_404(
         _user_cards(request.user).select_related(
             "category", "category__collection"
         ),
         pk=pk,
     )
+    if card.pk not in pks:
+        return redirect("hub:practice-menu")
+    total = len(pks)
+    position = pks.index(card.pk) + 1
     return render(
         request,
         "hub/practice_card.html",
-        {"card": card, "mode": mode},
+        {"card": card, "mode": mode, "position": position, "total": total},
     )

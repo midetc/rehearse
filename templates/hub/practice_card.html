@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
   <p><a href="{% url 'hub:practice-menu' %}">Exit practice</a></p>
+  <p>Card {{ position }} of {{ total }}</p>
   <h2>{{ card.question }}</h2>
   <p>{{ card.get_status_display }} · {{ card.level }}</p>
 
