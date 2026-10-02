@@ -508,6 +508,18 @@ span.btn-ghost.is-disabled {
   display: none;
 }
 
+.reveal-label-hide {
+  display: none;
+}
+
+.reveal[open] .reveal-label-show {
+  display: none;
+}
+
+.reveal[open] .reveal-label-hide {
+  display: inline;
+}
+
 .reveal[open] summary {
   margin-bottom: 0.75rem;
 }

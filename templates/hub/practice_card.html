@@ -11,7 +11,10 @@
   <p class="meta">{{ card.get_status_display }} · {{ card.get_level_display }}</p>
 
   <details class="reveal">
-    <summary>Show answer</summary>
+    <summary>
+      <span class="reveal-label reveal-label-show">Show answer</span>
+      <span class="reveal-label reveal-label-hide">Hide answer</span>
+    </summary>
     <p>{{ card.answer }}</p>
   </details>
 
