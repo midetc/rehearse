@@ -1,4 +1,6 @@
 from django.contrib.auth import login
+from django.db import IntegrityError, transaction
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -11,6 +13,14 @@ class SignUpView(CreateView):
     success_url = reverse_lazy("hub:select-collection")
 
     def form_valid(self, form):
-        response = super().form_valid(form)
+        try:
+            with transaction.atomic():
+                self.object = form.save()
+        except IntegrityError:
+            form.add_error(
+                "username",
+                "A user with that username already exists.",
+            )
+            return self.form_invalid(form)
         login(self.request, self.object)
-        return response
+        return redirect(self.get_success_url())

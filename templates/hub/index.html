@@ -8,7 +8,7 @@
 
   {% if user.active_collection is None %}
     <p class="page-lead">
-      Pick a track to load your starter cards. Backend or AI Engineering — you can switch later.
+      Pick a track first — that loads your starter deck. You can switch later anytime.
     </p>
     <a class="btn-rehearse" href="{% url 'hub:select-collection' %}">Choose track</a>
   {% else %}

@@ -16,6 +16,13 @@ from hub.forms import CardQuestionSearchForm
 from hub.models import Card, CardTemplate, Category, Collection
 
 
+class ActiveCollectionRequiredMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.active_collection_id:
+            return redirect("hub:select-collection")
+        return super().dispatch(request, *args, **kwargs)
+
+
 @login_required
 def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'hub/index.html')
@@ -100,7 +107,7 @@ def seed_cards_for_user(user: User) -> None:
     Card.objects.bulk_create(cards)
 
 
-class CardListView(LoginRequiredMixin, ListView):
+class CardListView(LoginRequiredMixin, ActiveCollectionRequiredMixin, ListView):
     model = Card
     paginate_by = 20
     context_object_name = "cards"
@@ -139,7 +146,7 @@ class CardListView(LoginRequiredMixin, ListView):
         return context
 
 
-class CardDetailView(LoginRequiredMixin, DetailView):
+class CardDetailView(LoginRequiredMixin, ActiveCollectionRequiredMixin, DetailView):
     model = Card
 
     def get_queryset(self):
@@ -149,14 +156,15 @@ class CardDetailView(LoginRequiredMixin, DetailView):
         )
 
 
-class CardCreateView(LoginRequiredMixin, CreateView):
+class CardCreateView(LoginRequiredMixin, ActiveCollectionRequiredMixin, CreateView):
     model = Card
-    fields = ["level", "category", "question", "answer", "status"]
+    fields = ["level", "category", "question", "answer"]
     success_url = reverse_lazy("hub:card-list")
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
         form.instance.is_custom = True
+        form.instance.status = Card.Status.NEW
         return super().form_valid(form)
 
     def get_form(self, form_class=None):
@@ -167,9 +175,9 @@ class CardCreateView(LoginRequiredMixin, CreateView):
         return form
 
 
-class CardUpdateView(LoginRequiredMixin, UpdateView):
+class CardUpdateView(LoginRequiredMixin, ActiveCollectionRequiredMixin, UpdateView):
     model = Card
-    fields = ["level", "category", "question", "answer", "status"]
+    fields = ["level", "category", "question", "answer"]
 
     success_url = reverse_lazy("hub:card-list")
 
@@ -192,7 +200,7 @@ class CardUpdateView(LoginRequiredMixin, UpdateView):
         return form
 
 
-class CardDeleteView(LoginRequiredMixin, DeleteView):
+class CardDeleteView(LoginRequiredMixin, ActiveCollectionRequiredMixin, DeleteView):
     model = Card
     template_name = "hub/card_confirm_delete.html"
     success_url = reverse_lazy("hub:card-list")
@@ -207,6 +215,8 @@ class CardDeleteView(LoginRequiredMixin, DeleteView):
 @login_required
 @require_POST
 def card_set_status(request: HttpRequest, pk: int) -> HttpResponse:
+    if not request.user.active_collection_id:
+        return redirect("hub:select-collection")
     card = get_object_or_404(
         Card.objects.filter(
             owner=request.user,
@@ -216,7 +226,10 @@ def card_set_status(request: HttpRequest, pk: int) -> HttpResponse:
     )
     action = request.POST.get("action")
     if action == "know":
-        card.status = Card.Status.KNOWN
+        if card.status == Card.Status.NEW:
+            card.status = Card.Status.KNOWN
+        elif card.status == Card.Status.LEARNING:
+            card.status = Card.Status.MASTERED
     elif action == "dont_know":
         card.status = Card.Status.LEARNING
     else:
@@ -271,6 +284,8 @@ def practice_menu(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def practice_start(request: HttpRequest) -> HttpResponse:
+    if not request.user.active_collection_id:
+        return redirect("hub:select-collection")
     mode = request.GET.get("mode", "")
     queue = _practice_queue(request.user, mode)
     pks = list(queue.values_list("pk", flat=True))
@@ -289,6 +304,8 @@ def practice_start(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def practice_card(request: HttpRequest, pk: int) -> HttpResponse:
+    if not request.user.active_collection_id:
+        return redirect("hub:select-collection")
     mode = request.GET.get("mode", "")
     pks = request.session.get("practice_pks", [])
     mode = request.session.get("practice_mode", mode)

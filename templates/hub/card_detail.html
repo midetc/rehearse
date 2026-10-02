@@ -22,7 +22,7 @@
 
   <form method="post" action="{% url 'hub:card-set-status' card.id %}" class="actions-row">
     {% csrf_token %}
-    <button type="submit" name="action" value="know" class="btn-ok">Know</button>
     <button type="submit" name="action" value="dont_know" class="btn-danger-soft">Don't know</button>
+    <button type="submit" name="action" value="know" class="btn-ok">Know</button>
   </form>
 {% endblock %}
