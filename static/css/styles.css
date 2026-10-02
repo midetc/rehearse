@@ -83,6 +83,12 @@ h3,
   flex-direction: column;
   gap: 1.75rem;
   border-right: 1px solid rgba(255, 255, 255, 0.06);
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .brand {
@@ -811,6 +817,10 @@ span.btn-ghost.is-disabled {
   }
 
   .rail {
+    position: static;
+    height: auto;
+    max-height: none;
+    overflow: visible;
     border-right: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
