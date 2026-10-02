@@ -29,6 +29,10 @@
           <button type="submit">Sign in</button>
           <input type="hidden" name="next" value="{{ next }}">
         </form>
+        <p class="meta auth-switch">
+          New here?
+          <a href="{% url 'register' %}">Create an account</a>
+        </p>
       {% endif %}
     </div>
   </div>
