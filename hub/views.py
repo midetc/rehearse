@@ -88,6 +88,7 @@ def select_collection(request: HttpRequest) -> HttpResponse:
 
 User = get_user_model()
 
+
 def seed_cards_for_user(user: User) -> None:
     card_templates = CardTemplate.objects.filter(
         category__collection=user.active_collection
@@ -270,6 +271,7 @@ def _practice_queue(user, mode: str) -> QuerySet:
         )
     return qs.none()
 
+
 def _next_practice_card(user, mode: str, current_pk: int):
     qs = _practice_queue(user, mode).exclude(pk=current_pk)
     return qs.first()
@@ -310,7 +312,6 @@ def practice_card(request: HttpRequest, pk: int) -> HttpResponse:
     pks = request.session.get("practice_pks", [])
     mode = request.session.get("practice_mode", mode)
 
-
     card = get_object_or_404(
         _user_cards(request.user).select_related(
             "category", "category__collection"
@@ -326,6 +327,7 @@ def practice_card(request: HttpRequest, pk: int) -> HttpResponse:
         "hub/practice_card.html",
         {"card": card, "mode": mode, "position": position, "total": total},
     )
+
 
 @login_required
 def reset_cards(request: HttpRequest) -> HttpResponse:
