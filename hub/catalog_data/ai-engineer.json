@@ -1,0 +1,1555 @@
+{
+  "slug": "ai-engineer",
+  "name": "AI Engineer",
+  "description": "Train, evaluate, and ship ML and LLM systems.",
+  "categories": [
+    {
+      "name": "ML Fundamentals",
+      "description": "Core machine learning concepts for training and validating models.",
+      "cards": [
+        {
+          "question": "What is supervised learning in machine learning?",
+          "answer": "Supervised learning refers to learning from labeled examples to predict a target. In practice it shapes how you prepare data and pick algorithms. Choose it when labels are reliable and the decision is forecasting, not causal attribution.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize unsupervised learning?",
+          "answer": "Prioritize unsupervised learning when finding structure such as clusters or embeddings without labels. Interviewers expect you to link it to validation and monitoring. Use it for exploration, segmentation, or representation learning when labels are scarce.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around the bias-variance tradeoff?",
+          "answer": "A typical mistake is treating the bias-variance tradeoff as optional while balancing underfitting against overfitting on finite data. Watch validation curves; regularization and more data shift the balance in opposite directions. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain train, validation, and test splits to product stakeholders?",
+          "answer": "Describe train, validation, and test splits as separating fit, tuning, and final generalization estimates. Keep the story tied to user-visible outcomes and risk. Touch the test set once at the end to avoid optimistic metrics.",
+          "level": "junior"
+        },
+        {
+          "question": "What is k-fold cross-validation in machine learning?",
+          "answer": "K-fold cross-validation refers to rotating holdout folds to stabilize performance estimates. In practice it shapes how you prepare data and pick algorithms. Use it for model selection on small data, not as a substitute for a final test set.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize L1 versus L2 regularization?",
+          "answer": "Prioritize L1 versus L2 regularization when penalties that shrink weights with different sparsity effects. Interviewers expect you to link it to validation and monitoring. L1 can zero features; L2 handles correlated features smoothly.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around feature scaling?",
+          "answer": "A typical mistake is treating feature scaling as optional while putting numeric inputs on comparable ranges. Required for many linear models, distance metrics, and some neural nets; fit scalers on training data only. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain class imbalance to product stakeholders?",
+          "answer": "Describe class imbalance as minority classes that dominate accuracy but not business value. Keep the story tied to user-visible outcomes and risk. Prefer PR-AUC or F1, tune thresholds, and validate at production prevalence.",
+          "level": "junior"
+        },
+        {
+          "question": "What is data leakage in machine learning?",
+          "answer": "Data leakage refers to information from the future or label path entering features. In practice it shapes how you prepare data and pick algorithms. It inflates offline metrics and fails in production; audit joins and aggregations carefully.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize hyperparameter tuning?",
+          "answer": "Prioritize hyperparameter tuning when searching settings that are not learned by gradient descent. Interviewers expect you to link it to validation and monitoring. Keep searches on validation data and log every trial for reproducibility.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around gradient descent?",
+          "answer": "A typical mistake is treating gradient descent as optional while iterative optimization using loss gradients. Learning rate and batch size strongly affect convergence and generalization. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain learning curves to product stakeholders?",
+          "answer": "Describe learning curves as plots of performance versus training set size. Keep the story tied to user-visible outcomes and risk. They reveal whether more data, better features, or simpler models will help.",
+          "level": "middle"
+        },
+        {
+          "question": "What is random forests in machine learning?",
+          "answer": "Random forests refers to bagged decision trees with feature subsampling. In practice it shapes how you prepare data and pick algorithms. They handle nonlinear tabular data with minimal scaling and provide feature importance signals.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize gradient boosting?",
+          "answer": "Prioritize gradient boosting when sequential trees correcting prior errors. Interviewers expect you to link it to validation and monitoring. Often wins on heterogeneous tabular data when tuned with early stopping and proper validation.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around probability calibration?",
+          "answer": "A typical mistake is treating probability calibration as optional while aligning predicted probabilities with observed rates. Ranking metrics can look strong while probabilities mislead cost-sensitive decisions. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain the confusion matrix to product stakeholders?",
+          "answer": "Describe the confusion matrix as a table of predicted versus actual classes. Keep the story tied to user-visible outcomes and risk. Derive precision, recall, and per-class error patterns from it.",
+          "level": "middle"
+        },
+        {
+          "question": "What is ROC-AUC in machine learning?",
+          "answer": "Roc-auc refers to ranking quality across thresholds for binary classifiers. In practice it shapes how you prepare data and pick algorithms. It can look optimistic under heavy imbalance; pair with PR-AUC when positives are rare.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize precision and recall?",
+          "answer": "Prioritize precision and recall when tradeoffs between false positives and false negatives. Interviewers expect you to link it to validation and monitoring. Pick an operating point using validation costs, not a default 0.5 threshold.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around one-hot encoding?",
+          "answer": "A typical mistake is treating one-hot encoding as optional while representing categoricals as binary indicator columns. Watch cardinality explosions; consider hashing or embeddings for high-cardinality fields. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain target encoding to product stakeholders?",
+          "answer": "Describe target encoding as replacing categories with label statistics. Keep the story tied to user-visible outcomes and risk. It leaks without out-of-fold encoding and careful cross-validation.",
+          "level": "middle"
+        },
+        {
+          "question": "What is PCA in machine learning?",
+          "answer": "Pca refers to orthogonal linear projections that capture variance. In practice it shapes how you prepare data and pick algorithms. Useful for visualization and noise reduction, not automatic feature selection for all tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize the curse of dimensionality?",
+          "answer": "Prioritize the curse of dimensionality when distance and density becoming misleading in high dimensions. Interviewers expect you to link it to validation and monitoring. More features demand more data and stronger regularization.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around concept drift?",
+          "answer": "A typical mistake is treating concept drift as optional while changing data distributions after deployment. Monitor feature and score distributions and plan retraining triggers. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain IID assumptions to product stakeholders?",
+          "answer": "Describe IID assumptions as treating samples as independent and identically distributed. Keep the story tied to user-visible outcomes and risk. Time series and grouped users violate IID; use appropriate splits and metrics.",
+          "level": "middle"
+        },
+        {
+          "question": "What is stratified sampling in machine learning?",
+          "answer": "Stratified sampling refers to preserving class proportions in splits. In practice it shapes how you prepare data and pick algorithms. It stabilizes validation for imbalanced classification tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize early stopping?",
+          "answer": "Prioritize early stopping when halting training when validation loss stops improving. Interviewers expect you to link it to validation and monitoring. It acts as regularization for iterative learners like boosting and neural nets.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around ensembling?",
+          "answer": "A typical mistake is treating ensembling as optional while combining multiple models for robustness. Bagging reduces variance; boosting reduces bias; stacking needs careful out-of-fold predictions. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain logistic regression to product stakeholders?",
+          "answer": "Describe logistic regression as a linear classifier with log-odds outputs. Keep the story tied to user-visible outcomes and risk. Strong baselines for tabular data with calibrated probabilities when features are well engineered.",
+          "level": "senior"
+        },
+        {
+          "question": "What is support vector machines in machine learning?",
+          "answer": "Support vector machines refers to max-margin separators with optional kernels. In practice it shapes how you prepare data and pick algorithms. Effective in medium-dimensional spaces; kernels add flexibility at higher compute cost.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize k-nearest neighbors?",
+          "answer": "Prioritize k-nearest neighbors when predicting from the closest labeled points. Interviewers expect you to link it to validation and monitoring. Sensitive to scaling and dimensionality; simple baselines for small datasets.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around decision tree splits?",
+          "answer": "A typical mistake is treating decision tree splits as optional while axis-aligned rules maximizing impurity reduction. Trees interpret easily but overfit without depth limits or ensembles. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain feature importance to product stakeholders?",
+          "answer": "Describe feature importance as scores suggesting which inputs drive predictions. Keep the story tied to user-visible outcomes and risk. Permutation importance and SHAP explain individual predictions better than impurity alone.",
+          "level": "senior"
+        },
+        {
+          "question": "What is multicollinearity in machine learning?",
+          "answer": "Multicollinearity refers to highly correlated features destabilizing linear models. In practice it shapes how you prepare data and pick algorithms. Coefficients become unstable; use regularization, PCA, or feature grouping.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize label noise?",
+          "answer": "Prioritize label noise when incorrect or ambiguous training labels. Interviewers expect you to link it to validation and monitoring. It caps achievable accuracy; robust losses and cleaning pipelines help.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around sample size planning?",
+          "answer": "A typical mistake is treating sample size planning as optional while estimating data needed for a target metric variance. Power-style reasoning prevents launching models that cannot beat noise. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain active learning to product stakeholders?",
+          "answer": "Describe active learning as selecting the most informative points to label. Keep the story tied to user-visible outcomes and risk. It reduces labeling cost when uncertainty sampling matches the deployment distribution.",
+          "level": "senior"
+        },
+        {
+          "question": "What is semi-supervised learning in machine learning?",
+          "answer": "Semi-supervised learning refers to using unlabeled data alongside limited labels. In practice it shapes how you prepare data and pick algorithms. Consistency regularization and pseudo-labeling help when labels are expensive.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Classical ML",
+      "description": "Traditional algorithms and tabular modeling techniques.",
+      "cards": [
+        {
+          "question": "What is logistic regression coefficients in machine learning?",
+          "answer": "Logistic regression coefficients refers to log-odds changes per unit feature increase. In practice it shapes how you prepare data and pick algorithms. Interpret signs and magnitudes only after scaling and checking multicollinearity.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize linear regression assumptions?",
+          "answer": "Prioritize linear regression assumptions when linearity, independent errors, and homoscedasticity. Interviewers expect you to link it to validation and monitoring. Violations suggest transforms, robust regression, or tree models.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around ridge regression?",
+          "answer": "A typical mistake is treating ridge regression as optional while L2 penalty shrinking correlated coefficients together. Use when many correlated features exist and you want stable weights. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain lasso regression to product stakeholders?",
+          "answer": "Describe lasso regression as L1 penalty producing sparse solutions. Keep the story tied to user-visible outcomes and risk. Helpful for automatic feature selection when the true signal is sparse.",
+          "level": "junior"
+        },
+        {
+          "question": "What is elastic net in machine learning?",
+          "answer": "Elastic net refers to mixing L1 and L2 penalties. In practice it shapes how you prepare data and pick algorithms. Balances sparsity and stability on wide correlated tabular data.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize decision tree pruning?",
+          "answer": "Prioritize decision tree pruning when removing splits that do not generalize. Interviewers expect you to link it to validation and monitoring. Prevents overfitting beyond setting max depth alone.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around Gini impurity?",
+          "answer": "A typical mistake is treating Gini impurity as optional while a split criterion for classification trees. It relates to node purity and guides greedy splitting. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain entropy and information gain to product stakeholders?",
+          "answer": "Describe entropy and information gain as split criteria based on label uncertainty. Keep the story tied to user-visible outcomes and risk. Similar to Gini in practice; choose one and tune tree complexity instead.",
+          "level": "junior"
+        },
+        {
+          "question": "What is random forest out-of-bag error in machine learning?",
+          "answer": "Random forest out-of-bag error refers to internal validation using unsampled rows. In practice it shapes how you prepare data and pick algorithms. Useful quick check but still validate on a true holdout.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize extra trees?",
+          "answer": "Prioritize extra trees when randomized splits with lower variance than classic forests. Interviewers expect you to link it to validation and monitoring. They train faster and sometimes generalize better on noisy data.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around XGBoost?",
+          "answer": "A typical mistake is treating XGBoost as optional while regularized gradient boosting with efficient implementations. Early stopping on a validation set is critical to avoid overfitting. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain LightGBM to product stakeholders?",
+          "answer": "Describe LightGBM as leaf-wise boosting optimized for speed. Keep the story tied to user-visible outcomes and risk. Watch overfitting on small data; control num_leaves and min_data_in_leaf.",
+          "level": "junior"
+        },
+        {
+          "question": "What is CatBoost in machine learning?",
+          "answer": "Catboost refers to boosting with native categorical handling. In practice it shapes how you prepare data and pick algorithms. Reduces manual encoding work and can improve tabular baselines.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize SMOTE?",
+          "answer": "Prioritize SMOTE when synthetic oversampling of minority classes. Interviewers expect you to link it to validation and monitoring. Apply only on training folds to avoid leaking synthetic points into validation.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around class weights?",
+          "answer": "A typical mistake is treating class weights as optional while reweighting loss by inverse class frequency. Often preferable to naive oversampling when imbalance is moderate. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain Platt scaling to product stakeholders?",
+          "answer": "Describe Platt scaling as logistic calibration on validation scores. Keep the story tied to user-visible outcomes and risk. Maps SVM or boosting scores to better probabilities.",
+          "level": "middle"
+        },
+        {
+          "question": "What is isotonic regression calibration in machine learning?",
+          "answer": "Isotonic regression calibration refers to nonparametric monotonic calibration. In practice it shapes how you prepare data and pick algorithms. Flexible but needs enough validation data to avoid overfitting calibration.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize log loss?",
+          "answer": "Prioritize log loss when penalizing confident wrong probabilities. Interviewers expect you to link it to validation and monitoring. Optimize it when probability quality matters for ranking and thresholds.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around hinge loss?",
+          "answer": "A typical mistake is treating hinge loss as optional while SVM margin maximization objective. It focuses on support vectors near the decision boundary. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain Huber loss to product stakeholders?",
+          "answer": "Describe Huber loss as robust regression loss between MAE and MSE. Keep the story tied to user-visible outcomes and risk. Use when outliers exist but you still want smooth optimization.",
+          "level": "middle"
+        },
+        {
+          "question": "What is kernel SVMs in machine learning?",
+          "answer": "Kernel svms refers to implicit feature maps via the kernel trick. In practice it shapes how you prepare data and pick algorithms. RBF gamma controls smoothness; too high overfits noise.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize linear SVMs?",
+          "answer": "Prioritize linear SVMs when large-margin linear separators on high-dimensional sparse text. Interviewers expect you to link it to validation and monitoring. Often competitive with logistic regression on bag-of-words features.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around kNN distance metrics?",
+          "answer": "A typical mistake is treating kNN distance metrics as optional while choosing Euclidean versus cosine similarity. Cosine suits normalized embeddings; Euclidean needs scaled features. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain naive Bayes to product stakeholders?",
+          "answer": "Describe naive Bayes as generative classifiers assuming conditional independence. Keep the story tied to user-visible outcomes and risk. Fast baselines for text with bag-of-words despite strong assumptions.",
+          "level": "middle"
+        },
+        {
+          "question": "What is multinomial logistic regression in machine learning?",
+          "answer": "Multinomial logistic regression refers to softmax over multiple classes. In practice it shapes how you prepare data and pick algorithms. Baselines for multiclass tabular and text problems.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize one-versus-rest classification?",
+          "answer": "Prioritize one-versus-rest classification when training binary classifiers per class. Interviewers expect you to link it to validation and monitoring. Simple but can produce inconsistent probability estimates across classes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around one-versus-one classification?",
+          "answer": "A typical mistake is treating one-versus-one classification as optional while pairwise classifiers with voting. Can be costly for many classes but sometimes improves margins. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain model stacking to product stakeholders?",
+          "answer": "Describe model stacking as meta-learners on out-of-fold base predictions. Keep the story tied to user-visible outcomes and risk. Prevent leakage by generating meta-features with cross-validation only.",
+          "level": "senior"
+        },
+        {
+          "question": "What is blending in machine learning?",
+          "answer": "Blending refers to holdout-based ensembling of base models. In practice it shapes how you prepare data and pick algorithms. Simpler than stacking but uses less data for the meta-model.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize monotonic constraints?",
+          "answer": "Prioritize monotonic constraints when forcing predictions to increase with selected features. Interviewers expect you to link it to validation and monitoring. Useful for credit and pricing models with regulatory expectations.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around partial dependence plots?",
+          "answer": "A typical mistake is treating partial dependence plots as optional while marginal effect of a feature averaged over others. They can hide heterogeneity; check individual explanations too. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain SHAP values to product stakeholders?",
+          "answer": "Describe SHAP values as Shapley-based feature attributions for predictions. Keep the story tied to user-visible outcomes and risk. They explain local decisions but can be slow on large tree ensembles.",
+          "level": "senior"
+        },
+        {
+          "question": "What is permutation importance in machine learning?",
+          "answer": "Permutation importance refers to score drop when shuffling a feature. In practice it shapes how you prepare data and pick algorithms. Measure on validation data to reflect generalization, not training fit.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize imbalanced precision at k?",
+          "answer": "Prioritize imbalanced precision at k when ranking metrics when only top scores are acted on. Interviewers expect you to link it to validation and monitoring. Matches campaigns where you contact a fixed budget of users.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around cost-sensitive learning?",
+          "answer": "A typical mistake is treating cost-sensitive learning as optional while encoding asymmetric misclassification costs. Reflects fraud or medical screening where false negatives dominate. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain ordinal regression to product stakeholders?",
+          "answer": "Describe ordinal regression as models respecting ordered class labels. Keep the story tied to user-visible outcomes and risk. Better than treating ordered outcomes as nominal categories.",
+          "level": "senior"
+        },
+        {
+          "question": "What is Poisson regression in machine learning?",
+          "answer": "Poisson regression refers to modeling count targets with log links. In practice it shapes how you prepare data and pick algorithms. Fits event counts like purchases per day with heteroskedastic variance.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Deep Learning",
+      "description": "Neural networks, training dynamics, and modern architectures.",
+      "cards": [
+        {
+          "question": "What is neural network layers in machine learning?",
+          "answer": "Neural network layers refers to stacks of affine transforms and nonlinearities. In practice it shapes how you prepare data and pick algorithms. Depth increases capacity but demands more data and careful optimization.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize ReLU activations?",
+          "answer": "Prioritize ReLU activations when piecewise linear units avoiding saturation for positive inputs. Interviewers expect you to link it to validation and monitoring. Dead ReLU units can stall learning; leaky variants mitigate zeros.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around softmax outputs?",
+          "answer": "A typical mistake is treating softmax outputs as optional while multiclass probabilities from logits. Use with cross-entropy; watch numerical stability via log-sum-exp tricks. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain cross-entropy loss to product stakeholders?",
+          "answer": "Describe cross-entropy loss as classification objective penalizing wrong confident predictions. Keep the story tied to user-visible outcomes and risk. It pairs naturally with softmax and sigmoid outputs.",
+          "level": "junior"
+        },
+        {
+          "question": "What is backpropagation in machine learning?",
+          "answer": "Backpropagation refers to efficient gradient computation via the chain rule. In practice it shapes how you prepare data and pick algorithms. Framework autograd handles it; you define the forward graph and loss.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize vanishing gradients?",
+          "answer": "Prioritize vanishing gradients when gradients shrinking in deep sigmoid or tanh stacks. Interviewers expect you to link it to validation and monitoring. ReLU, residuals, and normalization layers mitigate the effect.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around exploding gradients?",
+          "answer": "A typical mistake is treating exploding gradients as optional while unstable updates from large recurrent gradients. Clip gradients and reduce learning rate when loss spikes. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain batch normalization to product stakeholders?",
+          "answer": "Describe batch normalization as normalizing activations within mini-batches. Keep the story tied to user-visible outcomes and risk. Speeds training; use batch statistics at train time and running stats at inference.",
+          "level": "junior"
+        },
+        {
+          "question": "What is layer normalization in machine learning?",
+          "answer": "Layer normalization refers to normalizing across features per token or sample. In practice it shapes how you prepare data and pick algorithms. Common in transformers where batch sizes vary.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize dropout?",
+          "answer": "Prioritize dropout when randomly dropping activations during training. Interviewers expect you to link it to validation and monitoring. Regularizes fully connected layers; often skipped in modern conv blocks.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around weight initialization?",
+          "answer": "A typical mistake is treating weight initialization as optional while starting points that keep activation variance stable. He init for ReLU and Xavier for tanh reduce early instability. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain SGD with momentum to product stakeholders?",
+          "answer": "Describe SGD with momentum as velocity-accelerated gradient steps. Keep the story tied to user-visible outcomes and risk. Can generalize well on vision with tuned schedules.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Adam optimizer in machine learning?",
+          "answer": "Adam optimizer refers to adaptive per-parameter learning rates. In practice it shapes how you prepare data and pick algorithms. Fast default for many deep models; watch generalization on some vision tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize learning rate schedules?",
+          "answer": "Prioritize learning rate schedules when decaying step sizes during training. Interviewers expect you to link it to validation and monitoring. Cosine, step decay, or warmup stabilize convergence in transformers.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around convolutional layers?",
+          "answer": "A typical mistake is treating convolutional layers as optional while shared filters detecting local patterns. Translation equivariance suits images and some sequence models. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain pooling layers to product stakeholders?",
+          "answer": "Describe pooling layers as downsampling spatial dimensions. Keep the story tied to user-visible outcomes and risk. Max pooling preserves salient activations; global average pooling reduces parameters.",
+          "level": "middle"
+        },
+        {
+          "question": "What is ResNet skip connections in machine learning?",
+          "answer": "Resnet skip connections refers to additive paths easing gradient flow. In practice it shapes how you prepare data and pick algorithms. Enable very deep networks without degradation in trainability.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize LSTM cells?",
+          "answer": "Prioritize LSTM cells when gated recurrent units capturing long dependencies. Interviewers expect you to link it to validation and monitoring. Still useful for small sequence tasks though transformers dominate NLP.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around GRU cells?",
+          "answer": "A typical mistake is treating GRU cells as optional while simpler gated recurrent units. Fewer parameters than LSTM with similar performance on many sequences. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain sequence-to-sequence models to product stakeholders?",
+          "answer": "Describe sequence-to-sequence models as encoder-decoder architectures for variable-length IO. Keep the story tied to user-visible outcomes and risk. Attention largely replaced fixed context bottlenecks.",
+          "level": "middle"
+        },
+        {
+          "question": "What is self-attention in machine learning?",
+          "answer": "Self-attention refers to pairwise token interactions weighted by compatibility. In practice it shapes how you prepare data and pick algorithms. Quadratic memory in sequence length drives efficient attention research.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize transformer blocks?",
+          "answer": "Prioritize transformer blocks when multi-head attention plus feedforward MLP stacks. Interviewers expect you to link it to validation and monitoring. They parallelize well on GPUs and underpin modern LLMs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around positional encodings?",
+          "answer": "A typical mistake is treating positional encodings as optional while injecting order information into token embeddings. Sinusoidal or learned positions let attention be order-aware. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain data augmentation for images to product stakeholders?",
+          "answer": "Describe data augmentation for images as random crops, flips, and color jitter. Keep the story tied to user-visible outcomes and risk. It acts as regularization and improves robustness to shift.",
+          "level": "middle"
+        },
+        {
+          "question": "What is batch size effects in machine learning?",
+          "answer": "Batch size effects refers to noise in gradient estimates versus throughput. In practice it shapes how you prepare data and pick algorithms. Large batches need learning rate scaling; small batches add regularization.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize early stopping in deep learning?",
+          "answer": "Prioritize early stopping in deep learning when monitoring validation loss during epochs. Interviewers expect you to link it to validation and monitoring. Prevents overfitting when training loss keeps dropping.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around weight decay?",
+          "answer": "A typical mistake is treating weight decay as optional while L2 penalty on weights in optimizers. Distinct from L2 in loss in AdamW implementations; improves generalization. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain transfer learning for vision to product stakeholders?",
+          "answer": "Describe transfer learning for vision as fine-tuning ImageNet backbones. Keep the story tied to user-visible outcomes and risk. Replace the head, tune with small LR, unfreeze gradually if data allows.",
+          "level": "senior"
+        },
+        {
+          "question": "What is mixed precision training in machine learning?",
+          "answer": "Mixed precision training refers to float16 or bfloat16 compute with float32 stability. In practice it shapes how you prepare data and pick algorithms. Increases throughput on modern GPUs with loss scaling when needed.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize gradient clipping?",
+          "answer": "Prioritize gradient clipping when capping gradient norms before optimizer steps. Interviewers expect you to link it to validation and monitoring. Stabilizes RNN and transformer training when loss spikes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around U-Net architectures?",
+          "answer": "A typical mistake is treating U-Net architectures as optional while encoder-decoder nets with skip connections. Standard for segmentation where spatial detail must be preserved. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain autoencoders to product stakeholders?",
+          "answer": "Describe autoencoders as bottleneck networks learning compressed representations. Keep the story tied to user-visible outcomes and risk. Used for denoising, anomaly detection, and pretraining.",
+          "level": "senior"
+        },
+        {
+          "question": "What is VAEs in machine learning?",
+          "answer": "Vaes refers to probabilistic encoders with reconstruction plus KL terms. In practice it shapes how you prepare data and pick algorithms. Enable generative modeling and structured latent spaces.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize GAN training dynamics?",
+          "answer": "Prioritize GAN training dynamics when generator-discriminator adversarial objectives. Interviewers expect you to link it to validation and monitoring. Mode collapse and instability require careful architecture and loss choices.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around diffusion models?",
+          "answer": "A typical mistake is treating diffusion models as optional while iterative denoising generative processes. They produce high-quality samples at higher inference cost. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain knowledge distillation to product stakeholders?",
+          "answer": "Describe knowledge distillation as training smaller students to mimic teachers. Keep the story tied to user-visible outcomes and risk. Reduces latency and memory while preserving much of teacher accuracy.",
+          "level": "senior"
+        },
+        {
+          "question": "What is neural architecture search in machine learning?",
+          "answer": "Neural architecture search refers to automated search over model graphs. In practice it shapes how you prepare data and pick algorithms. Expensive; use only when manual tuning fails and budget allows.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize on-device neural nets?",
+          "answer": "Prioritize on-device neural nets when mobile constraints on size and latency. Interviewers expect you to link it to validation and monitoring. Quantization and pruning make edge deployment feasible.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "LLMs & GenAI",
+      "description": "Large language models, retrieval, and generative AI systems.",
+      "cards": [
+        {
+          "question": "What is tokenization in machine learning?",
+          "answer": "Tokenization refers to mapping text to subword token IDs. In practice it shapes how you prepare data and pick algorithms. Vocabulary choices affect cost, multilingual behavior, and rare word handling.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize context windows?",
+          "answer": "Prioritize context windows when maximum tokens processed in one forward pass. Interviewers expect you to link it to validation and monitoring. Long inputs need truncation, summarization, or retrieval strategies.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around temperature sampling?",
+          "answer": "A typical mistake is treating temperature sampling as optional while scaling logits to control randomness. Lower temperature for factual tasks; higher for creative variation. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain top-p nucleus sampling to product stakeholders?",
+          "answer": "Describe top-p nucleus sampling as sampling from the smallest high-probability mass. Keep the story tied to user-visible outcomes and risk. Reduces incoherent tail tokens compared to raw sampling.",
+          "level": "junior"
+        },
+        {
+          "question": "What is retrieval-augmented generation in machine learning?",
+          "answer": "Retrieval-augmented generation refers to conditioning generation on fetched documents. In practice it shapes how you prepare data and pick algorithms. Improves grounding on private or fresh knowledge without full retraining.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize prompt engineering?",
+          "answer": "Prioritize prompt engineering when crafting instructions and examples in context. Interviewers expect you to link it to validation and monitoring. Fastest lever for behavior change when base models already fit.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around few-shot prompting?",
+          "answer": "A typical mistake is treating few-shot prompting as optional while supplying exemplars inside the prompt. Quality depends on example selection and ordering. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain chain-of-thought prompting to product stakeholders?",
+          "answer": "Describe chain-of-thought prompting as encouraging intermediate reasoning steps. Keep the story tied to user-visible outcomes and risk. Helps math and logic tasks when models support explicit reasoning.",
+          "level": "junior"
+        },
+        {
+          "question": "What is hallucinations in machine learning?",
+          "answer": "Hallucinations refers to plausible but unsupported generated claims. In practice it shapes how you prepare data and pick algorithms. Mitigate with retrieval, citations, tool verification, and eval rubrics.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize fine-tuning LLMs?",
+          "answer": "Prioritize fine-tuning LLMs when continued training on domain-specific examples. Interviewers expect you to link it to validation and monitoring. Use when prompts cannot enforce format or style consistently.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around LoRA adapters?",
+          "answer": "A typical mistake is treating LoRA adapters as optional while low-rank weight updates on frozen bases. Cheap multi-tenant customization with swappable adapter weights. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain RLHF to product stakeholders?",
+          "answer": "Describe RLHF as optimizing models from human preference rewards. Keep the story tied to user-visible outcomes and risk. Aligns helpfulness but adds pipeline complexity and reward hacking risk.",
+          "level": "junior"
+        },
+        {
+          "question": "What is DPO in machine learning?",
+          "answer": "Dpo refers to direct preference optimization without explicit RL loops. In practice it shapes how you prepare data and pick algorithms. Simpler alternative to RLHF for preference datasets.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize instruction tuning?",
+          "answer": "Prioritize instruction tuning when supervised fine-tuning on instruction-response pairs. Interviewers expect you to link it to validation and monitoring. Turns base LMs into assistants that follow user commands.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around embedding models?",
+          "answer": "A typical mistake is treating embedding models as optional while vector representations for semantic similarity. Power search, clustering, and RAG retrieval quality. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain document chunking to product stakeholders?",
+          "answer": "Describe document chunking as splitting sources for retrieval indexes. Keep the story tied to user-visible outcomes and risk. Chunk size and overlap strongly affect recall and answer completeness.",
+          "level": "middle"
+        },
+        {
+          "question": "What is reranking retrieved chunks in machine learning?",
+          "answer": "Reranking retrieved chunks refers to second-stage scoring of candidate passages. In practice it shapes how you prepare data and pick algorithms. Improves precision when bi-encoder retrieval is fast but noisy.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize LLM evaluation harnesses?",
+          "answer": "Prioritize LLM evaluation harnesses when golden prompts with rubrics and automatic checks. Interviewers expect you to link it to validation and monitoring. Track groundedness, toxicity, latency, and cost before launch.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around system prompts?",
+          "answer": "A typical mistake is treating system prompts as optional while persistent policy instructions for assistants. Version and test them like code; small edits change behavior broadly. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain tool use by LLMs to product stakeholders?",
+          "answer": "Describe tool use by LLMs as structured API calls executed by runtime orchestrators. Keep the story tied to user-visible outcomes and risk. Allowlist tools, cap steps, and log traces for debugging.",
+          "level": "middle"
+        },
+        {
+          "question": "What is agent loops in machine learning?",
+          "answer": "Agent loops refers to iterative plan-act-observe cycles. In practice it shapes how you prepare data and pick algorithms. Require budgets and human gates for destructive or financial actions.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize KV caching?",
+          "answer": "Prioritize KV caching when reusing key-value tensors during autoregressive decoding. Interviewers expect you to link it to validation and monitoring. Critical for low-latency long outputs in serving stacks.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around quantized LLM weights?",
+          "answer": "A typical mistake is treating quantized LLM weights as optional while INT8 or INT4 approximations for inference. Reduce memory with small quality loss when calibrated properly. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain speculative decoding to product stakeholders?",
+          "answer": "Describe speculative decoding as draft models proposing tokens verified by larger models. Keep the story tied to user-visible outcomes and risk. Speeds generation when draft acceptance rates are high.",
+          "level": "middle"
+        },
+        {
+          "question": "What is multimodal LLMs in machine learning?",
+          "answer": "Multimodal llms refers to models consuming images and text jointly. In practice it shapes how you prepare data and pick algorithms. Useful for document understanding and visual QA with guardrails.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize prompt injection?",
+          "answer": "Prioritize prompt injection when user text overriding system instructions. Interviewers expect you to link it to validation and monitoring. Separate trusted instructions from untrusted content and sanitize tool inputs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around jailbreak attempts?",
+          "answer": "A typical mistake is treating jailbreak attempts as optional while adversarial prompts bypassing safety policies. Layer defenses with classifiers, filters, and human review for sensitive flows. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain PII in prompts to product stakeholders?",
+          "answer": "Describe PII in prompts as personally identifiable information entering model logs. Keep the story tied to user-visible outcomes and risk. Redact before sending to third-party APIs and restrict retention.",
+          "level": "senior"
+        },
+        {
+          "question": "What is streaming responses in machine learning?",
+          "answer": "Streaming responses refers to token-by-token delivery to clients. In practice it shapes how you prepare data and pick algorithms. Improves perceived latency; still measure time-to-first-token and total cost.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize token billing?",
+          "answer": "Prioritize token billing when pricing tied to input and output tokens. Interviewers expect you to link it to validation and monitoring. Design UX and retrieval to stay within budget per session.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around guardrails?",
+          "answer": "A typical mistake is treating guardrails as optional while policy filters on inputs and outputs. Combine rule-based checks with smaller classifier models. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain red teaming LLM apps to product stakeholders?",
+          "answer": "Describe red teaming LLM apps as adversarial testing before release. Keep the story tied to user-visible outcomes and risk. Document failure modes and mitigations like for security pen tests.",
+          "level": "senior"
+        },
+        {
+          "question": "What is model cards in machine learning?",
+          "answer": "Model cards refers to documentation of intended use and limitations. In practice it shapes how you prepare data and pick algorithms. Required for responsible deployment and compliance reviews.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize semantic search indexes?",
+          "answer": "Prioritize semantic search indexes when vector stores backing RAG systems. Interviewers expect you to link it to validation and monitoring. Refresh embeddings when documents change and monitor stale chunks.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around context compression?",
+          "answer": "A typical mistake is treating context compression as optional while summarizing history to fit windows. Risk losing details; prefer structured memory or retrieval instead. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain base versus instruct models to product stakeholders?",
+          "answer": "Describe base versus instruct models as pretrained LMs compared to chat-tuned variants. Keep the story tied to user-visible outcomes and risk. Use instruct models for assistants; base models for continued pretraining.",
+          "level": "senior"
+        },
+        {
+          "question": "What is logit bias and penalties in machine learning?",
+          "answer": "Logit bias and penalties refers to API-level control of token preferences. In practice it shapes how you prepare data and pick algorithms. Discourage repetition or forbidden phrases without retraining.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize batch inference for LLMs?",
+          "answer": "Prioritize batch inference for LLMs when grouping requests to saturate GPUs. Interviewers expect you to link it to validation and monitoring. Balance batching gains with tail latency SLAs.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "MLOps",
+      "description": "Deploying, monitoring, and operating ML in production.",
+      "cards": [
+        {
+          "question": "What is model versioning in machine learning?",
+          "answer": "Model versioning refers to tracking artifacts alongside code releases. In practice it shapes how you prepare data and pick algorithms. Enable rollback when metrics regress after retrain.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize train-serve skew?",
+          "answer": "Prioritize train-serve skew when differences between offline training and online features. Interviewers expect you to link it to validation and monitoring. Parity tests on feature vectors catch silent bugs.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around ML CI pipelines?",
+          "answer": "A typical mistake is treating ML CI pipelines as optional while automated tests on data schemas and training smoke jobs. Block merges when contracts break or metrics fall below gates. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain feature stores to product stakeholders?",
+          "answer": "Describe feature stores as shared definitions for offline and online features. Keep the story tied to user-visible outcomes and risk. Reduce duplication and point-in-time correctness bugs.",
+          "level": "junior"
+        },
+        {
+          "question": "What is data drift monitoring in machine learning?",
+          "answer": "Data drift monitoring refers to tracking shifting input distributions. In practice it shapes how you prepare data and pick algorithms. Alert owners when PSI or KS thresholds breach on key columns.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize prediction drift?",
+          "answer": "Prioritize prediction drift when changes in model output distributions. Interviewers expect you to link it to validation and monitoring. Can indicate upstream bugs even when inputs look stable.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around batch inference?",
+          "answer": "A typical mistake is treating batch inference as optional while scheduled scoring of large tables. Cheaper for nightly decisions when latency tolerance is hours. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain online inference to product stakeholders?",
+          "answer": "Describe online inference as real-time scoring on request paths. Keep the story tied to user-visible outcomes and risk. Needs autoscaling, caching, and strict latency budgets.",
+          "level": "junior"
+        },
+        {
+          "question": "What is canary deployments in machine learning?",
+          "answer": "Canary deployments refers to routing small traffic slices to new models. In practice it shapes how you prepare data and pick algorithms. Compare error rates and business KPIs before full promotion.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize shadow deployments?",
+          "answer": "Prioritize shadow deployments when running challengers without affecting users. Interviewers expect you to link it to validation and monitoring. Validates latency and stability before canary traffic.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around model registries?",
+          "answer": "A typical mistake is treating model registries as optional while central metadata for promoted artifacts. Link models to datasets, metrics, and deployment stages. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain Airflow for ML to product stakeholders?",
+          "answer": "Describe Airflow for ML as orchestrating dependent batch pipelines. Keep the story tied to user-visible outcomes and risk. Use sensors and retries; idempotent tasks simplify recovery.",
+          "level": "junior"
+        },
+        {
+          "question": "What is MLflow tracking in machine learning?",
+          "answer": "Mlflow tracking refers to logging params, metrics, and artifacts per run. In practice it shapes how you prepare data and pick algorithms. Standardizes experiment comparison across teammates.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize Kubernetes for serving?",
+          "answer": "Prioritize Kubernetes for serving when container orchestration for scalable endpoints. Interviewers expect you to link it to validation and monitoring. Combine HPA with GPU node pools and readiness probes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around SLOs for ML APIs?",
+          "answer": "A typical mistake is treating SLOs for ML APIs as optional while latency and availability targets for predictions. Error budgets guide when to optimize models versus infra. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain rollback playbooks to product stakeholders?",
+          "answer": "Describe rollback playbooks as steps to revert bad model promotions. Keep the story tied to user-visible outcomes and risk. Automate revert to last known good version with one command.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Great Expectations in machine learning?",
+          "answer": "Great expectations refers to data validation suites on pipelines. In practice it shapes how you prepare data and pick algorithms. Fail fast when null rates or ranges violate contracts.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize schema evolution?",
+          "answer": "Prioritize schema evolution when handling new or renamed columns safely. Interviewers expect you to link it to validation and monitoring. Version contracts and coordinate producers before breaking consumers.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around secrets management?",
+          "answer": "A typical mistake is treating secrets management as optional while keeping credentials out of repos and images. Use vaults or cloud secret stores injected at runtime. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain IaC for ML infra to product stakeholders?",
+          "answer": "Describe IaC for ML infra as terraform or/pulumi for repeatable environments. Keep the story tied to user-visible outcomes and risk. Review infra changes like application code.",
+          "level": "middle"
+        },
+        {
+          "question": "What is GPU scheduling in machine learning?",
+          "answer": "Gpu scheduling refers to allocating accelerators across training and serving. In practice it shapes how you prepare data and pick algorithms. Queues and priorities prevent research jobs from starving prod.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize observability traces?",
+          "answer": "Prioritize observability traces when following requests through feature lookup and model calls. Interviewers expect you to link it to validation and monitoring. Pinpoint latency in embedding caches versus model forward passes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around logging predictions?",
+          "answer": "A typical mistake is treating logging predictions as optional while storing scores with request IDs for audit. Balance retention policies with privacy regulations. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain feedback loops to product stakeholders?",
+          "answer": "Describe feedback loops as using production outcomes to improve models. Keep the story tied to user-visible outcomes and risk. Delayed labels require careful label windows and unbiased sampling.",
+          "level": "middle"
+        },
+        {
+          "question": "What is retraining triggers in machine learning?",
+          "answer": "Retraining triggers refers to rules for when to refresh models. In practice it shapes how you prepare data and pick algorithms. Combine drift alerts, calendar schedules, and business events.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize container images for ML?",
+          "answer": "Prioritize container images for ML when packaging code, deps, and model weights. Interviewers expect you to link it to validation and monitoring. Multi-stage builds keep images small and reproducible.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around blue-green deployments?",
+          "answer": "A typical mistake is treating blue-green deployments as optional while switching traffic between two full environments. Fast rollback though doubles resource usage temporarily. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain A/B tests for models to product stakeholders?",
+          "answer": "Describe A/B tests for models as experiments comparing challenger models. Keep the story tied to user-visible outcomes and risk. Same rigor as product experiments with pre-registered metrics.",
+          "level": "senior"
+        },
+        {
+          "question": "What is data contracts in machine learning?",
+          "answer": "Data contracts refers to SLAs between producers and ML consumers. In practice it shapes how you prepare data and pick algorithms. Specify freshness, schema, and ownership to prevent silent breaks.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize reproducible training?",
+          "answer": "Prioritize reproducible training when pinned data snapshots and container digests. Interviewers expect you to link it to validation and monitoring. One command should rebuild models within numeric tolerance.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around cost-aware autoscaling?",
+          "answer": "A typical mistake is treating cost-aware autoscaling as optional while scaling inference on queue depth and GPU util. Avoid over-provisioning expensive GPU fleets. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain edge feature computation to product stakeholders?",
+          "answer": "Describe edge feature computation as computing features on devices or gateways. Keep the story tied to user-visible outcomes and risk. Reduces latency but complicates parity with training logs.",
+          "level": "senior"
+        },
+        {
+          "question": "What is batch feature backfills in machine learning?",
+          "answer": "Batch feature backfills refers to recomputing historical features after bug fixes. In practice it shapes how you prepare data and pick algorithms. Coordinate with analysts before restating dashboards.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize model explainability in prod?",
+          "answer": "Prioritize model explainability in prod when serving explanations alongside scores. Interviewers expect you to link it to validation and monitoring. Only expose methods validated for stability and compliance needs.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around privacy reviews for ML?",
+          "answer": "A typical mistake is treating privacy reviews for ML as optional while assessing data use before training. Document lawful basis and minimization for personal data. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain incident response for ML to product stakeholders?",
+          "answer": "Describe incident response for ML as handling metric cliffs or biased outputs. Keep the story tied to user-visible outcomes and risk. Include kill switches and comms templates like any production incident.",
+          "level": "senior"
+        },
+        {
+          "question": "What is multi-tenant model serving in machine learning?",
+          "answer": "Multi-tenant model serving refers to isolating customers on shared infrastructure. In practice it shapes how you prepare data and pick algorithms. Separate adapters, quotas, and encryption keys per tenant.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Data for ML",
+      "description": "Labeling, features, splits, and dataset engineering for models.",
+      "cards": [
+        {
+          "question": "What is labeling workflows in machine learning?",
+          "answer": "Labeling workflows refers to human annotation pipelines with guidelines. In practice it shapes how you prepare data and pick algorithms. Inter-annotator agreement metrics catch ambiguous instructions early.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize weak supervision?",
+          "answer": "Prioritize weak supervision when noisy labeling functions combined probabilistically. Interviewers expect you to link it to validation and monitoring. Useful when expert labels are scarce but heuristics exist.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around point-in-time joins?",
+          "answer": "A typical mistake is treating point-in-time joins as optional while features known only as of each label timestamp. Prevents leakage from future information in training tables. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain entity-level splits to product stakeholders?",
+          "answer": "Describe entity-level splits as keeping all rows for a user in one fold. Keep the story tied to user-visible outcomes and risk. Avoids leakage when users contribute many correlated rows.",
+          "level": "junior"
+        },
+        {
+          "question": "What is time-based splits in machine learning?",
+          "answer": "Time-based splits refers to training on past and validating on future. In practice it shapes how you prepare data and pick algorithms. Mandatory for forecasting and many user behavior models.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize grouped cross-validation?",
+          "answer": "Prioritize grouped cross-validation when respecting groups such as accounts or sessions. Interviewers expect you to link it to validation and monitoring. Standard when IID rows are unrealistic.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around missing value imputation?",
+          "answer": "A typical mistake is treating missing value imputation as optional while filling nulls with statistics or models. Add missingness indicators when absence is informative. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain outlier treatment to product stakeholders?",
+          "answer": "Describe outlier treatment as winsorizing, capping, or robust modeling. Keep the story tied to user-visible outcomes and risk. Investigate whether outliers are bugs, fraud, or real signal.",
+          "level": "junior"
+        },
+        {
+          "question": "What is high-cardinality categoricals in machine learning?",
+          "answer": "High-cardinality categoricals refers to fields with thousands of distinct values. In practice it shapes how you prepare data and pick algorithms. Hashing, embeddings, or target encoding with care beat huge one-hot matrices.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize text featurization?",
+          "answer": "Prioritize text featurization when TF-IDF, n-grams, or embeddings for NLP features. Interviewers expect you to link it to validation and monitoring. Match complexity to data size and latency budget.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around image preprocessing?",
+          "answer": "A typical mistake is treating image preprocessing as optional while resize, normalize, and augment pixels consistently. Training and serving must apply identical transforms. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain class distribution shift to product stakeholders?",
+          "answer": "Describe class distribution shift as train and serve populations differing in prevalence. Keep the story tied to user-visible outcomes and risk. Recalibrate thresholds and monitor precision on live traffic.",
+          "level": "junior"
+        },
+        {
+          "question": "What is synthetic data in machine learning?",
+          "answer": "Synthetic data refers to generated samples augmenting real datasets. In practice it shapes how you prepare data and pick algorithms. Validate that synthetic rows do not distort decision boundaries.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize deduplication?",
+          "answer": "Prioritize deduplication when removing repeated records before training. Interviewers expect you to link it to validation and monitoring. Duplicates inflate metrics and overweight certain entities.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around data versioning with DVC?",
+          "answer": "A typical mistake is treating data versioning with DVC as optional while tracking datasets like code in git. Pairs with remote storage for reproducible experiments. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain Parquet versus CSV to product stakeholders?",
+          "answer": "Describe Parquet versus CSV as columnar storage for analytics pipelines. Keep the story tied to user-visible outcomes and risk. Parquet saves IO and preserves types for large tables.",
+          "level": "middle"
+        },
+        {
+          "question": "What is windowed time-series features in machine learning?",
+          "answer": "Windowed time-series features refers to lags and rolling statistics per entity. In practice it shapes how you prepare data and pick algorithms. Ensure windows exclude future timestamps relative to each label.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize target leakage via aggregates?",
+          "answer": "Prioritize target leakage via aggregates when global stats computed including validation rows. Interviewers expect you to link it to validation and monitoring. Compute aggregates in cross-validation folds only.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around sampling bias?",
+          "answer": "A typical mistake is treating sampling bias as optional while training data not representing deployment users. Reweight or resample carefully and validate on representative holdouts. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain coresets to product stakeholders?",
+          "answer": "Describe coresets as subsets approximating full dataset behavior. Keep the story tied to user-visible outcomes and risk. Speed experimentation while monitoring approximation error.",
+          "level": "middle"
+        },
+        {
+          "question": "What is privacy-preserving aggregation in machine learning?",
+          "answer": "Privacy-preserving aggregation refers to k-anonymity or aggregation thresholds in features. In practice it shapes how you prepare data and pick algorithms. Prevent re-identification in exported training sets.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize federated data access?",
+          "answer": "Prioritize federated data access when training without centralizing raw user data. Interviewers expect you to link it to validation and monitoring. Adds communication overhead and non-IID challenges across clients.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around label delay?",
+          "answer": "A typical mistake is treating label delay as optional while outcomes arriving days after features. Design label windows and backfill jobs for delayed supervision. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain human review queues to product stakeholders?",
+          "answer": "Describe human review queues as sampling low-confidence predictions for labeling. Keep the story tied to user-visible outcomes and risk. Improves data flywheel while controlling reviewer load.",
+          "level": "middle"
+        },
+        {
+          "question": "What is schema validation on ingest in machine learning?",
+          "answer": "Schema validation on ingest refers to rejecting malformed upstream batches. In practice it shapes how you prepare data and pick algorithms. Stop bad types from poisoning weeks of training data.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize class balance in splits?",
+          "answer": "Prioritize class balance in splits when stratifying rare events across folds. Interviewers expect you to link it to validation and monitoring. Stabilizes variance for minority class metrics.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around feature crosses?",
+          "answer": "A typical mistake is treating feature crosses as optional while explicit interactions of categorical pairs. Help linear models; trees often learn interactions implicitly. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain embedding tables for sparse IDs to product stakeholders?",
+          "answer": "Describe embedding tables for sparse IDs as learned dense vectors for entities. Keep the story tied to user-visible outcomes and risk. Common in recommender and ads models with huge vocabularies.",
+          "level": "senior"
+        },
+        {
+          "question": "What is negative sampling in machine learning?",
+          "answer": "Negative sampling refers to subsetting negatives for ranking tasks. In practice it shapes how you prepare data and pick algorithms. Biased sampling requires correction or careful loss design.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize multilabel targets?",
+          "answer": "Prioritize multilabel targets when examples belonging to multiple classes. Interviewers expect you to link it to validation and monitoring. Use sigmoid per label metrics instead of single softmax accuracy.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around hierarchical labels?",
+          "answer": "A typical mistake is treating hierarchical labels as optional while taxonomies where parent-child constraints exist. Use hierarchical loss or post-processing to enforce consistency. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain spatial data splits to product stakeholders?",
+          "answer": "Describe spatial data splits as avoiding leakage across geographically correlated rows. Keep the story tied to user-visible outcomes and risk. Important for maps, weather, and regional pricing models.",
+          "level": "senior"
+        },
+        {
+          "question": "What is audio feature pipelines in machine learning?",
+          "answer": "Audio feature pipelines refers to spectrograms or learned front-ends. In practice it shapes how you prepare data and pick algorithms. Keep sample rates and window sizes consistent in train and serve.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize video frame sampling?",
+          "answer": "Prioritize video frame sampling when choosing frames for action recognition. Interviewers expect you to link it to validation and monitoring. Random stride during training; deterministic policy online if needed.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around graph datasets?",
+          "answer": "A typical mistake is treating graph datasets as optional while nodes and edges with relational structure. Use graph splits that do not leak neighbors across folds. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain anonymization pitfalls to product stakeholders?",
+          "answer": "Describe anonymization pitfalls as re-identification from quasi-identifiers. Keep the story tied to user-visible outcomes and risk. Hashing IDs alone is insufficient when joins re-link people.",
+          "level": "senior"
+        },
+        {
+          "question": "What is data lineage in machine learning?",
+          "answer": "Data lineage refers to tracing columns from source to model features. In practice it shapes how you prepare data and pick algorithms. Speeds debugging when upstream definitions change.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize train-prod feature parity tests?",
+          "answer": "Prioritize train-prod feature parity tests when assertions that online features match offline SQL. Interviewers expect you to link it to validation and monitoring. Run continuously in staging with production-like traffic.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Metrics & Evaluation",
+      "description": "Choosing and interpreting metrics for ML systems.",
+      "cards": [
+        {
+          "question": "What is accuracy in machine learning?",
+          "answer": "Accuracy refers to fraction of correct predictions overall. In practice it shapes how you prepare data and pick algorithms. Misleading under imbalance or unequal error costs.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize precision?",
+          "answer": "Prioritize precision when positive predictive value among predicted positives. Interviewers expect you to link it to validation and monitoring. Matters when false positives are expensive.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around recall?",
+          "answer": "A typical mistake is treating recall as optional while true positive rate among actual positives. Matters when false negatives are costly. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain F1 score to product stakeholders?",
+          "answer": "Describe F1 score as harmonic mean of precision and recall. Keep the story tied to user-visible outcomes and risk. Single summary when you need balance for imbalanced classes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is ROC-AUC in machine learning?",
+          "answer": "Roc-auc refers to area under the true versus false positive rate curve. In practice it shapes how you prepare data and pick algorithms. Threshold-free ranking metric for balanced-ish binary tasks.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize PR-AUC?",
+          "answer": "Prioritize PR-AUC when area under precision-recall curve. Interviewers expect you to link it to validation and monitoring. More informative than ROC when positives are rare.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around MAE?",
+          "answer": "A typical mistake is treating MAE as optional while mean absolute error for regression. Robust interpretability in original units. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain RMSE to product stakeholders?",
+          "answer": "Describe RMSE as root mean squared error penalizing large mistakes. Keep the story tied to user-visible outcomes and risk. Use when big errors are disproportionately bad.",
+          "level": "junior"
+        },
+        {
+          "question": "What is R-squared in machine learning?",
+          "answer": "R-squared refers to explained variance fraction in regression. In practice it shapes how you prepare data and pick algorithms. Can rise with useless features; prefer held-out error.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize log loss for classifiers?",
+          "answer": "Prioritize log loss for classifiers when penalizing wrong confident probabilities. Interviewers expect you to link it to validation and monitoring. Aligns training with probability quality.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around Brier score?",
+          "answer": "A typical mistake is treating Brier score as optional while mean squared error of probabilities. Measures calibration and sharpness jointly. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain confusion matrix analysis to product stakeholders?",
+          "answer": "Describe confusion matrix analysis as inspecting per-class error types. Keep the story tied to user-visible outcomes and risk. Drives product decisions more than a single scalar.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Matthews correlation coefficient in machine learning?",
+          "answer": "Matthews correlation coefficient refers to balanced metric for binary classification. In practice it shapes how you prepare data and pick algorithms. Useful with extreme class ratios.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize Cohen's kappa?",
+          "answer": "Prioritize Cohen's kappa when agreement beyond chance for categorical predictions. Interviewers expect you to link it to validation and monitoring. Helpful when comparing human and model labels.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around NDCG?",
+          "answer": "A typical mistake is treating NDCG as optional while ranking quality with graded relevance. Standard for search and recommendation offline eval. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain MAP to product stakeholders?",
+          "answer": "Describe MAP as mean average precision for ranked lists. Keep the story tied to user-visible outcomes and risk. Focuses on retrieving relevant items early.",
+          "level": "middle"
+        },
+        {
+          "question": "What is hit rate at k in machine learning?",
+          "answer": "Hit rate at k refers to whether a relevant item appears in top k. In practice it shapes how you prepare data and pick algorithms. Simple metric for recommendation prototypes.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize coverage?",
+          "answer": "Prioritize coverage when fraction of catalog items recommended. Interviewers expect you to link it to validation and monitoring. Guards against models recommending only popular items.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around calibration error?",
+          "answer": "A typical mistake is treating calibration error as optional while gap between predicted and observed rates. Expected calibration error summarizes reliability across bins. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain business KPI mapping to product stakeholders?",
+          "answer": "Describe business KPI mapping as linking model scores to revenue or cost. Keep the story tied to user-visible outcomes and risk. Translate threshold changes into dollar impact for stakeholders.",
+          "level": "middle"
+        },
+        {
+          "question": "What is uplift modeling metrics in machine learning?",
+          "answer": "Uplift modeling metrics refers to qini and AUUC for treatment effects. In practice it shapes how you prepare data and pick algorithms. Evaluate campaigns targeting persuadable users.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize counterfactual evaluation?",
+          "answer": "Prioritize counterfactual evaluation when estimating policy value under logged bandit data. Interviewers expect you to link it to validation and monitoring. Requires unbiased logging or correction methods.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around offline-online gaps?",
+          "answer": "A typical mistake is treating offline-online gaps as optional while metrics dropping after deployment. Often due to feedback loops, selection bias, or bugs. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain bootstrap confidence intervals to product stakeholders?",
+          "answer": "Describe bootstrap confidence intervals as resampling uncertainty for metric estimates. Keep the story tied to user-visible outcomes and risk. Report intervals, not only point estimates.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Bayesian A/B analysis in machine learning?",
+          "answer": "Bayesian a/b analysis refers to posterior distributions for experiment lift. In practice it shapes how you prepare data and pick algorithms. Communicates probability of harm or benefit clearly.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize multiple testing correction?",
+          "answer": "Prioritize multiple testing correction when Bonferroni or FDR when scanning many metrics. Interviewers expect you to link it to validation and monitoring. Prevents false discoveries from metric fishing.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around segmented evaluation?",
+          "answer": "A typical mistake is treating segmented evaluation as optional while metrics per country, platform, or cohort. Global averages can hide harmed segments. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain slice analysis to product stakeholders?",
+          "answer": "Describe slice analysis as finding subgroups with degraded performance. Keep the story tied to user-visible outcomes and risk. Required for fairness and product risk reviews.",
+          "level": "senior"
+        },
+        {
+          "question": "What is fairness metrics in machine learning?",
+          "answer": "Fairness metrics refers to demographic parity or equalized odds comparisons. In practice it shapes how you prepare data and pick algorithms. Pick definitions aligned with policy and legal guidance.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize cost matrices?",
+          "answer": "Prioritize cost matrices when weighting false positives versus false negatives. Interviewers expect you to link it to validation and monitoring. Derive optimal thresholds analytically when costs are known.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around custom training losses versus metrics?",
+          "answer": "A typical mistake is treating custom training losses versus metrics as optional while optimizing surrogates different from business goals. Calibrate or tune thresholds post-hoc when they diverge. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain human evaluation rubrics to product stakeholders?",
+          "answer": "Describe human evaluation rubrics as structured scoring of generative outputs. Keep the story tied to user-visible outcomes and risk. Combine automatic checks with spot human review.",
+          "level": "senior"
+        },
+        {
+          "question": "What is inter-rater agreement in machine learning?",
+          "answer": "Inter-rater agreement refers to Cohen's kappa among human graders. In practice it shapes how you prepare data and pick algorithms. Low agreement means rubrics need refinement.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize statistical power for ML experiments?",
+          "answer": "Prioritize statistical power for ML experiments when sample size to detect meaningful lifts. Interviewers expect you to link it to validation and monitoring. Underpowered tests waste weeks and yield inconclusive results.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around guardrail metrics in model eval?",
+          "answer": "A typical mistake is treating guardrail metrics in model eval as optional while latency, error rate, and toxicity checks. Block launch if primary metric wins but guardrails fail. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain backtesting for time series models to product stakeholders?",
+          "answer": "Describe backtesting for time series models as rolling-origin evaluation. Keep the story tied to user-visible outcomes and risk. Mimics production refit cadence better than random splits.",
+          "level": "senior"
+        },
+        {
+          "question": "What is leaderboard leakage in machine learning?",
+          "answer": "Leaderboard leakage refers to test set reuse in repeated submissions. In practice it shapes how you prepare data and pick algorithms. Hold out a truly private test for final comparisons.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Production & Ethics",
+      "description": "Latency, safety, compliance, and responsible AI in production.",
+      "cards": [
+        {
+          "question": "What is inference latency budgets in machine learning?",
+          "answer": "Inference latency budgets refers to milliseconds allowed per prediction on critical paths. In practice it shapes how you prepare data and pick algorithms. Trade model size against SLAs using distillation or caching.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize throughput planning?",
+          "answer": "Prioritize throughput planning when requests per second a serving tier must handle. Interviewers expect you to link it to validation and monitoring. Batch when possible and scale horizontally with stateless workers.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around model size tradeoffs?",
+          "answer": "A typical mistake is treating model size tradeoffs as optional while parameters versus accuracy on edge devices. Quantization and pruning shrink footprints with measured quality loss. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain explainability requirements to product stakeholders?",
+          "answer": "Describe explainability requirements as regulatory or user needs for reasons behind scores. Keep the story tied to user-visible outcomes and risk. Pick methods stable across similar inputs and document limitations.",
+          "level": "junior"
+        },
+        {
+          "question": "What is GDPR implications for ML in machine learning?",
+          "answer": "Gdpr implications for ml refers to lawful basis, minimization, and erasure rights. In practice it shapes how you prepare data and pick algorithms. Design pipelines to delete or retrain when users withdraw consent.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize model documentation?",
+          "answer": "Prioritize model documentation when intended use, data sources, and known failure modes. Interviewers expect you to link it to validation and monitoring. Model cards accelerate reviews and onboarding.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around human-in-the-loop review?",
+          "answer": "A typical mistake is treating human-in-the-loop review as optional while routing uncertain cases to operators. Improves quality and collects labels for retraining. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain automation bias to product stakeholders?",
+          "answer": "Describe automation bias as operators over-trusting model recommendations. Keep the story tied to user-visible outcomes and risk. Show confidence and support override with logged reasons.",
+          "level": "junior"
+        },
+        {
+          "question": "What is adversarial examples in machine learning?",
+          "answer": "Adversarial examples refers to inputs crafted to fool classifiers. In practice it shapes how you prepare data and pick algorithms. Monitor for abnormal perturbations in sensitive domains.",
+          "level": "junior"
+        },
+        {
+          "question": "When should teams prioritize training data poisoning?",
+          "answer": "Prioritize training data poisoning when malicious labels corrupting learned weights. Interviewers expect you to link it to validation and monitoring. Validate data provenance and anomaly-scan new batches.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a common pitfall around prompt injection defenses?",
+          "answer": "A typical mistake is treating prompt injection defenses as optional while separating instructions from untrusted user content. Structure prompts and sanitize tool inputs in LLM apps. Catch issues early with explicit checks in pipelines.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you explain content moderation models to product stakeholders?",
+          "answer": "Describe content moderation models as classifiers blocking unsafe generations. Keep the story tied to user-visible outcomes and risk. Layer policies with human escalation for edge cases.",
+          "level": "junior"
+        },
+        {
+          "question": "What is bias mitigation strategies in machine learning?",
+          "answer": "Bias mitigation strategies refers to reweighing, adversarial debiasing, or post-processing. In practice it shapes how you prepare data and pick algorithms. Measure disparate impact before and after mitigation.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize responsible AI reviews?",
+          "answer": "Prioritize responsible AI reviews when checklists before launching automated decisions. Interviewers expect you to link it to validation and monitoring. Include legal, policy, and domain experts beyond engineering.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around audit trails for decisions?",
+          "answer": "A typical mistake is treating audit trails for decisions as optional while immutable logs tying inputs to model versions. Required for credit, hiring, and healthcare automation. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain consent for training data to product stakeholders?",
+          "answer": "Describe consent for training data as terms allowing model training on user content. Keep the story tied to user-visible outcomes and risk. Clarify opt-out paths and regional differences.",
+          "level": "middle"
+        },
+        {
+          "question": "What is copyright in training corpora in machine learning?",
+          "answer": "Copyright in training corpora refers to risk when scraping protected text or media. In practice it shapes how you prepare data and pick algorithms. Prefer licensed datasets and document provenance.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize EU AI Act awareness?",
+          "answer": "Prioritize EU AI Act awareness when risk tiers for high-impact AI systems. Interviewers expect you to link it to validation and monitoring. Map products to obligations for transparency and oversight.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around monitoring for harm?",
+          "answer": "A typical mistake is treating monitoring for harm as optional while tracking abuse reports tied to model outputs. Feed incidents back into safety filters and eval sets. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain kill switches to product stakeholders?",
+          "answer": "Describe kill switches as instant disable for unsafe model features. Keep the story tied to user-visible outcomes and risk. Practice drills like other production incident tools.",
+          "level": "middle"
+        },
+        {
+          "question": "What is fallback rules in machine learning?",
+          "answer": "Fallback rules refers to heuristics when models timeout or abstain. In practice it shapes how you prepare data and pick algorithms. Default to safe paths rather than random guesses.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize graceful degradation?",
+          "answer": "Prioritize graceful degradation when reduced functionality under load or partial outages. Interviewers expect you to link it to validation and monitoring. Serve cached scores or simpler models before hard failures.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around multi-tenant isolation?",
+          "answer": "A typical mistake is treating multi-tenant isolation as optional while preventing cross-customer data leakage in SaaS ML. Encrypt per tenant and segregate indexes and adapters. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain PII detection pipelines to product stakeholders?",
+          "answer": "Describe PII detection pipelines as scanning inputs and outputs for sensitive fields. Keep the story tied to user-visible outcomes and risk. Block or redact before logging or third-party APIs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is edge deployment constraints in machine learning?",
+          "answer": "Edge deployment constraints refers to battery, memory, and offline operation limits. In practice it shapes how you prepare data and pick algorithms. Profile on device hardware, not only cloud GPUs.",
+          "level": "middle"
+        },
+        {
+          "question": "When should teams prioritize sustainable ML compute?",
+          "answer": "Prioritize sustainable ML compute when tracking energy use of large training jobs. Interviewers expect you to link it to validation and monitoring. Right-size experiments and reuse checkpoints.",
+          "level": "middle"
+        },
+        {
+          "question": "What is a common pitfall around accessibility of AI products?",
+          "answer": "A typical mistake is treating accessibility of AI products as optional while UI that works with screen readers and clear language. Do not rely solely on visual model outputs. Catch issues early with explicit checks in pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you explain stakeholder communication to product stakeholders?",
+          "answer": "Describe stakeholder communication as explaining uncertainty without jargon. Keep the story tied to user-visible outcomes and risk. Use scenarios and intervals instead of false precision.",
+          "level": "senior"
+        },
+        {
+          "question": "What is postmortems for ML incidents in machine learning?",
+          "answer": "Postmortems for ml incidents refers to blameless reviews after metric cliffs. In practice it shapes how you prepare data and pick algorithms. Capture data, code, and deployment changes systematically.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize liability boundaries?",
+          "answer": "Prioritize liability boundaries when disclaimers versus automated decision authority. Interviewers expect you to link it to validation and monitoring. Legal defines where human approval remains mandatory.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around safety red teaming?",
+          "answer": "A typical mistake is treating safety red teaming as optional while adversarial testing of generative features. Document exploits and mitigations before wide release. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain synthetic media policies to product stakeholders?",
+          "answer": "Describe synthetic media policies as labeling AI-generated content for users. Keep the story tied to user-visible outcomes and risk. Reduces deception and supports platform trust.",
+          "level": "senior"
+        },
+        {
+          "question": "What is child safety filters in machine learning?",
+          "answer": "Child safety filters refers to policies for minors interacting with models. In practice it shapes how you prepare data and pick algorithms. Stricter defaults and age-gating where regulations apply.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize export controls on models?",
+          "answer": "Prioritize export controls on models when restrictions on sharing weights or APIs. Interviewers expect you to link it to validation and monitoring. Compliance reviews for cross-border deployments.",
+          "level": "senior"
+        },
+        {
+          "question": "What is a common pitfall around on-call for ML services?",
+          "answer": "A typical mistake is treating on-call for ML services as optional while ownership of model endpoints in rotations. Runbooks include rollback, feature toggles, and comms. Catch issues early with explicit checks in pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you explain ethical use policies to product stakeholders?",
+          "answer": "Describe ethical use policies as internal standards forbidding certain applications. Keep the story tied to user-visible outcomes and risk. Engineers need clear escalation when sales requests conflict.",
+          "level": "senior"
+        },
+        {
+          "question": "What is transparency to end users in machine learning?",
+          "answer": "Transparency to end users refers to disclosing automation in decisions. In practice it shapes how you prepare data and pick algorithms. Builds trust and meets emerging regulatory expectations.",
+          "level": "senior"
+        },
+        {
+          "question": "When should teams prioritize third-party model APIs?",
+          "answer": "Prioritize third-party model APIs when vendor risk when relying on external LLMs. Interviewers expect you to link it to validation and monitoring. Monitor outages, price changes, and data handling terms.",
+          "level": "senior"
+        }
+      ]
+    }
+  ]
+}

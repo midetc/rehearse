@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Sign up · Rehearse</title>{% endblock %}
+
+{% block layout %}
+  <div class="auth-shell">
+    <div class="auth-panel">
+      <a class="brand" href="{% url 'hub:index' %}">Rehear<span>se</span></a>
+      <p class="page-lead">Create an account, pick a track, and start drilling interview cards.</p>
+
+      {% if user.is_authenticated %}
+        <p class="page-lead">You are already signed in.</p>
+        <a class="btn-rehearse" href="{% url 'hub:index' %}">Go to hub</a>
+      {% else %}
+        <form method="post" action="{% url 'register' %}" class="stack">
+          {% csrf_token %}
+          {% if form.errors %}
+            <p class="meta">Fix the highlighted fields and try again.</p>
+          {% endif %}
+          {% for field in form %}
+            <p>
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}
+                <span class="meta">{{ field.errors|striptags }}</span>
+              {% endif %}
+            </p>
+          {% endfor %}
+          <button type="submit">Create account</button>
+        </form>
+        <p class="meta auth-switch">
+          Already have an account?
+          <a href="{% url 'login' %}">Sign in</a>
+        </p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

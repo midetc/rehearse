@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Choose track · Rehearse</title>{% endblock %}
+
+{% block stage_class %}stage-tracks{% endblock %}
+
+{% block content %}
+  <div class="track-head">
+    <div>
+      <p class="page-kicker">Setup</p>
+      <h1 class="page-title">Professional tracks <span class="track-count">{{ track_count }}</span></h1>
+      <p class="page-lead">
+        Pick a direction. Each track has its own starter deck — switching later keeps progress per track.
+      </p>
+    </div>
+  </div>
+
+  <form method="post" action="{% url 'hub:select-collection' %}" class="track-form">
+    {% csrf_token %}
+    <div class="track-grid">
+      {% for track in tracks %}
+        <button
+          type="submit"
+          name="collection"
+          value="{{ track.id }}"
+          class="track-card{% if track.is_current %} is-current{% endif %}"
+        >
+          <div class="track-card-top">
+            <span class="track-icon" data-slug="{{ track.slug }}">{{ track.icon }}</span>
+            <span class="track-pill">{{ track.topic_count }} topics</span>
+          </div>
+          <h2 class="track-name">{{ track.name }}</h2>
+          {% if track.progress != None %}
+            <div class="track-progress">
+              <div class="track-progress-bar">
+                <span style="width: {{ track.progress }}%"></span>
+              </div>
+              <span class="track-progress-label">{{ track.progress }}%</span>
+            </div>
+          {% else %}
+            <div class="track-meta">
+              <span>{{ track.card_count }} cards</span>
+              <span>{{ track.topic_count }} topics</span>
+            </div>
+          {% endif %}
+          <p class="track-desc">{{ track.description }}</p>
+          {% if track.is_current %}
+            <span class="track-current-label">Current track</span>
+          {% endif %}
+        </button>
+      {% endfor %}
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Card · Rehearse</title>{% endblock %}
+
+{% block content %}
+  <p class="page-kicker">Card</p>
+  <div class="actions-row">
+    <a class="btn-ghost" href="{% url 'hub:card-list' %}">Back</a>
+    <a class="btn-ghost" href="{% url 'hub:card-update' card.id %}">Edit</a>
+    <a class="btn-ghost" href="{% url 'hub:card-delete' card.id %}">Delete</a>
+  </div>
+
+  <h1 class="question">{{ card.question }}</h1>
+  <p class="meta">
+    {{ card.get_status_display }} · {{ card.get_level_display }} · {{ card.category }}
+  </p>
+
+  <details class="reveal">
+    <summary>
+      <span class="reveal-label reveal-label-show">Show answer</span>
+      <span class="reveal-label reveal-label-hide">Hide answer</span>
+    </summary>
+    <p>{{ card.answer }}</p>
+  </details>
+
+  <form method="post" action="{% url 'hub:card-set-status' card.id %}" class="actions-row">
+    {% csrf_token %}
+    <button type="submit" name="action" value="dont_know" class="btn-danger-soft">Don't know</button>
+    <button type="submit" name="action" value="know" class="btn-ok">Know</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,943 @@
+{
+  "slug": "kotlin",
+  "name": "Kotlin Developer",
+  "description": "Practical Kotlin for JVM backends, Android, coroutines, and interoperable multiplatform delivery.",
+  "categories": [
+    {
+      "name": "Kotlin Core",
+      "description": "Null safety, data classes, extensions, and idiomatic language features.",
+      "cards": [
+        {
+          "question": "How does Kotlin null safety work at compile time?",
+          "answer": "Regular types exclude null; nullable types append ? and require safe calls or checks before use. The compiler rejects many NPE-prone patterns Java allows. !! asserts non-null and throws if wrong. Prefer Elvis defaults and let for smart casts after guards.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the difference between val and var?",
+          "answer": "val declares read-only references; reassignment is forbidden though mutable objects may still mutate internally. var allows rebinding to another instance. Use val by default for clearer intent and safer concurrency. Immutable data structures pair well with val fields in data classes.",
+          "level": "junior"
+        },
+        {
+          "question": "When use data class versus regular class?",
+          "answer": "data class auto-generates equals, hashCode, toString, copy, and componentN for properties in the primary constructor. Ideal for DTOs and value objects without heavy invariants. Regular classes suit entities with behavior and encapsulation. data class copy helps immutable updates in Redux-style state.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain sealed classes and sealed interfaces.",
+          "answer": "Subtypes are known at compile time within the same module, enabling exhaustive when without else. Model UI states, network results, and domain events cleanly. Unlike enum, subclasses can carry distinct property sets. sealed interface supports multiple inheritance of contracts in Kotlin 1.5+.",
+          "level": "middle"
+        },
+        {
+          "question": "What are extension functions and their limitations?",
+          "answer": "They add methods to existing types without inheritance, resolved statically at compile time. Cannot access private members of the extended class. Useful for DSL builders and adapting third-party APIs. Overuse scatters API surface; prefer cohesive types for domain logic.",
+          "level": "middle"
+        },
+        {
+          "question": "How do scope functions let, run, with, apply, also differ?",
+          "answer": "They execute blocks with a receiver or argument and return different values for chaining ergonomics. apply returns the receiver after configuration; also returns receiver after side effects for logging. let passes it as argument and returns block result, great for nullables. Choose based on readability, not brevity alone.",
+          "level": "junior"
+        },
+        {
+          "question": "What is inline reified generics and where is it used?",
+          "answer": "inline functions with reified T preserve type at runtime without JVM erasure in that scope. Enables type checks and Gson/Moshi style adapters without passing Class objects manually. Only works with inline functions, not regular generics. Common in Android startActivity and Ktor routing helpers.",
+          "level": "middle"
+        },
+        {
+          "question": "Compare lazy delegation versus lateinit.",
+          "answer": "lazy initializes on first access thread-safely by default for val properties. lateinit var marks non-null reference initialized later before use, mainly for injected fields on Android. lateinit fails fast on access if unset; lazy throws on circular initialization. lateinit cannot hold primitives.",
+          "level": "middle"
+        },
+        {
+          "question": "What are value classes and why use them?",
+          "answer": "Inline value classes wrap a single property with zero overhead when used as that property at runtime on JVM. Model type-safe IDs like UserId versus raw Long. Prevents argument swaps in large function lists. JVM name mangling applies when boxed or used as generics.",
+          "level": "senior"
+        },
+        {
+          "question": "How does Kotlin handle equality with ==?",
+          "answer": "== calls structural equals unless comparing nullable Any where reference equality may apply for some cases; === is referential identity. Data classes implement equals on properties. Floating point compares follow IEEE unless you normalize. Collections use element-wise equals for listOf comparisons.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design a production approach around null safety in Kotlin Core?",
+          "answer": "Senior work on null safety in Kotlin Core means setting standards, not only fixing bugs. Define ownership boundaries, observability, and rollback paths before scaling usage across services or devices. Expect follow-ups on failure isolation, security, and long-term cost once null safety becomes load-bearing.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize null safety across a large Kotlin Core codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does val and var matter for Kotlin Core work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use data classes?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply sealed classes correctly in Kotlin Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve sealed interfaces in Kotlin Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see object declarations in a Kotlin Core codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply companion objects correctly in Kotlin Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve extension functions in Kotlin Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on scope functions in Kotlin Core architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply inline functions correctly in Kotlin Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve reified generics in Kotlin Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on delegated properties in Kotlin Core architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is lazy?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve lateinit in Kotlin Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on observable properties in Kotlin Core architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply type aliases correctly in Kotlin Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to when expressions, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see smart casts in a Kotlin Core codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply equality correctly in Kotlin Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Coroutines & Flow",
+      "description": "Structured concurrency, dispatchers, flows, and cancellation on JVM and mobile.",
+      "cards": [
+        {
+          "question": "What is a coroutine versus a thread on the JVM?",
+          "answer": "Coroutines are lightweight tasks scheduled by kotlinx.coroutines on thread pools. Thousands can run without one OS thread each. Suspend functions pause without blocking threads during IO waits. Threads remain the underlying workers; coroutines add structured async style.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain structured concurrency with coroutineScope and supervisorScope.",
+          "answer": "Child jobs fail the parent scope by default, cancelling siblings in coroutineScope. supervisorScope isolates child failures so one error does not cancel peers. launch and async inherit parent context and cancellation. Always tie work to a scope lifecycle like viewModelScope or request scope.",
+          "level": "middle"
+        },
+        {
+          "question": "When choose Dispatchers.IO versus Default versus Main?",
+          "answer": "IO is for blocking or high-latency IO with an expanded pool. Default runs CPU-bound work sized to cores. Main posts to UI thread on Android or JavaFX. withContext switches dispatcher for a block without leaking wrong thread assumptions.",
+          "level": "senior"
+        },
+        {
+          "question": "How does cancellation propagate in coroutines?",
+          "answer": "Cancelling a Job cancels children and throws CancellationException at suspension points. Cooperative cancellation requires checking isActive or using cancellable suspending APIs. Non-cancellable finally runs with withContext(NonCancellable) for cleanup. Blocking Java calls ignore cancellation unless wrapped with interruptible patterns.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Flow and how differs from RxJava cold streams?",
+          "answer": "Flow is cold: collectors trigger execution; multiple collectors re-run upstream unless shared. Operators like map and filter are suspending and backpressure-aware via suspension. StateFlow and SharedFlow provide hot replayable streams for UI state. terminal operators like collect or first consume the stream.",
+          "level": "junior"
+        },
+        {
+          "question": "Compare async/await pattern with coroutine async builder.",
+          "answer": "async starts deferred computation returning Deferred<T>; await retrieves result. Structured concurrency ties Deferred lifecycle to parent job. Use async for parallel independent calls then awaitAll. Avoid async without a scope on GlobalScope; it leaks work beyond UI or request lifetime.",
+          "level": "junior"
+        },
+        {
+          "question": "What is channel and when prefer it over Flow?",
+          "answer": "Channel is hot communication between producers and consumers with buffering strategies. Useful for event buses and worker queues bridging non-coroutine APIs. Flow models sequential data pipelines with clearer operator chains. Prefer Flow for transformations; Channel for fan-in fan-out between actors.",
+          "level": "junior"
+        },
+        {
+          "question": "How handle exceptions in coroutines with CoroutineExceptionHandler?",
+          "answer": "Uncaught exceptions in launch propagate to handler on root scope; async stores them until await. SupervisorJob plus handler logs errors without crashing unrelated tasks. try/catch around suspend calls handles expected failures. Never swallow CancellationException accidentally in generic catch blocks.",
+          "level": "middle"
+        },
+        {
+          "question": "What does suspendCoroutine do for callback APIs?",
+          "answer": "It bridges callback-based libraries into suspend functions by resuming continuation once. Used internally in retrofit and custom SDK wrappers. Must resume exactly once or the coroutine hangs or crashes. suspendCancellableCoroutine adds cancellation hooks when callbacks support abort.",
+          "level": "junior"
+        },
+        {
+          "question": "Why avoid GlobalScope in application code?",
+          "answer": "GlobalScope jobs live for process lifetime without structured parent cancellation. Leaks work after Activity or request ends, causing crashes or wasted battery. Inject application-scoped SupervisorJob tied to lifecycle instead. Tests become flaky when background GlobalScope tasks outlive test finish.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply suspend functions in day-to-day Coroutines & Flow work?",
+          "answer": "suspend functions compile to state machines that pause at suspension points without blocking a thread. They must run inside a coroutine context and cooperate with cancellation at suspension boundaries. Bridge legacy callbacks with suspendCancellableCoroutine and resume exactly once.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply suspend functions correctly in Coroutines & Flow?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve coroutine builders in Coroutines & Flow?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on launch in Coroutines & Flow architecture?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply async correctly in Coroutines & Flow?",
+          "answer": "Async code runs as futures polled by an executor until completion or cancellation. Await at IO boundaries and avoid blocking syscalls on executor threads without offload. Propagate cancellation and timeouts so shutdown drains in-flight work safely.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does runBlocking pitfalls matter for Coroutines & Flow work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see dispatchers in a Coroutines & Flow codebase?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "senior"
+        },
+        {
+          "question": "What is coroutine context?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve Job hierarchy in Coroutines & Flow?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see SupervisorJob in a Coroutines & Flow codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is cancellation?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve CancellationException in Coroutines & Flow?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on withContext in Coroutines & Flow architecture?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply yield correctly in Coroutines & Flow?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does delay matter for Coroutines & Flow work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use Flow cold streams?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize StateFlow across a large Coroutines & Flow codebase?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to SharedFlow, and how do you prevent them?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see channel Flow in a Coroutines & Flow codebase?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize buffer operator across a large Coroutines & Flow codebase?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Android",
+      "description": "Jetpack, lifecycle, UI layers, and mobile-specific Kotlin patterns.",
+      "cards": [
+        {
+          "question": "How does ViewModel survive configuration changes?",
+          "answer": "ViewModelStore retains instances across Activity recreation while process lives. ViewModel holds UI state and coroutine scopes cancelled on clear(). Do not hold Activity context references to avoid leaks. Hilt or manual factories inject repositories into ViewModels.",
+          "level": "junior"
+        },
+        {
+          "question": "What is StateFlow versus LiveData for UI state?",
+          "answer": "StateFlow is Kotlin coroutine-native hot flow with always-current value and conflation options. LiveData is lifecycle-aware and main-thread focused with simpler Java interop. StateFlow fits MVI and Compose; LiveData remains in legacy XML projects. Both should expose immutable state snapshots to UI.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain Jetpack Compose recomposition basics.",
+          "answer": "Composable functions rerun when state they read changes, updating UI tree incrementally. remember stores mutable state across recompositions; derivedStateOf optimizes computed values. Side effects belong in LaunchedEffect or DisposableEffect with keys. Stable types help compiler skip unnecessary recomposition.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you prevent memory leaks with coroutines on Android?",
+          "answer": "Bind coroutines to lifecycleScope or viewModelScope so they cancel when UI destroys. Avoid long-running GlobalScope launching from Fragments. Use weak references only as last resort; prefer architecture boundaries. LeakCanary detects retained contexts from static callbacks.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Room and how does it use Kotlin?",
+          "answer": "Room generates SQLite access from interfaces with suspend queries and Flow return types. DAO methods map to compile-time verified SQL. Relations use data classes for nested projections. Migrations must be tested; destructive fallback is dev-only.",
+          "level": "middle"
+        },
+        {
+          "question": "How handle process death and saved state?",
+          "answer": "Persist critical UI state in SavedStateHandle or onSaveInstanceState bundles. Restore before rendering to avoid duplicate navigation events. Parcelable implementations via @Parcelize reduce boilerplate. Large data belongs in repository disk cache, not bundles.",
+          "level": "senior"
+        },
+        {
+          "question": "What patterns isolate domain logic from Android framework?",
+          "answer": "Pure Kotlin modules without Android dependencies hold use cases and entities. Data layer implements repositories with Retrofit, Room, and DataStore. Presentation maps domain models to UI state. Enables unit tests on JVM without Robolectric for business rules.",
+          "level": "senior"
+        },
+        {
+          "question": "How do WorkManager and coroutines interact?",
+          "answer": "CoroutineWorker implements doWork as suspend for async jobs with retries and constraints. Replaces deprecated AsyncTask patterns for deferrable background work. Constraints express network and battery requirements OS enforces. Idempotent work handles duplicate scheduling after crashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is dependency injection with Hilt at a high level?",
+          "answer": "Hilt generates Dagger components bound to Android classes like Application and Activity. @Inject constructors wire graphs at compile time with fail-fast missing bindings. Scopes align object lifetimes to components. Testing swaps modules with test installs for fakes.",
+          "level": "junior"
+        },
+        {
+          "question": "How optimize APK size when using Kotlin reflection-heavy libraries?",
+          "answer": "Enable R8 shrinking and keep rules for serialized models and DI generated classes. Avoid shipping unused kotlinx serialization or Ktor features via proguard consumer rules. App Bundle splits deliver language and density slices. Audit dependency tree for duplicate JSON parsers.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Activity lifecycle?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve Fragment lifecycle in Android?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see ViewModel in a Android codebase?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply LiveData correctly in Android?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve StateFlow UI in Android?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on Jetpack Compose in Android architecture?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize recomposition across a large Android codebase?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve remember in Android?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see LaunchedEffect in a Android codebase?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "senior"
+        },
+        {
+          "question": "What is Navigation component?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does Hilt DI matter for Android work?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use Room database?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply DataStore correctly in Android?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does WorkManager matter for Android work?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on CoroutineWorker in Android architecture?",
+          "answer": "Kotlin coroutines structure concurrent work with scopes, jobs, and cooperative cancellation. Pick dispatchers for CPU, IO, or UI work and never block the UI thread. Flow models cold streams; StateFlow and SharedFlow expose hot state to collectors.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply Retrofit correctly in Android?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve OkHttp in Android?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see Coil in a Android codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize Permissions across a large Android codebase?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve background limits in Android?",
+          "answer": "Android components have lifecycle boundaries; hold UI state in ViewModel and collect flows with lifecycle-aware scopes. Inject dependencies with Hilt and defer heavy work to WorkManager when constraints allow. Avoid leaking Context; use application-scoped objects for long-running tasks.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Backend",
+      "description": "Server-side Kotlin, HTTP services, persistence, and Spring Boot integration.",
+      "cards": [
+        {
+          "question": "How does Ktor structure an HTTP application?",
+          "answer": "Modules install features like ContentNegotiation, Authentication, and Routing. Routes define verbs and paths with suspend handlers. ApplicationEngine embeds Netty or CIO for async IO. Configuration loads from environment for twelve-factor deployment.",
+          "level": "junior"
+        },
+        {
+          "question": "What advantages does Spring Boot with Kotlin offer?",
+          "answer": "Null-safe domain models reduce defensive checks in services. Data classes map cleanly to DTOs with Jackson Kotlin module. Coroutines integrate via suspend controllers in Spring MVC 6+. Extension functions simplify configuration DSLs while keeping Java interop for libraries.",
+          "level": "senior"
+        },
+        {
+          "question": "How validate request bodies in Ktor or Spring?",
+          "answer": "Ktor uses receive<Type>() with kotlinx.serialization or Jackson and returns 400 on failure. Spring uses @Valid with Jakarta validation annotations on DTOs. Centralize error mapping to problem+json responses. Never trust client validation alone for security rules.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain transaction boundaries with Spring @Transactional and coroutines.",
+          "answer": "Transactional proxies bind to thread-local sessions on blocking calls. Suspend functions need spring-data coroutine support or run blocking repos on IO dispatcher. Opening transactions across await points risks connection pool exhaustion. Keep transactions short around repository calls only.",
+          "level": "junior"
+        },
+        {
+          "question": "How serialize JSON with kotlinx.serialization versus Jackson?",
+          "answer": "kotlinx.serialization is compile-time plugin generating serializers with multiplatform support. Jackson is runtime reflection with mature ecosystem on JVM Spring apps. Choose kotlinx for KMP shared models; Jackson when integrating legacy Spring stacks. Explicit @Serializable handles versioning and unknown keys policy.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Exposed ORM role in Kotlin backends?",
+          "answer": "Exposed offers type-safe DSL and DAO APIs over JDBC in pure Kotlin. Transactions wrap blocks with rollback on exceptions. Works well in Ktor services without JPA magic. For complex graphs JPA/Hibernate may still be chosen in Spring shops.",
+          "level": "senior"
+        },
+        {
+          "question": "How implement authentication in Ktor?",
+          "answer": "Install Authentication with JWT, OAuth, or basic providers validating credentials per route. Challenge and authorize pipelines separate concerns. Store secrets in environment variables loaded at startup. Combine with role-based Route selectors for admin endpoints.",
+          "level": "middle"
+        },
+        {
+          "question": "What metrics and tracing hooks suit Kotlin microservices?",
+          "answer": "Micrometer integrates with Spring Boot Actuator exposing Prometheus metrics. OpenTelemetry Java agent traces Ktor and Spring HTTP with minimal code. Structured logging with MDC carries trace ids across coroutine context elements. Monitor connection pool saturation and GC pauses on JVM.",
+          "level": "senior"
+        },
+        {
+          "question": "How configure connection pools for database access?",
+          "answer": "HikariCP sizes pools from expected concurrency and DB limits, not thread count alone. Coroutines increase logical concurrency; pool must bound simultaneous connections. Timeouts prevent hung queries from starving pool. Health checks validate connectivity on startup and periodically.",
+          "level": "middle"
+        },
+        {
+          "question": "What testing approach fits Kotlin HTTP services?",
+          "answer": "Ktor testApplication starts embedded server for end-to-end route tests. Spring MockMvc or WebTestClient hits controllers without full network. Testcontainers spins real Postgres for repository integration tests. Use fixtures builders in Kotlin for readable Given-When-Then.",
+          "level": "senior"
+        },
+        {
+          "question": "What is Ktor routing?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to Ktor plugins, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see ContentNegotiation in a Backend codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Authentication JWT?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve Spring Boot Kotlin in Backend?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on Spring WebFlux in Backend architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply suspend controllers correctly in Backend?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to JPA repositories, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use Exposed ORM?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize Flyway migrations across a large Backend codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve HikariCP in Backend?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use transaction boundaries?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is validation?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does DTO mapping matter for Backend work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see kotlinx.serialization in a Backend codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize Jackson module across a large Backend codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does OpenAPI matter for Backend work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on Micrometer metrics in Backend architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is Actuator endpoints?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does OAuth2 resource server matter for Backend work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Interop & JVM",
+      "description": "Java interop, Gradle builds, multiplatform basics, and JVM performance habits.",
+      "cards": [
+        {
+          "question": "What is platform type when calling Java from Kotlin?",
+          "answer": "Java declarations without nullability annotations become flexible platform types. Kotlin compiler allows assignment to nullable or non-null Kotlin types at your risk. Add @Nullable/@NotNull in Java or wrap APIs with Kotlin extensions. NPE can still occur at Java boundaries if mismatched.",
+          "level": "junior"
+        },
+        {
+          "question": "How do @JvmStatic and @JvmOverloads help Java callers?",
+          "answer": "@JvmStatic exposes companion methods as static on the Java side. @JvmOverloads generates overloads for default parameter values Java lacks. @JvmName avoids signature clashes from erased generics. Essential for SDKs consumed by mixed Java/Kotlin codebases.",
+          "level": "junior"
+        },
+        {
+          "question": "When use fun interface SAM conversions?",
+          "answer": "Kotlin lambdas convert to Java functional interfaces automatically when marked fun interface. Simplifies Android listeners and executor callbacks. For multiple abstract methods Java interfaces need explicit object expressions. Kotlin 1.4+ fun interface reduces boilerplate for single-method APIs.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Kotlin Multiplatform commonMain purpose?",
+          "answer": "Shared business logic compiles to JVM, JS, and native targets from one source set. expect/actual declarations abstract platform-specific APIs. Reduces duplicate models between Android and iOS when teams invest in KMP. Not all libraries are multiplatform-ready; check dependency support.",
+          "level": "middle"
+        },
+        {
+          "question": "How Gradle Kotlin DSL improves build scripts?",
+          "answer": "build.gradle.kts offers type-safe accessors and IDE completion versus Groovy DSL. Version catalogs centralize dependency coordinates in libs.versions.toml. Shared convention plugins enforce module standards. Same Gradle engine runs both DSL styles during migration.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain JVM default method conflicts with Kotlin inheritance.",
+          "answer": "Java 8 interface defaults can clash when Kotlin classes implement multiple interfaces. Explicit override required in Kotlin to resolve diamond cases. @JvmDefaultWithoutCompatibility modes affect bytecode generation for older Android desugaring. Audit API surfaces when mixing Java 8 libraries.",
+          "level": "senior"
+        },
+        {
+          "question": "What causes Kotlin reflection performance cost?",
+          "answer": "KClass and callable references traverse metadata and box values. Prefer codegen with KSP or inline reified at hot paths. Serialization frameworks cache reflectively gathered adapters on first use. Benchmark startup impact on Android cold start when using heavy reflection.",
+          "level": "senior"
+        },
+        {
+          "question": "How tune JVM heap for Kotlin Spring services?",
+          "answer": "Set initial and max heap based on container limits leaving headroom for metaspace and native threads. G1GC is default on modern JDK; monitor pause times with GC logs. Avoid massive object graphs in session caches. Use virtual threads on JDK 21 for blocking IO heavy workloads.",
+          "level": "junior"
+        },
+        {
+          "question": "What is detekt and ktlint in Kotlin projects?",
+          "answer": "Static analysis enforces complexity limits, naming, and coroutine pitfalls. ktlint formats code to official style like prettier for Kotlin. Run in CI to block drift. Baseline files grandfather legacy issues during adoption.",
+          "level": "junior"
+        },
+        {
+          "question": "How publish a Kotlin library for Java consumers?",
+          "answer": "Ship JVM jar with Dokka-generated docs and explicit API files if using library authors plugin. Keep public API Java-friendly with annotations and avoid internal inline-only utilities leaking. Semantic versioning applies to ABI when exposing inline or inline value classes changes mangling.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Java interop?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does platform types matter for Interop & JVM work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see JvmStatic in a Interop & JVM codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply JvmOverloads correctly in Interop & JVM?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve JvmName in Interop & JVM?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on SAM conversions in Interop & JVM architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize default methods conflict across a large Interop & JVM codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does Kotlin from Java matter for Interop & JVM work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see nullability annotations in a Interop & JVM codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is static facades?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve companion for Java in Interop & JVM?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see properties getters in a Interop & JVM codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply file facades correctly in Interop & JVM?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve module-info in Interop & JVM?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see JPMS in a Interop & JVM codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply records interop correctly in Interop & JVM?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does Gradle Kotlin DSL matter for Interop & JVM work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use version catalogs?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply multiplatform commonMain correctly in Interop & JVM?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does expect actual matter for Interop & JVM work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Testing & Architecture",
+      "description": "Testing stacks, modularization, and architecture patterns for Kotlin apps.",
+      "cards": [
+        {
+          "question": "What is JUnit5?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to Kotest, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use MockK?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is fakes versus mocks?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to test fixtures, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use Given When Then?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is TDD Kotlin?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does clean architecture layers matter for Testing & Architecture work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on use cases in Testing & Architecture architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is repository pattern?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to MVI, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see MVVM in a Testing & Architecture codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply UDF correctly in Testing & Architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve domain models in Testing & Architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use presentation models?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is mapper functions?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve dependency inversion in Testing & Architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use modularization?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is feature modules?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does convention plugins matter for Testing & Architecture work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see static analysis CI in a Testing & Architecture codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply mutation testing correctly in Testing & Architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to snapshot testing, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use property testing?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is architecture decision records?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve code review focus in Testing & Architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use API design internal?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply error modeling sealed correctly in Testing & Architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve logging policy in Testing & Architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use feature flags?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        }
+      ]
+    }
+  ]
+}

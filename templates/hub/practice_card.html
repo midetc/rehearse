@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Practice · Rehearse</title>{% endblock %}
+
+{% block content %}
+  <p class="page-kicker">
+    <a href="{% url 'hub:practice-menu' %}">Exit</a>
+  </p>
+  <p class="progress">Card {{ position }} of {{ total }}</p>
+  <h1 class="question">{{ card.question }}</h1>
+  <p class="meta">{{ card.get_status_display }} · {{ card.get_level_display }}</p>
+
+  <details class="reveal">
+    <summary>
+      <span class="reveal-label reveal-label-show">Show answer</span>
+      <span class="reveal-label reveal-label-hide">Hide answer</span>
+    </summary>
+    <p>{{ card.answer }}</p>
+  </details>
+
+  <form method="post" action="{% url 'hub:card-set-status' card.pk %}" class="actions-row">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="practice">
+    <input type="hidden" name="mode" value="{{ mode }}">
+    <button type="submit" name="action" value="know" class="btn-ok">Know</button>
+    <button type="submit" name="action" value="dont_know" class="btn-danger-soft">Don't know</button>
+  </form>
+{% endblock %}

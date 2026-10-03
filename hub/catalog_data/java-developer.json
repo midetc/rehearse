@@ -1,0 +1,1555 @@
+{
+  "slug": "java-developer",
+  "name": "Java Developer",
+  "description": "Interview prep for JVM backend, Spring, concurrency, and enterprise systems.",
+  "categories": [
+    {
+      "name": "Java Core",
+      "description": "Types, JVM basics, exceptions, and modern Java language features.",
+      "cards": [
+        {
+          "question": "What is the difference between JDK, JRE, and JVM?",
+          "answer": "The JVM executes bytecode with platform-specific implementations. The JRE bundled runtime libraries plus JVM for running applications. The JDK adds development tools like javac, jar, and jdb for building software. Production servers often ship a JRE or modular runtime; developers use the full JDK.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain == versus equals() for objects.",
+          "answer": "== compares references for objects and values for primitives. equals() compares logical equality when properly overridden, often field-by-field. Always override hashCode when overriding equals to keep HashMap contracts. Use Objects.equals for null-safe field comparisons in implementations.",
+          "level": "junior"
+        },
+        {
+          "question": "What are primitives versus wrapper types?",
+          "answer": "Primitives (int, double, boolean) are unboxed values stored efficiently on the stack or inside objects. Wrappers (Integer, Double) are objects usable in generics and collections. Autoboxing converts between them implicitly with small caching for some integers. Null wrapper fields can cause NPE on unboxing if not guarded.",
+          "level": "middle"
+        },
+        {
+          "question": "How does Java handle exception handling best practices?",
+          "answer": "Checked exceptions force handling at compile time for recoverable conditions; unchecked extend RuntimeException for programming errors. Catch specific types, add context, and rethrow or wrap without swallowing. try-with-resources closes AutoCloseable reliably. Do not use exceptions for normal control flow; they are expensive and obscure intent.",
+          "level": "senior"
+        },
+        {
+          "question": "What changed with records in modern Java?",
+          "answer": "Records are immutable data carriers with generated constructor, accessors, equals, hashCode, and toString. They reduce boilerplate for DTOs and value types. Compact constructors validate invariants. They are final and cannot extend other classes but can implement interfaces.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain interfaces versus abstract classes in Java.",
+          "answer": "Interfaces define capabilities with abstract and default methods; a class can implement multiple. Abstract classes share state and partial implementation with single inheritance. Default methods on interfaces evolve APIs without breaking implementers. Choose interfaces for roles; abstract classes when shared fields and template methods matter.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the purpose of Optional and common misuse?",
+          "answer": "Optional models absent values in return types to avoid null returns in streams-friendly APIs. Do not use it for fields, parameters, or collections routinely. Avoid Optional.get without isPresent; prefer map, orElse, or orElseThrow. It documents intent but does not remove the need for domain validation.",
+          "level": "junior"
+        },
+        {
+          "question": "How do sealed classes help modeling?",
+          "answer": "Sealed classes restrict which types may extend them, enabling exhaustive switch with pattern matching. They express closed hierarchies like payment types or AST nodes safely. Permitted subclasses must be accessible modules. Combine with records for algebraic-style domain models.",
+          "level": "junior"
+        },
+        {
+          "question": "What are modules (JPMS) and when do they matter?",
+          "answer": "The Java Platform Module System encapsulates packages and declares dependencies in module-info.java. Strong encapsulation hides internal APIs from reflective access unless opened. Large applications and libraries use modules for clear boundaries; many Spring apps still run on classpath. Understand exports and requires when integrating modular JDK internals.",
+          "level": "senior"
+        },
+        {
+          "question": "How does garbage collection affect application tuning?",
+          "answer": "GC reclaims unreachable heap objects; pauses depend on collector choice and heap pressure. G1 is default for balanced latency and throughput; ZGC and Shenandoah target low pause times on large heaps. Avoid premature optimization; measure with GC logs and metrics first. Object churn and large young generation promotions often dominate latency issues.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does JDK JRE JVM introduce in Java Core?",
+          "answer": "Jdk jre jvm is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is == versus equals and when do you use it?",
+          "answer": "== versus equals is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use primitives versus wrappers correctly in Java Core?",
+          "answer": "Primitives versus wrappers is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is exception handling and when do you use it?",
+          "answer": "Exception handling is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with records in Java Core?",
+          "answer": "Records are compact immutable carriers in modern Java. Sealed hierarchies enable exhaustive switches with pattern matching. Optional belongs in return types, not fields or parameters everywhere.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use interfaces versus abstract classes correctly in Java Core?",
+          "answer": "Interfaces versus abstract classes is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with Optional misuse in Java Core?",
+          "answer": "Records are compact immutable carriers in modern Java. Sealed hierarchies enable exhaustive switches with pattern matching. Optional belongs in return types, not fields or parameters everywhere.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain sealed classes in the context of Java Core.",
+          "answer": "Records are compact immutable carriers in modern Java. Sealed hierarchies enable exhaustive switches with pattern matching. Optional belongs in return types, not fields or parameters everywhere.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use JPMS modules correctly in Java Core?",
+          "answer": "Jpms modules is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is garbage collection and when do you use it?",
+          "answer": "GC reclaims unreachable heap objects; pauses depend on collector and heap pressure. Tune after measuring GC logs and allocation rates. Reduce churn by reusing buffers and avoiding accidental object creation in hot loops.",
+          "level": "junior"
+        },
+        {
+          "question": "What is String immutability and when do you use it?",
+          "answer": "String immutability is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does StringBuilder introduce in Java Core?",
+          "answer": "Stringbuilder is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain autoboxing pitfalls in the context of Java Core.",
+          "answer": "Autoboxing pitfalls is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with try-with-resources in Java Core?",
+          "answer": "Try-with-resources is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use custom exceptions correctly in Java Core?",
+          "answer": "Custom exceptions is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use exception chaining correctly in Java Core?",
+          "answer": "Exception chaining is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around var keyword at scale in Java Core?",
+          "answer": "Var keyword is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is switch expressions and when do you use it?",
+          "answer": "Switch expressions is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with pattern matching in Java Core?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain text blocks in the context of Java Core.",
+          "answer": "Text blocks is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around Object methods at scale in Java Core?",
+          "answer": "Object methods is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is clone contract and when do you use it?",
+          "answer": "Clone contract is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with finalize deprecation in Java Core?",
+          "answer": "Finalize deprecation is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Cleaner API and when do you use it?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use enum types correctly in Java Core?",
+          "answer": "Enum types is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with enum methods in Java Core?",
+          "answer": "Enum methods is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain annotations in the context of Java Core.",
+          "answer": "Annotations is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use reflection basics correctly in Java Core?",
+          "answer": "Reflection basics is a practical Java Core topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "Collections & Generics",
+      "description": "Collections framework, streams, generics, and choosing APIs.",
+      "cards": [
+        {
+          "question": "When do you use ArrayList versus LinkedList?",
+          "answer": "ArrayList offers O(1) indexed access and amortized append with contiguous storage. LinkedList offers cheap inserts at known iterators but poor cache locality and no random access. Almost always prefer ArrayList unless you have measured deque operations at both ends with known iterators. Vector is legacy synchronized; use concurrent structures instead.",
+          "level": "middle"
+        },
+        {
+          "question": "How do HashMap and ConcurrentHashMap differ?",
+          "answer": "HashMap is not thread-safe; external sync or single-thread use required. ConcurrentHashMap supports concurrent reads and scoped writes with striped buckets or nodes. It does not lock the entire map on get. Null keys and values are disallowed in ConcurrentHashMap. Choose based on concurrency needs, not habit.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the contract between equals and hashCode?",
+          "answer": "Equal objects must have equal hash codes; unequal objects may collide but should distribute well. Breaking the contract breaks HashMap and HashSet lookups silently. Use the same fields in both methods, preferably via Objects.hash. IDE generation is fine if fields are stable.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain generics wildcards: ? extends T versus ? super T.",
+          "answer": "PECS: Producer Extends, Consumer Super. ? extends T reads covariant sources safely as T unknown subtype. ? super T accepts writes of T into contravariant sinks. Unbounded ? is read-only for arbitrary types. Wildcards improve API flexibility beyond simple List<T> parameters.",
+          "level": "senior"
+        },
+        {
+          "question": "What is type erasure and what limitations does it impose?",
+          "answer": "Generic type parameters are erased at compile time to raw types or bounds for bytecode compatibility. You cannot create new T[], overload solely by erasure, or use instanceof on parameterized types except raw checks. Reified generics exist for primitives in arrays but not for generic parameters at runtime. Workarounds include Class tokens and typed references.",
+          "level": "junior"
+        },
+        {
+          "question": "When should you use EnumSet or EnumMap?",
+          "answer": "They are compact, fast structures backed by arrays indexed by enum ordinal for enum keys or values. Null keys are rejected; iteration order follows enum declaration. Prefer them over HashSet or HashMap when keys are enums. They express domain constraints clearly in APIs.",
+          "level": "senior"
+        },
+        {
+          "question": "How do Java streams differ from loops?",
+          "answer": "Streams express declarative pipelines with map, filter, and reduce, often enabling lazy evaluation and easy parallelism. They shine for transformations on collections with clear data flow. Imperative loops remain better for complex control flow, early breaks with side effects, or indexed access. Parallel streams need thread-safe sources and measurable CPU work.",
+          "level": "middle"
+        },
+        {
+          "question": "What are Comparable versus Comparator?",
+          "answer": "Comparable defines natural ordering via compareTo inside the class, used by sort without extra args. Comparator is external strategy for multiple orders or third-party classes. Comparators compose with thenComparing for multi-field sorts. Consistent ordering must align with equals unless documented otherwise for sorted sets.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you choose Set implementations?",
+          "answer": "HashSet gives average O(1) add and contains with no order. LinkedHashSet preserves insertion order with slightly more memory. TreeSet keeps sorted order with O(log n) operations via red-black tree. Pick based on ordering needs and concurrency; CopyOnWriteArraySet suits small rarely mutated concurrent sets.",
+          "level": "middle"
+        },
+        {
+          "question": "What pitfalls exist with mutable keys in HashMap?",
+          "answer": "If a key hash changes while stored, lookup buckets break and entries appear lost. Never mutate fields participating in equals or hashCode after insertion. Use immutable keys like String or records with final fields. Defensive copies on put protect against external mutation of key objects.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around ArrayList versus LinkedList at scale in Collections & Generics?",
+          "answer": "Arraylist versus linkedlist is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you design systems around HashMap internals at scale in Collections & Generics?",
+          "answer": "Hash maps offer average O(1) lookup with a good hash function and load factor control. Keys need consistent equals and hashCode or __hash__ and __eq__. Resizing rehashes buckets when load grows.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with ConcurrentHashMap in Collections & Generics?",
+          "answer": "Hash maps offer average O(1) lookup with a good hash function and load factor control. Keys need consistent equals and hashCode or __hash__ and __eq__. Resizing rehashes buckets when load grows.",
+          "level": "middle"
+        },
+        {
+          "question": "What is equals hashCode and when do you use it?",
+          "answer": "Equals hashcode is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does generics wildcards PECS introduce in Collections & Generics?",
+          "answer": "PECS: Producer Extends, Consumer Super. ? extends T reads covariant sources; ? super T writes into contravariant sinks. Erasure removes type parameters at runtime; plan APIs accordingly.",
+          "level": "senior"
+        },
+        {
+          "question": "What is type erasure and when do you use it?",
+          "answer": "Type erasure is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around EnumSet EnumMap at scale in Collections & Generics?",
+          "answer": "Enumset enummap is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is streams versus loops and when do you use it?",
+          "answer": "Java streams express declarative pipelines over collections with lazy intermediate ops. Use for transforms; avoid side effects inside stream callbacks. Parallel streams need thread-safe sources and enough CPU work to pay off.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Comparable Comparator and when do you use it?",
+          "answer": "Comparable comparator is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain Set implementations in the context of Collections & Generics.",
+          "answer": "Set implementations is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use mutable map keys correctly in Collections & Generics?",
+          "answer": "Mutable map keys is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is TreeMap ordering and when do you use it?",
+          "answer": "Treemap ordering is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is LinkedHashMap order and when do you use it?",
+          "answer": "Hash maps offer average O(1) lookup with a good hash function and load factor control. Keys need consistent equals and hashCode or __hash__ and __eq__. Resizing rehashes buckets when load grows.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use WeakHashMap correctly in Collections & Generics?",
+          "answer": "Hash maps offer average O(1) lookup with a good hash function and load factor control. Keys need consistent equals and hashCode or __hash__ and __eq__. Resizing rehashes buckets when load grows.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use IdentityHashMap correctly in Collections & Generics?",
+          "answer": "Hash maps offer average O(1) lookup with a good hash function and load factor control. Keys need consistent equals and hashCode or __hash__ and __eq__. Resizing rehashes buckets when load grows.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does CopyOnWriteArrayList introduce in Collections & Generics?",
+          "answer": "Copyonwritearraylist is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with BlockingQueue in Collections & Generics?",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around PriorityQueue at scale in Collections & Generics?",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "senior"
+        },
+        {
+          "question": "What is Deque ArrayDeque and when do you use it?",
+          "answer": "collections.deque gives O(1) append/pop at both ends; lists are costly at the front. heapq implements a min-heap for priority queues; bisect maintains sorted lists. Pick APIs matching required operations.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Iterable forEach and when do you use it?",
+          "answer": "Iterable foreach is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with Stream map filter in Collections & Generics?",
+          "answer": "Java streams express declarative pipelines over collections with lazy intermediate ops. Use for transforms; avoid side effects inside stream callbacks. Parallel streams need thread-safe sources and enough CPU work to pay off.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain collectors groupingBy in the context of Collections & Generics.",
+          "answer": "Collectors groupingby is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use Optional in streams correctly in Collections & Generics?",
+          "answer": "Java streams express declarative pipelines over collections with lazy intermediate ops. Use for transforms; avoid side effects inside stream callbacks. Parallel streams need thread-safe sources and enough CPU work to pay off.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with parallel streams in Collections & Generics?",
+          "answer": "Java streams express declarative pipelines over collections with lazy intermediate ops. Use for transforms; avoid side effects inside stream callbacks. Parallel streams need thread-safe sources and enough CPU work to pay off.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with Spliterator in Collections & Generics?",
+          "answer": "Spliterator is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with Iterator fail-fast in Collections & Generics?",
+          "answer": "Iterator fail-fast is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around ConcurrentModificationException at scale in Collections & Generics?",
+          "answer": "Concurrentmodificationexception is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use List.of Map.of correctly in Collections & Generics?",
+          "answer": "List of map of is a practical Collections & Generics topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "OOP & Patterns",
+      "description": "Inheritance, SOLID, creational and behavioral patterns on the JVM.",
+      "cards": [
+        {
+          "question": "What is inheritance versus composition and when do you use it?",
+          "answer": "Inheritance versus composition is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with SOLID single responsibility in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does open closed principle introduce in OOP & Patterns?",
+          "answer": "Open closed principle is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with Liskov substitution in OOP & Patterns?",
+          "answer": "Liskov substitution is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around interface segregation at scale in OOP & Patterns?",
+          "answer": "Interface segregation is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does dependency inversion introduce in OOP & Patterns?",
+          "answer": "Dependency inversion is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use singleton pitfalls correctly in OOP & Patterns?",
+          "answer": "Singleton pitfalls is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around factory method at scale in OOP & Patterns?",
+          "answer": "Factory method is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain abstract factory in the context of OOP & Patterns.",
+          "answer": "Abstract factory is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around builder pattern at scale in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with prototype pattern in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around adapter pattern at scale in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does facade pattern introduce in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with decorator pattern in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use proxy pattern correctly in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with strategy pattern in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around observer pattern at scale in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain template method in the context of OOP & Patterns.",
+          "answer": "Template method is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around command pattern at scale in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use state pattern correctly in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around visitor pattern at scale in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with repository pattern in OOP & Patterns?",
+          "answer": "Patterns encode recurring design solutions; SOLID reduces coupling and eases change. Prefer composition when behavior varies; inheritance for true subtype polymorphism. Keep domain rules out of controllers and templates.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does DTO mapping introduce in OOP & Patterns?",
+          "answer": "Dto mapping is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with domain model in OOP & Patterns?",
+          "answer": "Domain model is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain anemic domain model in the context of OOP & Patterns.",
+          "answer": "Anemic domain model is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use value objects correctly in OOP & Patterns?",
+          "answer": "Value objects is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does aggregate roots introduce in OOP & Patterns?",
+          "answer": "Aggregate roots is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is bounded contexts and when do you use it?",
+          "answer": "Bounded contexts is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use anti-corruption layer correctly in OOP & Patterns?",
+          "answer": "Anti-corruption layer is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with event notification in OOP & Patterns?",
+          "answer": "Event notification is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is double dispatch and when do you use it?",
+          "answer": "Double dispatch is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does law of demeter introduce in OOP & Patterns?",
+          "answer": "Law of demeter is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use tell don't ask correctly in OOP & Patterns?",
+          "answer": "Tell don't ask is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is composition root and when do you use it?",
+          "answer": "Composition root is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around package by feature at scale in OOP & Patterns?",
+          "answer": "Package by feature is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with immutable objects in OOP & Patterns?",
+          "answer": "Immutable objects is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use defensive copying correctly in OOP & Patterns?",
+          "answer": "Defensive copying is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is equals contract and when do you use it?",
+          "answer": "Equals contract is a practical OOP & Patterns topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Concurrency & JVM",
+      "description": "Threads, memory model, executors, and JVM tuning.",
+      "cards": [
+        {
+          "question": "What is the difference between Runnable and Callable?",
+          "answer": "Runnable runs void work and cannot throw checked exceptions to the caller without wrapping. Callable returns a value and throws checked exceptions, used with ExecutorService submit. Futures track Callable results asynchronously. Prefer Callable when the task produces a result or needs declared exceptions.",
+          "level": "junior"
+        },
+        {
+          "question": "How does synchronized work and when is it insufficient?",
+          "answer": "synchronized acquires the intrinsic lock on an object for blocks or methods, ensuring mutual exclusion and visibility. Coarse locking can serialize throughput and risk deadlocks if lock order varies. java.util.concurrent locks offer tryLock, timeouts, and fairness. Higher-level constructs like ConcurrentHashMap reduce hand-rolled locking.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain volatile and happens-before.",
+          "answer": "volatile ensures reads and writes go to main memory and establishes happens-before edges between threads. It does not compound multiple operations atomically. Use it for flags and single-field publication patterns. For counters, use AtomicInteger or LongAdder instead of volatile int with ++.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a thread pool and why not create threads per request?",
+          "answer": "ExecutorService reuses worker threads bounded by a pool size, queuing excess tasks. Unbounded thread creation exhausts memory and context-switches the OS. Configure pool sizes from CPU cores and blocking factor for IO workloads. Reject policies define behavior when the queue is full: abort, caller runs, or discard.",
+          "level": "junior"
+        },
+        {
+          "question": "What are virtual threads in Java and their benefit?",
+          "answer": "Virtual threads are lightweight tasks scheduled on carrier platform threads by the JVM. They simplify blocking-style code at high concurrency without thread pool sizing puzzles for IO. Pinning to synchronized blocks or native code can reduce scalability until avoided. They complement reactive stacks where code clarity matters more than raw event loops.",
+          "level": "junior"
+        },
+        {
+          "question": "Describe deadlock and how to prevent it.",
+          "answer": "Deadlock is circular wait where threads hold locks each other needs. Prevent by global lock ordering, timeouts with tryLock, or reducing lock granularity. Detect with thread dumps showing blocked chains. Design lock-free paths with concurrent collections where possible.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the Java Memory Model visibility problem?",
+          "answer": "Without synchronization, one thread may not see another thread writes due to CPU caches and reordering. synchronized and volatile provide visibility guarantees via happens-before. Final fields are safely published after construction. Incorrect publication of partially constructed objects is a subtle bug in double-checked locking without volatile.",
+          "level": "middle"
+        },
+        {
+          "question": "When do you use CompletableFuture?",
+          "answer": "CompletableFuture composes async pipelines with thenApply, thenCompose, and allOf without nested callbacks. SupplyAsync runs tasks on an executor you control. Exceptionally handles failures in the chain. Use for parallel external calls with timeouts; avoid blocking get on reactive request threads without bounded waits.",
+          "level": "senior"
+        },
+        {
+          "question": "What is ThreadLocal and what are leak risks?",
+          "answer": "ThreadLocal stores per-thread values, useful for request context in servlet threads before async propagation. Failing to remove values in pooled threads retains large objects across requests. Prefer explicit context objects passed down the stack in new code. In thread pools, always clear ThreadLocal in finally blocks.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you profile CPU and memory issues on the JVM?",
+          "answer": "Use JDK tools like async-profiler, JFR, and heap dumps via jcmd. Correlate GC logs with latency spikes. Dominator trees in MAT find retention paths for leaks. Optimize hot methods shown in profiles rather than guessing. Load test with production-like data sizes to reveal realistic bottlenecks.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain Runnable Callable in the context of Concurrency & JVM.",
+          "answer": "Runnable callable is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is synchronized blocks and when do you use it?",
+          "answer": "Synchronized blocks is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does volatile happens-before introduce in Concurrency & JVM?",
+          "answer": "volatile ensures visibility of writes across threads and forbids certain reorderings. It does not compound operations atomically. Use atomics or locks for read-modify-write sequences.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with thread pools in Concurrency & JVM?",
+          "answer": "Size pools from cores and blocking factors; bound queues to apply backpressure. Use structured concurrency patterns and clear lock ordering. Profile under load instead of guessing contention.",
+          "level": "middle"
+        },
+        {
+          "question": "What is virtual threads and when do you use it?",
+          "answer": "Virtual threads mount many tasks on few carrier threads for blocking-style code at scale. Pinning happens when holding monitors or native code too long. Prefer them for IO-heavy services with clear blocking boundaries.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain deadlock prevention in the context of Concurrency & JVM.",
+          "answer": "Deadlock prevention is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use Java Memory Model correctly in Concurrency & JVM?",
+          "answer": "Java memory model is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use CompletableFuture correctly in Concurrency & JVM?",
+          "answer": "Completablefuture is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does ThreadLocal leaks introduce in Concurrency & JVM?",
+          "answer": "Size pools from cores and blocking factors; bound queues to apply backpressure. Use structured concurrency patterns and clear lock ordering. Profile under load instead of guessing contention.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with JFR profiling in Concurrency & JVM?",
+          "answer": "Jfr profiling is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is ExecutorService and when do you use it?",
+          "answer": "Size pools from cores and blocking factors; bound queues to apply backpressure. Use structured concurrency patterns and clear lock ordering. Profile under load instead of guessing contention.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does ForkJoinPool introduce in Concurrency & JVM?",
+          "answer": "INNER JOIN keeps matching rows; OUTER JOINs preserve a driving table with nulls for misses. Filter early and index join keys. ORMs still need review for N+1 and cartesian products.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with CountDownLatch in Concurrency & JVM?",
+          "answer": "Countdownlatch is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use CyclicBarrier correctly in Concurrency & JVM?",
+          "answer": "Cyclicbarrier is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use Phaser correctly in Concurrency & JVM?",
+          "answer": "Phaser is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use Semaphore correctly in Concurrency & JVM?",
+          "answer": "Semaphore is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does ReentrantLock introduce in Concurrency & JVM?",
+          "answer": "Reentrantlock is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain ReadWriteLock in the context of Concurrency & JVM.",
+          "answer": "Readwritelock is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does StampedLock introduce in Concurrency & JVM?",
+          "answer": "Stampedlock is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is atomic classes and when do you use it?",
+          "answer": "Atomic classes is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use LongAdder correctly in Concurrency & JVM?",
+          "answer": "Longadder is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around ConcurrentLinkedQueue at scale in Concurrency & JVM?",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "senior"
+        },
+        {
+          "question": "What is BlockingQueue put take and when do you use it?",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "junior"
+        },
+        {
+          "question": "What is future get timeout and when do you use it?",
+          "answer": "Future get timeout is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use structuredTaskScope correctly in Concurrency & JVM?",
+          "answer": "Structuredtaskscope is a practical Concurrency & JVM topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What bugs or performance issues involve pinning virtual threads in Concurrency & JVM?",
+          "answer": "Virtual threads are lightweight tasks mounted on carrier platform threads. They suit blocking IO at huge concurrency with familiar code. Avoid pinning by minimizing synchronized blocks and native holds on virtual threads.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around GC tuning G1 at scale in Concurrency & JVM?",
+          "answer": "GC reclaims unreachable heap objects; pauses depend on collector and heap pressure. Tune after measuring GC logs and allocation rates. Reduce churn by reusing buffers and avoiding accidental object creation in hot loops.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use ZGC low latency correctly in Concurrency & JVM?",
+          "answer": "GC reclaims unreachable heap objects; pauses depend on collector and heap pressure. Tune after measuring GC logs and allocation rates. Reduce churn by reusing buffers and avoiding accidental object creation in hot loops.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "Spring & Backend",
+      "description": "Spring Boot, DI, REST, security, and typical service layers.",
+      "cards": [
+        {
+          "question": "What is dependency injection in Spring?",
+          "answer": "Spring container creates beans and wires dependencies via constructor, setter, or field injection. Constructor injection is preferred for required immutable collaborators and testability. @Component, @Service, and @Repository mark classes for scanning. Interfaces plus single implementations keep wiring explicit without over-abstraction.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain @Transactional behavior and propagation basics.",
+          "answer": "@Transactional wraps methods in a database transaction with rollback on unchecked exceptions by default. Propagation REQUIRED joins or creates a transaction; REQUIRES_NEW suspends and starts fresh for isolated work. Read-only hints optimize connections for queries. Self-invocation on the same bean bypasses the proxy unless refactored.",
+          "level": "senior"
+        },
+        {
+          "question": "How does Spring Boot auto-configuration work at a high level?",
+          "answer": "Conditional @Configuration classes register beans when classpath and properties match. spring.factories and imports load defaults so apps start with sensible JDBC, web, and actuator setup. Override with your own @Configuration beans or properties. Exclude auto-config when it conflicts, such as multiple datasources without marking one primary.",
+          "level": "junior"
+        },
+        {
+          "question": "What is the difference between JPA and JDBC in Spring apps?",
+          "answer": "JPA maps objects to tables with caching, lazy loading, and JPQL for productivity. JDBC templates offer explicit SQL control and simpler mental models for reporting queries. JPA N+1 and flush timing issues require tuning; JDBC avoids ORM surprises but needs manual mapping. Many projects use JPA for domain CRUD and JDBC for heavy reads.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you secure a Spring REST API?",
+          "answer": "Spring Security configures authentication via JWT, OAuth2 resource server, or session for browser clients. Method security with @PreAuthorize enforces roles on service methods. CSRF is disabled for stateless APIs but enabled for cookie sessions. Centralize exception handling to return 401 versus 403 consistently without leaking user existence.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common REST layering patterns in Spring?",
+          "answer": "Controllers map HTTP to DTOs without business logic. Services orchestrate transactions and domain rules. Repositories encapsulate persistence. MapStruct or manual mappers isolate entity graphs from API contracts. Validation uses Bean Validation annotations on input DTOs with @Valid on controller parameters.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you handle validation errors uniformly?",
+          "answer": "@ControllerAdvice with @ExceptionHandler translates MethodArgumentNotValidException to 400 responses listing field errors. Use problem details or a stable JSON schema for clients. Log server errors with correlation ids separately from client messages. Never return stack traces to external callers.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the purpose of Spring profiles?",
+          "answer": "Profiles activate environment-specific beans and property files like dev, test, and prod. @Profile on @Configuration or @Bean toggles implementations such as mock payment clients locally. spring.profiles.active selects at startup via env or command line. Keep secrets out of committed yaml; inject via environment.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design idempotent POST endpoints?",
+          "answer": "Accept an Idempotency-Key header stored with the response hash until TTL expires. Duplicate keys return the original result without double side effects. Database unique constraints on business keys complement application checks. Transactions ensure key insertion and effect commit atomically.",
+          "level": "senior"
+        },
+        {
+          "question": "What monitoring hooks does Spring Boot provide?",
+          "answer": "Actuator exposes health, metrics, and info endpoints integrated with Micrometer. Custom timers and counters instrument service methods. Health indicators report database and broker readiness for orchestrators. Secure actuator endpoints in production; they reveal internals if left public.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply dependency injection correctly in Spring & Backend?",
+          "answer": "The container constructs objects and injects collaborators, usually via constructor injection in Spring. Constructor injection makes dependencies explicit and eases testing with mocks. Avoid field injection in new code because it hides requirements.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Transactional propagation and when do you use it?",
+          "answer": "Transactions group writes atomically with isolation and durability guarantees from the engine. Keep transactions short to reduce lock time. Application code should define rollback on business rule failure.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use Spring Boot auto-config correctly in Spring & Backend?",
+          "answer": "Spring boot auto-config is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain JPA versus JDBC in the context of Spring & Backend.",
+          "answer": "JPA maps objects to tables with a persistence context tracking changes. Flush sends SQL before queries that need fresh state. Tune fetch joins to avoid N+1 and lazy initialization surprises in APIs.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Spring Security REST and when do you use it?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with REST layering in Spring & Backend?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with validation errors in Spring & Backend?",
+          "answer": "Validation errors is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use Spring profiles correctly in Spring & Backend?",
+          "answer": "Spring profiles is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around idempotent POST at scale in Spring & Backend?",
+          "answer": "Idempotent post is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use Actuator monitoring correctly in Spring & Backend?",
+          "answer": "Actuator monitoring is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does Spring MVC dispatch introduce in Spring & Backend?",
+          "answer": "Spring mvc dispatch is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with RestTemplate WebClient in Spring & Backend?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with OpenAPI springdoc in Spring & Backend?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use CORS configuration correctly in Spring & Backend?",
+          "answer": "Cors configuration is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is OAuth2 resource server and when do you use it?",
+          "answer": "Validate and sanitize at trust boundaries. Use framework middleware for CSRF on cookie sessions; encode output against XSS. For APIs, prefer short-lived tokens, rotation, and least-privilege scopes.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with method security PreAuthorize in Spring & Backend?",
+          "answer": "Method security preauthorize is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is filter chain order and when do you use it?",
+          "answer": "Filter chain order is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain session fixation in the context of Spring & Backend.",
+          "answer": "Session fixation is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use CSRF stateless correctly in Spring & Backend?",
+          "answer": "Validate and sanitize at trust boundaries. Use framework middleware for CSRF on cookie sessions; encode output against XSS. For APIs, prefer short-lived tokens, rotation, and least-privilege scopes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use Bean scopes correctly in Spring & Backend?",
+          "answer": "Bean scopes is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does conditional beans introduce in Spring & Backend?",
+          "answer": "Conditional beans is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with configuration properties in Spring & Backend?",
+          "answer": "Configuration properties is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use Spring events correctly in Spring & Backend?",
+          "answer": "Spring events is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain AOP aspects in the context of Spring & Backend.",
+          "answer": "Aop aspects is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around caching annotations at scale in Spring & Backend?",
+          "answer": "Caching annotations is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does scheduling tasks introduce in Spring & Backend?",
+          "answer": "Scheduling tasks is a practical Spring & Backend topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does retry templates introduce in Spring & Backend?",
+          "answer": "Combine timeouts, bounded retries on idempotent ops, and circuit breakers to stop retry storms. Bulkheads limit blast radius per dependency pool. Measure client-side error budgets, not only server health.",
+          "level": "senior"
+        }
+      ]
+    },
+    {
+      "name": "Persistence & SQL",
+      "description": "JPA, JDBC, transactions, migrations, and SQL performance.",
+      "cards": [
+        {
+          "question": "What are common pitfalls with JPA entity lifecycle in Persistence & SQL?",
+          "answer": "JPA maps objects to tables with a persistence context tracking changes. Flush sends SQL before queries that need fresh state. Tune fetch joins to avoid N+1 and lazy initialization surprises in APIs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is lazy loading and when do you use it?",
+          "answer": "Lazy loading is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is N+1 JPA and when do you use it?",
+          "answer": "N+1 runs one query for a list plus one per row for relations. Fix with eager loading, joins, or batch queries sized to access patterns. Measure query count per HTTP request in development.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use JPQL versus SQL correctly in Persistence & SQL?",
+          "answer": "INNER JOIN keeps matching rows; OUTER JOINs preserve a driving table with nulls for misses. Filter early and index join keys. ORMs still need review for N+1 and cartesian products.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around EntityManager flush at scale in Persistence & SQL?",
+          "answer": "JPA maps objects to tables with a persistence context tracking changes. Flush sends SQL before queries that need fresh state. Tune fetch joins to avoid N+1 and lazy initialization surprises in APIs.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain first level cache in the context of Persistence & SQL.",
+          "answer": "Caches trade freshness for latency; define TTL and invalidation explicitly. Protect against stampedes with single-flight or jittered expiry. Monitor hit ratio and memory eviction behavior.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with second level cache in Persistence & SQL?",
+          "answer": "Caches trade freshness for latency; define TTL and invalidation explicitly. Protect against stampedes with single-flight or jittered expiry. Monitor hit ratio and memory eviction behavior.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Hibernate batching and when do you use it?",
+          "answer": "Hibernate batching is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Flyway migrations and when do you use it?",
+          "answer": "Ship schema changes in expand-contract steps compatible with rolling deploys. Backfill in batches and dual-write when needed. Never rewrite applied migration history in production.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does Liquibase introduce in Persistence & SQL?",
+          "answer": "Liquibase is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use optimistic @Version correctly in Persistence & SQL?",
+          "answer": "Optimistic @version is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does pessimistic lock JPA introduce in Persistence & SQL?",
+          "answer": "JPA maps objects to tables with a persistence context tracking changes. Flush sends SQL before queries that need fresh state. Tune fetch joins to avoid N+1 and lazy initialization surprises in APIs.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain transaction isolation in the context of Persistence & SQL.",
+          "answer": "Transactions group writes atomically with isolation and durability guarantees from the engine. Keep transactions short to reduce lock time. Application code should define rollback on business rule failure.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with read only transactions in Persistence & SQL?",
+          "answer": "Transactions group writes atomically with isolation and durability guarantees from the engine. Keep transactions short to reduce lock time. Application code should define rollback on business rule failure.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around connection pool Hikari at scale in Persistence & SQL?",
+          "answer": "Connection pool hikari is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use statement caching correctly in Persistence & SQL?",
+          "answer": "Statement caching is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is JDBC PreparedStatement and when do you use it?",
+          "answer": "Jdbc preparedstatement is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use ResultSet mapping correctly in Persistence & SQL?",
+          "answer": "Resultset mapping is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around RowMapper at scale in Persistence & SQL?",
+          "answer": "Rowmapper is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is JdbcTemplate and when do you use it?",
+          "answer": "Jdbctemplate is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does database indexes introduce in Persistence & SQL?",
+          "answer": "Indexes speed filters and joins on matching columns at the cost of write overhead and storage. Use EXPLAIN to verify the planner uses the expected index. Composite indexes follow left-prefix rules for multi-column queries.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does covering indexes introduce in Persistence & SQL?",
+          "answer": "Indexes speed filters and joins on matching columns at the cost of write overhead and storage. Use EXPLAIN to verify the planner uses the expected index. Composite indexes follow left-prefix rules for multi-column queries.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain query plans in the context of Persistence & SQL.",
+          "answer": "Query plans is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does pagination keyset introduce in Persistence & SQL?",
+          "answer": "Pagination keyset is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use soft deletes correctly in Persistence & SQL?",
+          "answer": "Soft deletes is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does audit columns introduce in Persistence & SQL?",
+          "answer": "Audit columns is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use multi-tenant schemas correctly in Persistence & SQL?",
+          "answer": "Multi-tenant schemas is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with read replicas routing in Persistence & SQL?",
+          "answer": "Read replicas routing is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with outbox pattern JPA in Persistence & SQL?",
+          "answer": "JPA maps objects to tables with a persistence context tracking changes. Flush sends SQL before queries that need fresh state. Tune fetch joins to avoid N+1 and lazy initialization surprises in APIs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is idempotency keys DB and when do you use it?",
+          "answer": "Idempotency keys db is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain dead letter queues in the context of Persistence & SQL.",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use two-phase commit limits correctly in Persistence & SQL?",
+          "answer": "Two-phase commit limits is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use schema migration safety correctly in Persistence & SQL?",
+          "answer": "Ship schema changes in expand-contract steps compatible with rolling deploys. Backfill in batches and dual-write when needed. Never rewrite applied migration history in production.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain expand contract columns in the context of Persistence & SQL.",
+          "answer": "Expand contract columns is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use JSON columns SQL correctly in Persistence & SQL?",
+          "answer": "INNER JOIN keeps matching rows; OUTER JOINs preserve a driving table with nulls for misses. Filter early and index join keys. ORMs still need review for N+1 and cartesian products.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain full-text Lucene in the context of Persistence & SQL.",
+          "answer": "Full-text lucene is a practical Persistence & SQL topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain JPA entity lifecycle in the context of Persistence & SQL.",
+          "answer": "JPA maps objects to tables with a persistence context tracking changes. Flush sends SQL before queries that need fresh state. Tune fetch joins to avoid N+1 and lazy initialization surprises in APIs.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Testing & Build",
+      "description": "JUnit, Mockito, Maven or Gradle, and quality gates.",
+      "cards": [
+        {
+          "question": "What are common pitfalls with JUnit 5 lifecycle in Testing & Build?",
+          "answer": "Tests should be deterministic, isolated, and fast at the unit layer. Fixtures or lifecycle hooks share expensive setup safely. Assert on behavior and contracts, not implementation details.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does parameterized tests introduce in Testing & Build?",
+          "answer": "Parameterized tests is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with Mockito when verify in Testing & Build?",
+          "answer": "Mocks verify interactions; fakes provide lightweight working implementations. Mock at module boundaries, not deep internals. Prefer testing observable behavior over call counts alone.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does test slices Spring introduce in Testing & Build?",
+          "answer": "Test slices spring is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does @WebMvcTest introduce in Testing & Build?",
+          "answer": "@webmvctest is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use @DataJpaTest correctly in Testing & Build?",
+          "answer": "JPA maps objects to tables with a persistence context tracking changes. Flush sends SQL before queries that need fresh state. Tune fetch joins to avoid N+1 and lazy initialization surprises in APIs.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Testcontainers and when do you use it?",
+          "answer": "Testcontainers is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around WireMock at scale in Testing & Build?",
+          "answer": "Mocks verify interactions; fakes provide lightweight working implementations. Mock at module boundaries, not deep internals. Prefer testing observable behavior over call counts alone.",
+          "level": "senior"
+        },
+        {
+          "question": "What is AssertJ fluent and when do you use it?",
+          "answer": "Assertj fluent is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain Hamcrest matchers in the context of Testing & Build.",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does approval tests introduce in Testing & Build?",
+          "answer": "Approval tests is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you use mutation testing pitest correctly in Testing & Build?",
+          "answer": "Mutation testing pitest is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is Maven lifecycle and when do you use it?",
+          "answer": "Build tools manage dependencies, plugins, and reproducible artifacts. Pin versions and use BOMs for aligned stacks. Cache dependencies in CI and scan for vulnerable coordinates.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with Gradle tasks in Testing & Build?",
+          "answer": "Build tools manage dependencies, plugins, and reproducible artifacts. Pin versions and use BOMs for aligned stacks. Cache dependencies in CI and scan for vulnerable coordinates.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use dependency scopes correctly in Testing & Build?",
+          "answer": "Dependency scopes is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is BOM imports and when do you use it?",
+          "answer": "Bom imports is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is multi-module builds and when do you use it?",
+          "answer": "Multi-module builds is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is shade plugin and when do you use it?",
+          "answer": "Shade plugin is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does reproducible builds introduce in Testing & Build?",
+          "answer": "Reproducible builds is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with SBOM generation in Testing & Build?",
+          "answer": "Sbom generation is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with CI pipelines in Testing & Build?",
+          "answer": "Ci pipelines is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain quality gates Sonar in the context of Testing & Build.",
+          "answer": "Quality gates sonar is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain JaCoCo coverage in the context of Testing & Build.",
+          "answer": "Jacoco coverage is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use SpotBugs correctly in Testing & Build?",
+          "answer": "Spotbugs is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with Checkstyle in Testing & Build?",
+          "answer": "Checkstyle is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use ArchUnit rules correctly in Testing & Build?",
+          "answer": "Archunit rules is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What are common pitfalls with contract tests Pact in Testing & Build?",
+          "answer": "Contract tests pact is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use load testing Gatling correctly in Testing & Build?",
+          "answer": "Load testing gatling is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use benchmark JMH correctly in Testing & Build?",
+          "answer": "Benchmark jmh is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain flaky test control in the context of Testing & Build.",
+          "answer": "Flaky test control is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is test pyramid JVM and when do you use it?",
+          "answer": "Test pyramid jvm is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with integration test data in Testing & Build?",
+          "answer": "Integration test data is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around JUnit 5 lifecycle at scale in Testing & Build?",
+          "answer": "Tests should be deterministic, isolated, and fast at the unit layer. Fixtures or lifecycle hooks share expensive setup safely. Assert on behavior and contracts, not implementation details.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does parameterized tests introduce in Testing & Build?",
+          "answer": "Parameterized tests is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is Mockito when verify and when do you use it?",
+          "answer": "Mocks verify interactions; fakes provide lightweight working implementations. Mock at module boundaries, not deep internals. Prefer testing observable behavior over call counts alone.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use test slices Spring correctly in Testing & Build?",
+          "answer": "Test slices spring is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain @WebMvcTest in the context of Testing & Build.",
+          "answer": "@webmvctest is a practical Testing & Build topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "System Design for Java",
+      "description": "Microservices, messaging, resilience, and JVM at scale.",
+      "cards": [
+        {
+          "question": "What makes a REST API resource-oriented?",
+          "answer": "URLs name nouns like /orders/{id}; HTTP verbs express actions. Status codes convey outcome; representations use JSON with content negotiation when needed. State transitions use hypermedia or documented links optionally. Avoid RPC-style verbs in paths except for unavoidable actions modeled as sub-resources.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you version a public HTTP API?",
+          "answer": "URI prefix versioning is explicit and easy to route but clutters paths. Header or Accept versioning keeps URLs stable but needs client discipline. Never break existing clients silently; deprecate with timelines and metrics on old versions. Document sunset dates and provide migration guides.",
+          "level": "junior"
+        },
+        {
+          "question": "What is pagination and which strategies exist?",
+          "answer": "Offset pagination uses page and size; simple but slow and inconsistent on mutating datasets at depth. Cursor pagination keys off stable sort columns and last seen values for scalable feeds. Include total counts only when cheap or approximate. Document sort stability and maximum page sizes.",
+          "level": "middle"
+        },
+        {
+          "question": "Explain idempotency for PUT, PATCH, and DELETE.",
+          "answer": "PUT replaces a resource at an idempotent URI; repeating yields the same state. PATCH partial updates may not be idempotent unless designed with replace semantics or version checks. DELETE removes resource; repeated deletes should return consistent 404 or 204. POST creates and is not idempotent without keys.",
+          "level": "middle"
+        },
+        {
+          "question": "What is the circuit breaker pattern?",
+          "answer": "After repeated failures calling a dependency, the breaker opens and fails fast without hammering the sick service. Half-open probes test recovery before closing. Libraries like Resilience4j integrate with Spring. Pair with timeouts, bulkheads, and retries only on idempotent safe operations with jitter.",
+          "level": "middle"
+        },
+        {
+          "question": "How do DTOs differ from domain entities in API design?",
+          "answer": "Entities carry persistence and business invariants; DTOs shape what clients send and receive. Mapping prevents over-exposure of internal fields and lazy graph serialization surprises. Version DTOs independently from tables during migrations. Validation annotations live on DTOs at the edge, not deep domain cores.",
+          "level": "middle"
+        },
+        {
+          "question": "What headers improve observability for microservices?",
+          "answer": "Propagate trace ids like W3C traceparent across service calls for distributed tracing. Correlation ids tie user-facing errors to logs. Structured JSON logging with service name and span ids enables search. Avoid logging secrets or full payloads with PII.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you design for backward-compatible schema changes?",
+          "answer": "Add optional fields with defaults; never rename or change type in place without dual publishing. Consumers should ignore unknown fields per tolerant reader principle. Use feature flags for behavior toggles tied to schema presence. Contract tests between producer and consumer catch breaking changes in CI.",
+          "level": "middle"
+        },
+        {
+          "question": "What is HATEOAS and is it always needed?",
+          "answer": "Hypermedia links embed next actions in responses for discoverable clients. It helps generic crawlers and evolving workflows without hard-coded URLs. Many internal JSON APIs skip it for simplicity and rely on OpenAPI docs. Adopt when clients are diverse or long-lived public platforms.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you rate-limit APIs fairly?",
+          "answer": "Token bucket or leaky bucket algorithms cap requests per key such as API key or IP. Return 429 with Retry-After headers. Separate limits for auth versus anonymous tiers. Implement at gateway edge to protect origin services consistently.",
+          "level": "middle"
+        },
+        {
+          "question": "What is microservices boundaries and when do you use it?",
+          "answer": "Design services with clear boundaries, health checks, and backward-compatible APIs. Deploy with rolling or canary strategies and observability on golden signals. Plan failure isolation so one dependency cannot take down the fleet.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with service discovery in System Design for Java?",
+          "answer": "Service discovery is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you use API gateway correctly in System Design for Java?",
+          "answer": "Model resources with nouns and HTTP verbs; use status codes precisely. Version explicitly and avoid breaking clients silently. Paginate large collections and document error shapes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is config server and when do you use it?",
+          "answer": "Config server is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Kafka ordering and when do you use it?",
+          "answer": "Messaging decouples producers and consumers with at-least-once or exactly-once semantics depending on config. Consumers should be idempotent and handle reordering. Monitor lag and dead-letter queues.",
+          "level": "junior"
+        },
+        {
+          "question": "What is event sourcing and when do you use it?",
+          "answer": "Event sourcing is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is CQRS Java and when do you use it?",
+          "answer": "Cqrs java is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What are common pitfalls with saga orchestration in System Design for Java?",
+          "answer": "Saga orchestration is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What operational risks does idempotent consumers introduce in System Design for Java?",
+          "answer": "Idempotent consumers is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does deduplication keys introduce in System Design for Java?",
+          "answer": "Deduplication keys is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you design systems around Redis session at scale in System Design for Java?",
+          "answer": "Caches trade freshness for latency; define TTL and invalidation explicitly. Protect against stampedes with single-flight or jittered expiry. Monitor hit ratio and memory eviction behavior.",
+          "level": "senior"
+        },
+        {
+          "question": "What operational risks does distributed locks introduce in System Design for Java?",
+          "answer": "Distributed locks is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain Hazelcast in the context of System Design for Java.",
+          "answer": "Hazelcast is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain caching stampede in the context of System Design for Java.",
+          "answer": "Caching stampede is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain JWT rotation in the context of System Design for Java.",
+          "answer": "Validate and sanitize at trust boundaries. Use framework middleware for CSRF on cookie sessions; encode output against XSS. For APIs, prefer short-lived tokens, rotation, and least-privilege scopes.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain mTLS services in the context of System Design for Java.",
+          "answer": "Mtls services is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you design systems around Kubernetes probes JVM at scale in System Design for Java?",
+          "answer": "Design services with clear boundaries, health checks, and backward-compatible APIs. Deploy with rolling or canary strategies and observability on golden signals. Plan failure isolation so one dependency cannot take down the fleet.",
+          "level": "senior"
+        },
+        {
+          "question": "What are common pitfalls with JVM container limits in System Design for Java?",
+          "answer": "Jvm container limits is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you design systems around GC in containers at scale in System Design for Java?",
+          "answer": "GC reclaims unreachable heap objects; pauses depend on collector and heap pressure. Tune after measuring GC logs and allocation rates. Reduce churn by reusing buffers and avoiding accidental object creation in hot loops.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you design systems around horizontal pod autoscaler at scale in System Design for Java?",
+          "answer": "Horizontal pod autoscaler is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "senior"
+        },
+        {
+          "question": "What is blue green JVM and when do you use it?",
+          "answer": "Blue green jvm is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What is canary analysis metrics and when do you use it?",
+          "answer": "Use traces for latency path, metrics for rates and saturation, logs for rich context with correlation IDs. Define SLOs on user-facing outcomes. Alert on burn rate, not every blip.",
+          "level": "junior"
+        },
+        {
+          "question": "What is feature toggles and when do you use it?",
+          "answer": "Feature toggles is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you use chaos engineering correctly in System Design for Java?",
+          "answer": "Chaos engineering is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "middle"
+        },
+        {
+          "question": "What is rate limiting bucket4j and when do you use it?",
+          "answer": "Rate limiting bucket4j is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        },
+        {
+          "question": "What operational risks does bulkhead thread pools introduce in System Design for Java?",
+          "answer": "Combine timeouts, bounded retries on idempotent ops, and circuit breakers to stop retry storms. Bulkheads limit blast radius per dependency pool. Measure client-side error budgets, not only server health.",
+          "level": "senior"
+        },
+        {
+          "question": "What is timeout cascades and when do you use it?",
+          "answer": "Timeout cascades is a practical System Design for Java topic for backend interviews. Explain what it is, where it appears in production code, and one failure mode teams see. Close with how you would test or monitor it during a rollout.",
+          "level": "junior"
+        }
+      ]
+    }
+  ]
+}

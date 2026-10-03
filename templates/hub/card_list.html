@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Cards · Rehearse</title>{% endblock %}
+
+{% block content %}
+  <p class="page-kicker">Deck</p>
+  <h1 class="page-title">Your cards</h1>
+  <p class="page-lead">Search and filter the deck for your current track.</p>
+
+  <div class="toolbar">
+    <a class="btn-rehearse" href="{% url 'hub:card-create' %}">New card</a>
+    <a class="btn-ghost" href="{% url 'hub:practice-menu' %}">Practice</a>
+    <a class="btn-ghost" href="{% url 'hub:reset-cards' %}">Reset deck</a>
+  </div>
+
+  <div class="filters">
+    <form action="" method="get" class="stack">
+      {{ search_form.as_p }}
+      {{ filter.form.as_p }}
+      <button type="submit">Apply</button>
+    </form>
+  </div>
+
+  <ol class="card-list">
+    {% for card in cards %}
+      <li>
+        <a href="{% url 'hub:card-detail' card.id %}">{{ card.question }}</a>
+        <span class="status">{{ card.get_status_display }}</span>
+      </li>
+    {% empty %}
+      <li class="empty-note">No cards in this deck yet. Reset to reload starters, or create one.</li>
+    {% endfor %}
+  </ol>
+
+  {% if page_obj.paginator.num_pages > 1 %}
+    <nav class="pagination" aria-label="Card pages">
+      {% if page_obj.has_previous %}
+        <a class="btn-ghost" href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Previous</a>
+      {% else %}
+        <span class="btn-ghost is-disabled">Previous</span>
+      {% endif %}
+
+      <span class="pagination-meta">
+        Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        · {{ page_obj.paginator.count }} cards
+      </span>
+
+      {% if page_obj.has_next %}
+        <a class="btn-ghost" href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Next</a>
+      {% else %}
+        <span class="btn-ghost is-disabled">Next</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% endblock %}

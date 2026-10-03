@@ -1,0 +1,1149 @@
+{
+  "slug": "cpp-robotics",
+  "name": "C++ Developer (Robotics)",
+  "description": "Modern C++ for real-time robotics, embedded targets, and performance-critical motion and perception stacks.",
+  "categories": [
+    {
+      "name": "C++ Core",
+      "description": "Language fundamentals, OOP, templates, and idiomatic C++ used in production codebases.",
+      "cards": [
+        {
+          "question": "What is the difference between stack and heap allocation in C++?",
+          "answer": "Automatic variables live on the stack with deterministic lifetime tied to scope. Dynamic allocation with new or make_unique places objects on the heap until explicitly freed or managed by smart pointers. Stack allocation is fast and cache-friendly; heap is for unknown size or lifetime beyond the current scope. In robotics loops, prefer stack or preallocated pools to avoid fragmentation during control cycles.",
+          "level": "middle"
+        },
+        {
+          "question": "When should you prefer references over pointers?",
+          "answer": "References must bind to valid objects and cannot be null or rebound, which makes APIs clearer for required dependencies. Pointers express optional or nullable targets and support polymorphism via base pointers. Use const T& for read-only inputs and T& for in-out parameters when null is impossible. In sensor interfaces, pointers often model missing data; references model always-present configuration.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain RAII and why it matters on embedded systems.",
+          "answer": "Resource Acquisition Is Initialization ties resource lifetime to object lifetime: constructors acquire, destructors release. Locks, file handles, and DMA buffers clean up even when exceptions or early returns occur. On embedded builds with exceptions disabled, destructors still run at scope exit for stack objects. RAII prevents leaks in long-running robot processes without manual cleanup in every error path.",
+          "level": "senior"
+        },
+        {
+          "question": "What is the rule of zero and when do you deviate from it?",
+          "answer": "If your class needs no custom destructor, copy, or move operations, do not declare them; the compiler-generated special members are correct. Deviate when you manage raw resources, enforce unique ownership, or need custom copying semantics. std::unique_ptr members often keep you at rule-of-zero. Robot driver wrappers around hardware handles typically need custom move-only types.",
+          "level": "junior"
+        },
+        {
+          "question": "How do move semantics improve performance?",
+          "answer": "Move construction and assignment transfer resources from a source object without deep copies, leaving the source in a valid empty state. They activate on rvalues and via std::move for explicit transfers. Large std::vector or point cloud buffers become cheap to return from perception pipelines. Misusing std::move on const objects silently copies instead of moving.",
+          "level": "middle"
+        },
+        {
+          "question": "What is the difference between struct and class in C++?",
+          "answer": "Only default member access differs: public for struct, private for class. Inheritance defaults differ similarly. Teams often use struct for plain data aggregates and class for invariants and behavior. POD-style structs map cleanly to sensor messages shared with C APIs. Consistency with project style matters more than the keyword itself.",
+          "level": "middle"
+        },
+        {
+          "question": "When are templates preferable to virtual functions?",
+          "answer": "Templates instantiate specialized code at compile time with zero runtime dispatch overhead. They excel for generic math, containers, and fixed-size Eigen-style operations in hot loops. Virtual functions provide runtime polymorphism with stable binary interfaces across modules. Robotics code often combines both: templates in inner loops, virtual drivers at hardware boundaries.",
+          "level": "junior"
+        },
+        {
+          "question": "What is SFINAE and how is it used in practice today?",
+          "answer": "Substitution Failure Is Not An Error removes invalid template overloads during overload resolution instead of hard errors. It enabled enable_if-based constraints before concepts. Modern code prefers requires clauses and concepts for clearer errors. Legacy middleware still uses SFINAE traits for serializable message types.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you avoid object slicing when passing polymorphic types?",
+          "answer": "Passing a derived object by value into a base parameter slices off derived data and behavior. Use pointers or references to base, or std::unique_ptr<Base> for ownership. Factory functions return unique_ptr to concrete types behind abstract interfaces. Slicing bugs show up as mysteriously wrong virtual calls in robot state machines.",
+          "level": "middle"
+        },
+        {
+          "question": "What is std::optional and when use it in robot APIs?",
+          "answer": "std::optional<T> models a value that may be absent without sentinel magic numbers. It makes missing joint limits or calibration data explicit in the type system. Access via value_or or check has_value before dereferencing. It replaces out-parameters and bool return plus reference patterns for clearer call sites.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply stack versus heap allocation in day-to-day C++ Core work?",
+          "answer": "Stack allocation ties lifetime to scope and is extremely fast for small, short-lived objects. Heap allocation via new or smart pointers supports unknown size and longer lifetimes but adds allocator cost and fragmentation risk. In robotics control loops, prefer stack or preallocated pools for per-tick temporaries.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply stack versus heap allocation correctly in C++ Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does references versus pointers matter for C++ Core work?",
+          "answer": "References must refer to valid objects, cannot be null, and cannot be rebound, which clarifies required dependencies. Pointers express optional targets, polymorphism, and pointer arithmetic where allowed. Use const T& for read-only inputs and pointers when null or runtime polymorphism is required.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on const correctness in C++ Core architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is value categories?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve copy constructor in C++ Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use move constructor?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is operator overloading?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve explicit constructors in C++ Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use defaulted functions?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize deleted functions across a large C++ Core codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve enum class in C++ Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use namespaces?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is ODR?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to linkage, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see inline functions in a C++ Core codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply constexpr variables correctly in C++ Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does static local initialization matter for C++ Core work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use friend functions?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply virtual destructors correctly in C++ Core?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to abstract base classes, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see override and final in a C++ Core codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Memory & Performance",
+      "description": "Allocation strategies, cache behavior, and tuning control and perception hot paths.",
+      "cards": [
+        {
+          "question": "Why can frequent small heap allocations hurt a real-time control loop?",
+          "answer": "Allocators may lock, traverse freelists, or trigger system calls with unpredictable latency. Fragmentation increases over long runtimes on embedded Linux. Spikes break deterministic cycle times for motor commands. Preallocate buffers, use arena allocators, or lock-free pools for per-tick work.",
+          "level": "junior"
+        },
+        {
+          "question": "What is cache locality and how do you improve it?",
+          "answer": "CPUs fetch memory in cache lines; accessing nearby data is faster than scattered pointers. Structure-of-arrays versus array-of-structures trades depend on access patterns in kinematics kernels. Keep hot fields contiguous and avoid chasing linked lists in inner loops. Profile with perf to see LLC misses before micro-optimizing.",
+          "level": "junior"
+        },
+        {
+          "question": "When should you mark functions noexcept?",
+          "answer": "noexcept promises the function will not throw, enabling optimizations and safe use in destructors and move operations. std::vector reallocation uses move only when move is noexcept. On -fno-exceptions builds the marker still documents intent. Do not mark noexcept if underlying code might throw unless you catch internally.",
+          "level": "senior"
+        },
+        {
+          "question": "Compare std::vector reserve versus resize for sensor buffers.",
+          "answer": "reserve allocates capacity without changing size, avoiding reallocation on subsequent push_back. resize changes logical size and value-initializes new elements. For fixed-rate lidar scans, reserve once at startup to the max points per revolution. resize each frame only if you need indexed access for the full slot count.",
+          "level": "middle"
+        },
+        {
+          "question": "What is false sharing and how do you mitigate it?",
+          "answer": "Two threads updating different variables on the same cache line cause expensive coherence traffic. Padding atomic counters or per-thread accumulators onto separate cache lines fixes many cases. It appears when parallelizing telemetry or joint state publishers. alignas(64) is a common mitigation on x86 and ARM servers.",
+          "level": "middle"
+        },
+        {
+          "question": "How does compiler inlining affect embedded builds?",
+          "answer": "Inlining removes call overhead and enables further optimizations across function boundaries. Aggressive -O3 can inflate code size and I-cache pressure on MCUs. Always measure on target hardware with representative workloads. hot and cold attributes guide placement when the toolchain supports them.",
+          "level": "middle"
+        },
+        {
+          "question": "What are placement new and when are they used?",
+          "answer": "Placement new constructs an object at a preallocated address without allocating memory. Useful for memory pools, shared memory segments, and deterministic firmware heaps. You must manually call the destructor before reusing the storage. Misaligned or undersized buffers cause undefined behavior.",
+          "level": "middle"
+        },
+        {
+          "question": "Why prefer std::array over C arrays in modern C++?",
+          "answer": "std::array knows its size, supports standard algorithms, and can be copied and compared safely. It avoids decay to pointer bugs in template code. Fixed-size Jacobians and rotation matrices fit naturally as std::array or Eigen fixed types. Zero overhead compared to raw arrays when optimized.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you profile CPU usage of a robotics node on Linux?",
+          "answer": "Use perf record and perf report for hotspot functions and call graphs. Combine with clock_gettime around critical sections for lightweight tracing when perf is unavailable. Flamegraphs highlight unexpected string formatting or logging in control paths. Always profile release builds with debug symbols separately.",
+          "level": "junior"
+        },
+        {
+          "question": "What is memory alignment and why do SIMD and DMA care?",
+          "answer": "Types have alignment requirements; unaligned access can trap or slow on some ARM cores. SIMD loads often need 16 or 32 byte alignment. DMA engines require buffer boundaries aligned to device rules. alignas and aligned allocators prevent subtle hardware faults in camera capture pipelines.",
+          "level": "senior"
+        },
+        {
+          "question": "What is allocator behavior?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does memory pools matter for Memory & Performance work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on arena allocators in Memory & Performance architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply fragmentation correctly in Memory & Performance?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve cache locality in Memory & Performance?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use false sharing?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply alignment correctly in Memory & Performance?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve SIMD in Memory & Performance?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see branch prediction in a Memory & Performance codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize profile-guided optimization across a large Memory & Performance codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve LTO in Memory & Performance?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on PGO in Memory & Performance architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is hot/cold splitting?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does std::vector growth matter for Memory & Performance work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use small object optimization?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize string SSO across a large Memory & Performance codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to custom allocators, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on pmr containers in Memory & Performance architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What is memory bandwidth?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve NUMA in Memory & Performance?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on huge pages in Memory & Performance architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply mmap correctly in Memory & Performance?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "Modern C++ (11-20)",
+      "description": "Smart pointers, move semantics, constexpr, concepts, and standard library modernizations.",
+      "cards": [
+        {
+          "question": "What is smart pointers?",
+          "answer": "Smart pointers encode ownership and sharing: unique, shared, or interior mutability patterns. Choose Arc/Mutex for cross-thread sharing and RefCell for single-thread interior mutability. Pinning stabilizes addresses required by self-referential async state machines.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does unique_ptr matter for Modern C++ (11-20) work?",
+          "answer": "Smart pointers encode ownership and sharing: unique, shared, or interior mutability patterns. Choose Arc/Mutex for cross-thread sharing and RefCell for single-thread interior mutability. Pinning stabilizes addresses required by self-referential async state machines.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use shared_ptr?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize weak_ptr across a large Modern C++ (11-20) codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to make_unique, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use make_shared?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize rvalue references across a large Modern C++ (11-20) codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does move semantics matter for Modern C++ (11-20) work?",
+          "answer": "Rust ownership ensures each value has one owner and references obey borrow rules at compile time. Moves transfer ownership; borrows grant temporary access with aliasing limits. Lifetime annotations tie references to valid data and prevent use-after-free.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use std::move?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply rule of five correctly in Modern C++ (11-20)?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve rule of zero in Modern C++ (11-20)?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on lambda captures in Modern C++ (11-20) architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize generic lambdas across a large Modern C++ (11-20) codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does std::thread matter for Modern C++ (11-20) work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use std::jthread?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is std::stop_token?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve std::mutex in Modern C++ (11-20)?",
+          "answer": "Mutexes serialize access to shared mutable state and must be held for the shortest critical section possible. Establish a global lock order across modules to prevent deadlock cycles. Prefer transferring data over channels when ownership handoff is clearer than shared memory.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use std::scoped_lock?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply std::shared_mutex correctly in Modern C++ (11-20)?",
+          "answer": "Mutexes serialize access to shared mutable state and must be held for the shortest critical section possible. Establish a global lock order across modules to prevent deadlock cycles. Prefer transferring data over channels when ownership handoff is clearer than shared memory.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to std::atomic, and how do you prevent them?",
+          "answer": "Atomics provide lock-free updates when paired with an appropriate memory ordering. Relaxed works for independent counters; release-acquire publishes data between threads. Incorrect ordering causes subtle bugs that TSan and careful code review must catch.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use memory model?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply std::chrono correctly in Modern C++ (11-20)?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does std::filesystem matter for Modern C++ (11-20) work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on std::format in Modern C++ (11-20) architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize spaceship operator across a large Modern C++ (11-20) codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve three-way comparison in Modern C++ (11-20)?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use concepts?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is requires clauses?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve constrained templates in Modern C++ (11-20)?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on fold expressions in Modern C++ (11-20) architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize if constexpr across a large Modern C++ (11-20) codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does constexpr algorithms matter for Modern C++ (11-20) work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Concurrency",
+      "description": "Threads, atomics, lock-free patterns, and real-time scheduling concerns.",
+      "cards": [
+        {
+          "question": "What is a data race in C++ and how do you prevent it?",
+          "answer": "A data race occurs when two threads access the same non-atomic object and at least one write is not synchronized. Use mutexes, atomics, or message passing so happens-before relationships exist. ThreadSanitizer catches many races in CI on x86 builds. On ARM, even word-sized torn reads motivate atomic or guarded access to shared state.",
+          "level": "middle"
+        },
+        {
+          "question": "When is std::mutex enough versus a lock-free queue?",
+          "answer": "Mutexes are simple and correct for moderate contention and non-hot paths like configuration updates. Lock-free SPSC queues suit high-rate sensor handoff between capture and processing threads. Lock-free code is harder to verify and may still spin under contention. Pick mutex plus careful locking order unless profiling proves the mutex is the bottleneck.",
+          "level": "senior"
+        },
+        {
+          "question": "Explain memory ordering for std::atomic.",
+          "answer": "Sequential consistency is the default and easiest to reason about. Relaxed is for counters where ordering with other memory is irrelevant. acquire-release pairs publish data safely between threads without full seq_cst cost. Incorrect ordering causes subtle bugs where consumers see partially updated robot state.",
+          "level": "junior"
+        },
+        {
+          "question": "What is deadlock and how do you avoid it in multi-module robots?",
+          "answer": "Deadlock is a cycle of threads waiting on each other's locks. Establish a global lock hierarchy and never acquire locks in reverse order across modules. std::lock can acquire multiple mutexes atomically when needed. Timeouts and try_lock are last resorts that complicate correctness proofs.",
+          "level": "junior"
+        },
+        {
+          "question": "How does std::condition_variable coordinate producer and consumer threads?",
+          "answer": "Wait atomically releases the mutex and sleeps until notify; spurious wakeups require predicates in loops. Producers notify after updating shared queues under the same mutex. Used for thread pools processing perception jobs. Always pair with std::unique_lock for wait compatibility.",
+          "level": "middle"
+        },
+        {
+          "question": "What is thread affinity and when set it on a robot PC?",
+          "answer": "Pinning threads to cores reduces migration and improves cache warmth for real-time loops. Isolate control cores from OS housekeeping via cset or tuned irqbalance policies. NUMA-aware placement matters on dual-socket perception servers. Wrong affinity can increase jitter more than raw CPU usage suggests.",
+          "level": "junior"
+        },
+        {
+          "question": "Compare std::thread versus thread pools for navigation stacks.",
+          "answer": "Spawning std::thread per task adds overhead and unbounded thread counts hurt scheduling. Pools reuse workers for costmaps, planners, and IO callbacks. Set pool sizes from CPU budget and latency goals. Join or detach policies must be explicit to avoid termination races on shutdown.",
+          "level": "senior"
+        },
+        {
+          "question": "What is priority inversion and how is it addressed?",
+          "answer": "A low-priority task holds a lock needed by high priority work while medium tasks run, delaying critical code. Priority inheritance mutexes on RTOS or priority-aware futexes mitigate the issue. Design fewer shared locks between realtime and non-realtime threads. Separate command buffers copied atomically instead of long critical sections.",
+          "level": "middle"
+        },
+        {
+          "question": "How do std::async and futures fit into parallel perception?",
+          "answer": "std::async launches tasks returning std::future for results. Useful for parallel independent model stages with clear join points. Overhead and thread explosion occur if every pixel task asyncs separately. Prefer structured batch parallelism with a bounded pool for GPU/CPU hybrid pipelines.",
+          "level": "middle"
+        },
+        {
+          "question": "What guarantees does volatile provide?",
+          "answer": "volatile forces loads and stores to memory for special device registers but does not provide atomicity or ordering with other memory. It is not a substitute for std::atomic or mutexes between threads. Use it for memory-mapped hardware as documented by the vendor. Misusing volatile for inter-thread flags is a common embedded interview trap.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply data races in day-to-day Concurrency work?",
+          "answer": "A data race occurs when unsynchronized concurrent access includes at least one write to the same memory location. Fix races with mutexes, atomics with correct ordering, or by transferring ownership via queues. Run ThreadSanitizer on representative workloads because races are nondeterministic in the field.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply data races correctly in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to mutex ordering, and how do you prevent them?",
+          "answer": "Mutexes serialize access to shared mutable state and must be held for the shortest critical section possible. Establish a global lock order across modules to prevent deadlock cycles. Prefer transferring data over channels when ownership handoff is clearer than shared memory.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see deadlock in a Concurrency codebase?",
+          "answer": "Mutexes serialize access to shared mutable state and must be held for the shortest critical section possible. Establish a global lock order across modules to prevent deadlock cycles. Prefer transferring data over channels when ownership handoff is clearer than shared memory.",
+          "level": "junior"
+        },
+        {
+          "question": "What is lock hierarchy?",
+          "answer": "Mutexes serialize access to shared mutable state and must be held for the shortest critical section possible. Establish a global lock order across modules to prevent deadlock cycles. Prefer transferring data over channels when ownership handoff is clearer than shared memory.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve std::lock in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Where do you typically see condition variables in a Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize spurious wakeup across a large Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve semaphore in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use latch and barrier?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply thread pools correctly in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does work stealing matter for Concurrency work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on task queues in Concurrency architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply atomics correctly in Concurrency?",
+          "answer": "Atomics provide lock-free updates when paired with an appropriate memory ordering. Relaxed works for independent counters; release-acquire publishes data between threads. Incorrect ordering causes subtle bugs that TSan and careful code review must catch.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does memory ordering matter for Concurrency work?",
+          "answer": "Atomics provide lock-free updates when paired with an appropriate memory ordering. Relaxed works for independent counters; release-acquire publishes data between threads. Incorrect ordering causes subtle bugs that TSan and careful code review must catch.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use seq_cst?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize acquire-release across a large Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve lock-free stacks in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see ABA problem in a Concurrency codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you apply hazard pointers correctly in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve RCU in Concurrency?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Robotics & Embedded",
+      "description": "Kinematics interfaces, sensors, buses, safety, and deployment on robot hardware.",
+      "cards": [
+        {
+          "question": "How do you structure a real-time joint command pipeline?",
+          "answer": "Separate planning, interpolation, and hardware write stages with bounded queues between them. Timestamp commands and reject stale setpoints when watchdogs fire. Use monotonic clocks for control period measurement. Log overruns separately from functional errors to tune rates.",
+          "level": "senior"
+        },
+        {
+          "question": "What is encoder resolution versus accuracy in motor control?",
+          "answer": "Resolution is the smallest measurable step; accuracy is how close readings are to true angle. High resolution with poor calibration still yields drift in odometry. Calibrate offsets and scale factors per joint after assembly. Filter velocity estimates knowing quantization noise limits.",
+          "level": "middle"
+        },
+        {
+          "question": "Why use Eigen in robotics C++ code?",
+          "answer": "Eigen provides expression templates for efficient linear algebra without temporary allocations in many cases. Fixed-size matrices compile to SIMD-friendly loops for SE3 transforms. Map views wrap sensor buffer memory without copy. Watch alignment flags when mapping external DMA buffers.",
+          "level": "senior"
+        },
+        {
+          "question": "How do CAN and EtherCAT differ for actuator networks?",
+          "answer": "CAN is multi-master serial with limited bandwidth suited to many low-rate drives and sensors. EtherCAT uses Ethernet physical layer with deterministic cyclic frames for high-axis-count arms. CANopen and CiA402 define drive profiles on CAN; EtherCAT uses vendor-specific PDO mappings. Choice depends on bandwidth, cable plant, and vendor ecosystem.",
+          "level": "junior"
+        },
+        {
+          "question": "What safety practices apply when mixing autonomous motion and human proximity?",
+          "answer": "Hardware estops cut power independently of software paths. Software limits velocity and workspace envelopes with redundant checks where standards require. Validate sensor fusion timeouts before coasting to stop. Document fail-safe states for communication loss with the motion controller.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you timestamp lidar scans for SLAM?",
+          "answer": "Each range return may need per-ray timing compensation due to motion during sweep. Record sensor clock and host receive time; synchronize with PTP or pulse-per-second when possible. SLAM frontends motion-distort points using interpolated odometry. Consistent time base beats microsecond precision with wrong frame ids.",
+          "level": "junior"
+        },
+        {
+          "question": "What is an IMU bias and how is it estimated?",
+          "answer": "Biases are slowly varying offsets in gyro and accelerometer readings. Stationary periods enable zero-velocity updates; filters like EKF track bias states online. Temperature swings on outdoor robots require periodic recalibration. Ignoring bias yields drifting orientation even with good raw noise specs.",
+          "level": "junior"
+        },
+        {
+          "question": "When compile for ARM versus x86 in a robotics product?",
+          "answer": "ARM SoCs dominate onboard compute for power and integration with ISP and NPU blocks. x86 remains common in development kits and high-end perception servers. Cross-compile with consistent ABI and test on hardware-in-the-loop rigs. SIMD intrinsics differ; prefer portable libraries or abstraction layers.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you expose a C++ driver to Python in a ROS stack?",
+          "answer": "pybind11 wraps C++ classes with minimal boilerplate and GIL release in hot callbacks. Keep the C++ API stable and thin bindings to reduce maintenance. rclcpp nodes can stay C++ while tools script in Python. Document ownership: who frees buffers shared across the language boundary.",
+          "level": "junior"
+        },
+        {
+          "question": "What is a watchdog in embedded robot firmware?",
+          "answer": "A hardware or software timer resets or safe-stops the system if the control loop stops petting it. Independent of main CPU hang causes like infinite loops. Pet interval must be shorter than worst-case loop latency plus margin. Pair with logical monitors on command freshness.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you design a production approach around real-time loops in Robotics & Embedded?",
+          "answer": "Senior work on real-time loops in Robotics & Embedded means setting standards, not only fixing bugs. Define ownership boundaries, observability, and rollback paths before scaling usage across services or devices. Expect follow-ups on failure isolation, security, and long-term cost once real-time loops becomes load-bearing.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize real-time loops across a large Robotics & Embedded codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve control period jitter in Robotics & Embedded?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on encoder feedback in Robotics & Embedded architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is PID tuning?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve feedforward control in Robotics & Embedded?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see kinematics in a Robotics & Embedded codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is Jacobians?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve inverse kinematics in Robotics & Embedded?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see dynamics in a Robotics & Embedded codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize trajectory planning across a large Robotics & Embedded codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What common bugs involve splines in Robotics & Embedded?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use ROS2 nodes?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you standardize DDS QoS across a large Robotics & Embedded codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does tf transforms matter for Robotics & Embedded work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on URDF in Robotics & Embedded architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply collision checking correctly in Robotics & Embedded?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does costmaps matter for Robotics & Embedded work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you test or profile code paths that use SLAM basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What is lidar processing?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does camera calibration matter for Robotics & Embedded work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        }
+      ]
+    },
+    {
+      "name": "Math & Control basics",
+      "description": "Rotations, estimation, control intuition, and numerical methods for robotics software.",
+      "cards": [
+        {
+          "question": "How would you design a production approach around rotation matrices in Math & Control basics?",
+          "answer": "Senior work on rotation matrices in Math & Control basics means setting standards, not only fixing bugs. Define ownership boundaries, observability, and rollback paths before scaling usage across services or devices. Expect follow-ups on failure isolation, security, and long-term cost once rotation matrices becomes load-bearing.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize rotation matrices across a large Math & Control basics codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve quaternions in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see Euler angles in a Math & Control basics codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply gimbal lock correctly in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does SE(3) matter for Math & Control basics work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use homogeneous transforms?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply Lie algebra correctly in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve numerical differentiation in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see integration drift in a Math & Control basics codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply Kalman filter intuition correctly in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to covariance matrices, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on Mahalanobis distance in Math & Control basics architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is outlier rejection?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve RANSAC in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on least squares in Math & Control basics architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply SVD in calibration correctly in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve eigenvalues in stability in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see Lyapunov intuition in a Math & Control basics codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply Bode plots correctly in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve Nyquist stability in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see discrete-time control in a Math & Control basics codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you standardize ZOH across a large Math & Control basics codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does sampling theorem matter for Math & Control basics work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on aliasing in sensors in Math & Control basics architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply low-pass filters correctly in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Why does complementary filters matter for Math & Control basics work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on PID anti-windup in Math & Control basics architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply state space models correctly in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What common bugs involve LQR intuition in Math & Control basics?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on MPC overview in Math & Control basics architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        }
+      ]
+    },
+    {
+      "name": "Tooling & Debugging",
+      "description": "Build systems, static analysis, testing, packaging, and shipping robot software.",
+      "cards": [
+        {
+          "question": "Why use CMake targets instead of global include directories?",
+          "answer": "Target-based INTERFACE includes propagate only to dependents, reducing ODR and header pollution. Link libraries privately versus publicly encodes whether API types leak. Modern CMake improves reproducible builds across dev laptops and CI. Export sets generate config packages for reusable robot libraries.",
+          "level": "junior"
+        },
+        {
+          "question": "How do sanitizers help before deploying navigation code?",
+          "answer": "AddressSanitizer finds heap overflows and use-after-free; ThreadSanitizer finds data races. UndefinedBehaviorSanitizer catches shift and alignment bugs in math kernels. Run sanitized builds on recorded bag replays in CI. Performance differs from production; combine with unit tests on target hardware.",
+          "level": "senior"
+        },
+        {
+          "question": "What is clang-tidy's role in a robotics repo?",
+          "answer": "It enforces readability, modernize, and bugprone checks automatically in CI. Catches narrowing conversions in sensor scaling and redundant moves. Configure checks to match team tolerance for legacy third-party code. Fix incrementally with NOLINT comments only when justified.",
+          "level": "junior"
+        },
+        {
+          "question": "How do you version shared libraries on a robot fleet?",
+          "answer": "Semantic versioning on ABI-stable interfaces prevents silent breakage across OTA updates. Pin dependencies in manifest files consumed by build and deploy pipelines. Roll out canary devices before fleet-wide push. Keep rollback artifacts for motion stacks where regression risk is high.",
+          "level": "middle"
+        },
+        {
+          "question": "What should unit tests cover in motion planning modules?",
+          "answer": "Test collision checks with known geometries, edge cases at joint limits, and empty obstacle sets. Golden-path integration tests replay recorded scenarios. Property tests on Jacobian dimensions catch refactor mistakes. Mock time and hardware IO for deterministic CI.",
+          "level": "junior"
+        },
+        {
+          "question": "Explain Debug versus RelWithDebInfo for field debugging.",
+          "answer": "Debug disables optimizations and enables assertions for deep investigation. RelWithDebInfo keeps optimizations with symbols for perf-like profiling on robots. Release may strip asserts that guard invariants in simulation-only builds. Ship production with agreed assert policy and logging levels.",
+          "level": "middle"
+        },
+        {
+          "question": "How do Conan or vcpkg fit C++ dependency management?",
+          "answer": "They fetch prebuilt or source packages with transitive dependency resolution. Lockfiles reproduce CI and developer environments. Integrate with CMake toolchain files for cross-compilation to ARM boards. Mirror artifacts internally for air-gapped lab networks.",
+          "level": "senior"
+        },
+        {
+          "question": "What is reproducible build concern with __DATE__ and __TIME__?",
+          "answer": "Embedding compile timestamps breaks byte-identical rebuilds and complicates binary diff OTA. Prefer git commit hashes from build metadata injected by CI. Needed for audit trails in safety-related components. Document the metadata schema in release notes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you structure logging for multi-threaded robot apps?",
+          "answer": "Use asynchronous log sinks to avoid blocking realtime threads on disk IO. Include monotonic timestamps, node name, and sequence ids. Rate-limit repetitive fault messages to prevent log floods during sensor outages. Separate human-readable traces from machine-parseable telemetry streams.",
+          "level": "senior"
+        },
+        {
+          "question": "What is static linking versus dynamic linking tradeoff on embedded Linux?",
+          "answer": "Static linking simplifies deployment and avoids runtime library mismatch on minimal rootfs. Dynamic linking reduces image size when many processes share large libraries like OpenCV. Security updates to shared libs apply fleet-wide with dynamic linking. License obligations differ; track SBOM for both models.",
+          "level": "middle"
+        },
+        {
+          "question": "What is CMake targets?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "What production failures have you seen related to FetchContent, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "Where do you typically see CPM in a Tooling & Debugging codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply Conan correctly in Tooling & Debugging?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "Why does vcpkg matter for Tooling & Debugging work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use clang-tidy?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "How would you standardize clang-format across a large Tooling & Debugging codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What production failures have you seen related to include-what-you-use, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What tradeoffs guide your choice to rely on sanitizers in Tooling & Debugging architecture?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply ASan correctly in Tooling & Debugging?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What common bugs involve TSan in Tooling & Debugging?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see UBSan in a Tooling & Debugging codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How do you apply MSan correctly in Tooling & Debugging?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to gdb, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "How would you test or profile code paths that use lldb?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "junior"
+        },
+        {
+          "question": "What is pretty printers?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Why does core dumps matter for Tooling & Debugging work?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "Where do you typically see rr replay in a Tooling & Debugging codebase?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How do you apply valgrind correctly in Tooling & Debugging?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "senior"
+        },
+        {
+          "question": "What production failures have you seen related to heaptrack, and how do you prevent them?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        },
+        {
+          "question": "How would you test or profile code paths that use static analysis in CI?",
+          "answer": "Go favors simple types, explicit error returns, and gofmt-standard layout. Use defer for paired cleanup, respect zero values, and keep interfaces small. Modules and workspaces manage dependencies with reproducible go.sum hashes.",
+          "level": "middle"
+        }
+      ]
+    }
+  ]
+}

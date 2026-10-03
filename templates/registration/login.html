@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Sign in · Rehearse</title>{% endblock %}
+
+{% block layout %}
+  <div class="auth-shell">
+    <div class="auth-panel">
+      <a class="brand" href="{% url 'login' %}">Rehear<span>se</span></a>
+      <p class="page-lead">Interview prep hub. Sign in to open your track and start practicing.</p>
+
+      {% if form.errors %}
+        <p class="meta">Username or password did not match. Try again.</p>
+      {% endif %}
+
+      {% if user.is_authenticated %}
+        <p class="page-lead">You are already signed in.</p>
+        <a class="btn-rehearse" href="{% url 'hub:index' %}">Go to hub</a>
+      {% else %}
+        <form method="post" action="{% url 'login' %}" class="stack">
+          {% csrf_token %}
+          <p>
+            <label for="id_username">Username</label>
+            {{ form.username }}
+          </p>
+          <p>
+            <label for="id_password">Password</label>
+            {{ form.password }}
+          </p>
+          <button type="submit">Sign in</button>
+          <input type="hidden" name="next" value="{{ next }}">
+        </form>
+        <p class="meta auth-switch">
+          New here?
+          <a href="{% url 'register' %}">Create an account</a>
+        </p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

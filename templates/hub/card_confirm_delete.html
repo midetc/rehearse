@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Delete card · Rehearse</title>{% endblock %}
+
+{% block content %}
+  <p class="page-kicker">Confirm</p>
+  <h1 class="page-title">Delete this card?</h1>
+  <p class="page-lead">{{ card.question }}</p>
+  <form method="post" class="actions-row">
+    {% csrf_token %}
+    <button type="submit" class="btn-danger-soft">Yes, delete</button>
+    <a class="btn-ghost" href="{% url 'hub:card-list' %}">Cancel</a>
+  </form>
+{% endblock %}

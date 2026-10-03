@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}<title>{{ object|yesno:"Edit,Create" }} card · Rehearse</title>{% endblock %}
+
+{% block content %}
+  <p class="page-kicker">Deck</p>
+  <h1 class="page-title">{{ object|yesno:"Edit card,New card" }}</h1>
+  <form method="post" class="stack">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="actions-row">
+      <button type="submit">Save</button>
+      <a class="btn-ghost" href="{% url 'hub:card-list' %}">Cancel</a>
+    </div>
+  </form>
+{% endblock %}
