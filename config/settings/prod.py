@@ -4,11 +4,12 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    host
-    for host in os.environ.get("ALLOWED_HOSTS", "").split(",")
-    if host
-]
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    CSRF_TRUSTED_ORIGINS = [f"https://{RENDER_EXTERNAL_HOSTNAME}"]
 
 DATABASES = {
     "default": {
@@ -17,7 +18,7 @@ DATABASES = {
         "USER": os.environ["POSTGRES_USER"],
         "PASSWORD": os.environ["POSTGRES_PASSWORD"],
         "HOST": os.environ["POSTGRES_HOST"],
-        "PORT": os.environ.get("POSTGRES_DB_PORT", "5432"),
+        "PORT": os.environ["POSTGRES_DB_PORT"],
         "OPTIONS": {"sslmode": "require"},
     }
 }

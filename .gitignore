@@ -12,6 +12,8 @@ ENV/
 # Environment variables
 .env
 .env.*
+!.env.sample
+!.env.example
 
 # Django
 *.log
