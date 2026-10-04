@@ -2,6 +2,8 @@
 
 Interview prep app on Django.
 
+Live: [https://rehearse-gsp7.onrender.com](https://rehearse-gsp7.onrender.com)
+
 You pick a track (Python, Java, DevOps, etc.), get a bunch of starter questions, and practice them. Mark cards as learning / known / mastered, search, filter, reset the deck if you want a clean start.
 
 I worked on `develop`. PR goes into `main`.
