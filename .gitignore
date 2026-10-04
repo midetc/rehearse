@@ -18,7 +18,8 @@ ENV/
 db.sqlite3
 db.sqlite3-journal
 media/
-staticfiles/
+staticfiles/*
+!staticfiles/.gitkeep
 
 # IDE
 .vscode/
