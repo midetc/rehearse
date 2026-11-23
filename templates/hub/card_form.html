@@ -9,6 +9,9 @@
     {% csrf_token %}
     {{ form.as_p }}
     <div class="actions-row">
+      {% if not object %}
+        <button type="submit" name="draft" value="1" formnovalidate>Draft</button>
+      {% endif %}
       <button type="submit">Save</button>
       <a class="btn-ghost" href="{% url 'hub:card-list' %}">Cancel</a>
     </div>

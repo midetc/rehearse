@@ -11,8 +11,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
     DeleteView
 
 from hub.catalog_seed import ICON_LABELS
+from hub.draft import draft_card
 from hub.filters import CardFilter
-from hub.forms import CardQuestionSearchForm
+from hub.forms import CardForm, CardQuestionSearchForm
 from hub.models import Card, CardTemplate, Category, Collection
 
 
@@ -159,8 +160,47 @@ class CardDetailView(LoginRequiredMixin, ActiveCollectionRequiredMixin, DetailVi
 
 class CardCreateView(LoginRequiredMixin, ActiveCollectionRequiredMixin, CreateView):
     model = Card
-    fields = ["level", "category", "question", "answer"]
+    form_class = CardForm
     success_url = reverse_lazy("hub:card-list")
+
+    def post(self, request, *args, **kwargs):
+        if "draft" not in request.POST:
+            return super().post(request, *args, **kwargs)
+
+        self.object = None
+        topic = request.POST.get("topic", "").strip()
+        initial = {
+            "topic": topic,
+            "level": request.POST.get("level"),
+            "category": request.POST.get("category"),
+            "question": request.POST.get("question", ""),
+            "answer": request.POST.get("answer", ""),
+        }
+        failed = False
+        if topic:
+            try:
+                generated = draft_card(topic)
+                question = str(generated["question"]).strip()
+                answer = str(generated["answer"]).strip()
+                if not question or not answer:
+                    failed = True
+                else:
+                    initial["question"] = question
+                    initial["answer"] = answer
+            except Exception:
+                failed = True
+
+        form = CardForm(initial=initial)
+        form.fields["category"].queryset = Category.objects.filter(
+            collection_id=request.user.active_collection_id
+        )
+        if not topic or failed:
+            form.cleaned_data = {}
+        if not topic:
+            form.add_error("topic", "Write a topic.")
+        elif failed:
+            form.add_error(None, "Could not draft a card. Try again.")
+        return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
