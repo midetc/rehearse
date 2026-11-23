@@ -21,9 +21,7 @@
             <p>
               <label for="{{ field.id_for_label }}">{{ field.label }}</label>
               {{ field }}
-              {% if field.errors %}
-                <span class="meta">{{ field.errors|striptags }}</span>
-              {% endif %}
+              {{ field.errors }}
             </p>
           {% endfor %}
           <button type="submit">Create account</button>
