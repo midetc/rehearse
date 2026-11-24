@@ -1,5 +1,6 @@
 from django.forms import CharField, Form, ModelForm, TextInput
 
+from hub.draft import MAX_TOPIC_LENGTH
 from hub.models import Card
 
 
@@ -9,7 +10,7 @@ class CardQuestionSearchForm(Form):
 
 class CardForm(ModelForm):
     topic = CharField(
-        max_length=200,
+        max_length=MAX_TOPIC_LENGTH,
         required=False,
         label="Topic",
         widget=TextInput(attrs={"placeholder": "For example, Python decorators"}),

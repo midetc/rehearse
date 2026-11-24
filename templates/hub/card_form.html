@@ -21,6 +21,7 @@
           <p>
             <label for="{{ form.topic.id_for_label }}">{{ form.topic.label }}</label>
             {{ form.topic }}
+            <span class="meta">Up to {{ draft_hourly_limit }} drafts an hour. Save still stores the card.</span>
             {{ form.topic.errors }}
           </p>
           <button type="submit" name="draft" value="1" class="btn-ai" formnovalidate>Generate</button>

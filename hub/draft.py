@@ -2,10 +2,16 @@ import os
 import json
 from groq import Groq
 
+MIN_TOPIC_LENGTH = 3
+MAX_TOPIC_LENGTH = 200
+
 
 def draft_card(topic: str) -> dict:
-    if not topic:
-        raise ValueError("Topic cannot be empty")
+    topic = (topic or "").strip()
+    if len(topic) < MIN_TOPIC_LENGTH:
+        raise ValueError("Topic is too short")
+    if len(topic) > MAX_TOPIC_LENGTH:
+        raise ValueError("Topic is too long")
 
     GROQ_API_KEY = os.getenv("GROQ_API_KEY")
     if GROQ_API_KEY is None:

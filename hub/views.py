@@ -1,3 +1,5 @@
+import time
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,10 +13,14 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
     DeleteView
 
 from hub.catalog_seed import ICON_LABELS
-from hub.draft import draft_card
+from hub.draft import MAX_TOPIC_LENGTH, MIN_TOPIC_LENGTH, draft_card
 from hub.filters import CardFilter
 from hub.forms import CardForm, CardQuestionSearchForm
 from hub.models import Card, CardTemplate, Category, Collection
+
+DRAFT_COOLDOWN_SECONDS = 15
+DRAFT_HOURLY_LIMIT = 10
+DRAFT_WINDOW_SECONDS = 60 * 60
 
 
 class ActiveCollectionRequiredMixin:
@@ -158,6 +164,35 @@ class CardDetailView(LoginRequiredMixin, ActiveCollectionRequiredMixin, DetailVi
         )
 
 
+def _recent_drafts(request):
+    now = time.time()
+    times = [
+        stamp for stamp in request.session.get("ai_draft_at", [])
+        if now - stamp < DRAFT_WINDOW_SECONDS
+    ]
+    return now, times
+
+
+def _draft_limit_message(request, topic):
+    if len(topic) < MIN_TOPIC_LENGTH:
+        return "topic", "Write a longer topic."
+    if len(topic) > MAX_TOPIC_LENGTH:
+        return "topic", "Topic is too long."
+    now, times = _recent_drafts(request)
+    request.session["ai_draft_at"] = times
+    if times and now - times[-1] < DRAFT_COOLDOWN_SECONDS:
+        return None, "Wait a few seconds before another draft."
+    if len(times) >= DRAFT_HOURLY_LIMIT:
+        return None, "Draft limit reached. Try again in an hour."
+    return None, None
+
+
+def _remember_draft(request):
+    now, times = _recent_drafts(request)
+    times.append(now)
+    request.session["ai_draft_at"] = times
+
+
 class CardCreateView(LoginRequiredMixin, ActiveCollectionRequiredMixin, CreateView):
     model = Card
     form_class = CardForm
@@ -177,8 +212,13 @@ class CardCreateView(LoginRequiredMixin, ActiveCollectionRequiredMixin, CreateVi
             "answer": request.POST.get("answer", ""),
         }
         failed = False
+        limit_field = None
+        limit_message = None
         if topic:
+            limit_field, limit_message = _draft_limit_message(request, topic)
+        if topic and limit_message is None:
             try:
+                _remember_draft(request)
                 generated = draft_card(topic)
                 question = str(generated["question"]).strip()
                 answer = str(generated["answer"]).strip()
@@ -194,13 +234,20 @@ class CardCreateView(LoginRequiredMixin, ActiveCollectionRequiredMixin, CreateVi
         form.fields["category"].queryset = Category.objects.filter(
             collection_id=request.user.active_collection_id
         )
-        if not topic or failed:
+        if not topic or limit_message or failed:
             form.cleaned_data = {}
         if not topic:
             form.add_error("topic", "Write a topic.")
+        elif limit_message:
+            form.add_error(limit_field, limit_message)
         elif failed:
             form.add_error(None, "Could not draft a card. Try again.")
         return self.render_to_response(self.get_context_data(form=form))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["draft_hourly_limit"] = DRAFT_HOURLY_LIMIT
+        return context
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
