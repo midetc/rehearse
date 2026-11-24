@@ -7,7 +7,36 @@
   <h1 class="page-title">{{ object|yesno:"Edit card,New card" }}</h1>
   <form method="post" class="stack">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% if not object %}
+      <details class="ai-draft"{% if form.topic.value or form.topic.errors or form.non_field_errors %} open{% endif %}>
+        <summary>
+          <svg class="ai-star" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill="currentColor" d="M8 0.6 9.35 5.4 14.4 6.15 10.55 9.15 11.7 14.2 8 11.55 4.3 14.2 5.45 9.15 1.6 6.15 6.65 5.4Z"/>
+          </svg>
+          Draft by AI
+          <span class="ai-beta">Beta</span>
+        </summary>
+        <div class="ai-draft-panel">
+          {{ form.non_field_errors }}
+          <p>
+            <label for="{{ form.topic.id_for_label }}">{{ form.topic.label }}</label>
+            {{ form.topic }}
+            <span class="meta">Up to {{ draft_hourly_limit }} drafts an hour. Save still stores the card.</span>
+            {{ form.topic.errors }}
+          </p>
+          <button type="submit" name="draft" value="1" class="btn-ai" formnovalidate>Generate</button>
+        </div>
+      </details>
+    {% endif %}
+    {% for field in form %}
+      {% if field.name != "topic" %}
+        <p>
+          {{ field.label_tag }}
+          {{ field }}
+          {{ field.errors }}
+        </p>
+      {% endif %}
+    {% endfor %}
     <div class="actions-row">
       <button type="submit">Save</button>
       <a class="btn-ghost" href="{% url 'hub:card-list' %}">Cancel</a>

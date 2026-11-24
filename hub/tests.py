@@ -1,3 +1,6 @@
+import time
+from unittest.mock import patch
+
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
@@ -163,3 +166,64 @@ class CardCreateViewTest(TestCase):
         })
         card = Card.objects.get(owner=self.user, question="What is GIL?")
         self.assertEqual(card.status, Card.Status.NEW)
+
+
+class CardDraftLimitTest(TestCase):
+    def setUp(self):
+        self.collection = make_collection()
+        self.category = make_category(self.collection)
+        self.user = make_user(collection=self.collection)
+        self.client.force_login(self.user)
+
+    def _draft(self, topic):
+        return self.client.post("/cards/create/", {
+            "draft": "1",
+            "topic": topic,
+            "level": "junior",
+            "category": self.category.pk,
+        })
+
+    def test_anonymous_draft_does_not_call_api(self):
+        self.client.logout()
+        with patch("hub.views.draft_card") as draft_card:
+            response = self.client.post("/cards/create/", {
+                "draft": "1",
+                "topic": "decorators",
+            })
+        self.assertRedirects(response, "/accounts/login/?next=/cards/create/")
+        draft_card.assert_not_called()
+
+    def test_draft_without_track_does_not_call_api(self):
+        stranger = make_user(username="notrack")
+        self.client.force_login(stranger)
+        with patch("hub.views.draft_card") as draft_card:
+            response = self._draft("decorators")
+        self.assertRedirects(response, "/select_collection/")
+        draft_card.assert_not_called()
+
+    @patch("hub.views.draft_card", return_value={"question": "Q", "answer": "A"})
+    def test_second_draft_waits_for_cooldown(self, draft_card):
+        first = self._draft("decorators")
+        second = self._draft("closures")
+        self.assertContains(first, "Q")
+        self.assertContains(second, "Wait a few seconds")
+        self.assertEqual(draft_card.call_count, 1)
+        self.assertEqual(Card.objects.count(), 0)
+
+    @patch("hub.views.draft_card", return_value={"question": "Q", "answer": "A"})
+    def test_hourly_limit_stops_the_api_call(self, draft_card):
+        session = self.client.session
+        session["ai_draft_at"] = [time.time() - 30] * 10
+        session.save()
+        response = self._draft("decorators")
+        self.assertContains(response, "Draft limit reached")
+        draft_card.assert_not_called()
+        self.assertEqual(Card.objects.count(), 0)
+
+    @patch("hub.views.draft_card")
+    def test_short_and_long_topics_do_not_call_api(self, draft_card):
+        short = self._draft("ab")
+        long = self._draft("x" * 201)
+        self.assertContains(short, "Write a longer topic.")
+        self.assertContains(long, "Topic is too long.")
+        draft_card.assert_not_called()
